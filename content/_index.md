@@ -1,9 +1,11 @@
- 
-+++
+ +++
 
-title = "Software Engineering [for Intelligent Distributed Systems] Module 3: Intro"
+title = "Software Engineering Module 3: Intro"
 description = "Introduction to the course"
 outputs = ["Reveal"]
+aliases = [
+    "/intro/"
+]
 
 +++
 
