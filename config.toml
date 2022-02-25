@@ -38,6 +38,6 @@ transition_speed = "fast"
 custom_theme = "custom-theme.scss"
 custom_theme_compile = true
 
-# [params.reveal_hugo.custom_theme_options]
-# targetPath = "css/custom-theme.css"
-# enableSourceMap = true
+[params.reveal_hugo.custom_theme_options]
+targetPath = "css/custom-theme.css"
+enableSourceMap = true
