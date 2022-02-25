@@ -1,6 +1,6 @@
-baseURL = "https://danysk.github.io/Template-Hugo-Reveal-Slides"
+baseURL = "https://danysk.github.io/Course-DTM-SE-3"
 languageCode = "en-us"
-title = "A Hugo theme for creating Reveal.js presentations"
+title = "Software Engineering [for Intelligent Distributed Systems] Module 3"
 disableKinds = ["sitemap", "RSS"]
 theme = "reveal-hugo"
 publishDir = "build"
@@ -30,7 +30,7 @@ isHTML = true
 
 [params.reveal_hugo]
 history = true
-theme = "league"
+theme = "white"
 highlight_theme = "solarized-dark"
 slide_number = true
 transition = "slide"
@@ -38,6 +38,6 @@ transition_speed = "fast"
 custom_theme = "custom-theme.scss"
 custom_theme_compile = true
 
-[params.reveal_hugo.custom_theme_options]
-targetPath = "css/custom-theme.css"
-enableSourceMap = true
+# [params.reveal_hugo.custom_theme_options]
+# targetPath = "css/custom-theme.css"
+# enableSourceMap = true
