@@ -30,7 +30,7 @@ isHTML = true
 
 [params.reveal_hugo]
 history = true
-theme = "white"
+theme = "league"
 highlight_theme = "solarized-dark"
 slide_number = true
 transition = "slide"
