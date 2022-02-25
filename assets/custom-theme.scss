@@ -5,10 +5,10 @@
 // Include theme-specific fonts
 @import url(reveal-js/lib/font/source-sans-pro/source-sans-pro.css);
 
-// $backgroundColor: #fff;
+$backgroundColor: #fff;
 
-// $mainColor: #000;
-// $headingColor: #111;
+$mainColor: #000;
+$headingColor: #111;
 
 $mainFontSize: 2em;
 $mainFont: 'Source Sans Pro', Helvetica, sans-serif;
@@ -26,11 +26,11 @@ $heading4Size: 1.0em;
 
 @import "reveal-js/css/theme/template/theme";
 
-section.has-light-background {
-	&, h1, h2, h3, h4, h5, h6 {
-		color: #222;
-	}
-}
+// section.has-light-background {
+// 	&, h1, h2, h3, h4, h5, h6 {
+// 		color: #222;
+// 	}
+// }
 
 .reveal pre {
 	margin: 1em auto;
