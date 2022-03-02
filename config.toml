@@ -37,6 +37,12 @@ transition = "slide"
 transition_speed = "fast"
 custom_theme = "custom-theme.scss"
 custom_theme_compile = true
+width = '1920'
+height = '1080'
+# width = '3840'
+# height = '2160'
+# width = '100%'
+# height = '100%'
 
 [params.reveal_hugo.custom_theme_options]
 targetPath = "css/custom-theme.css"
