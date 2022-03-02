@@ -1,0 +1,1177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Software Engineering Module 3: Introduction to agile and DevOps</title>
+<meta name="description" content="Introduction to agile and DevOps, a case from the literature, SCRUM">
+<meta name="author" content="Danilo Pianini">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/css/reset.css">
+<link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/css/reveal.css">
+  <link rel="stylesheet" href="/Course-DTM-SE-3/css/custom-theme.min.2fee46db24a9ab664a9269e85066753b8576e5bf070cc86a1c857c98651d2cf0.css" id="theme"><link rel="stylesheet" href="/Course-DTM-SE-3/highlight-js/solarized-dark.min.css">
+    
+<link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
+<link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Oxygen Mono' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Ubuntu Mono' rel='stylesheet'>
+
+  </head>
+  <body>
+    
+    <div class="reveal">
+      <div class="slides">
+  
+
+    <section><h1 id="software-engineering">Software Engineering</h1>
+<h3 id="for-intelligent-distributed-systems"><strong>(for Intelligent Distributed Systems)</strong></h3>
+<h1 id="module-3-devops">Module 3: DevOps</h1>
+<h2 id="introduction-to-agile-and-devops"><em>Introduction to agile and DevOps</em></h2>
+</section><section>
+<h1 id="development">Development</h1>
+<ul>
+<li>Analysis of a domain</li>
+<li>Design of a solution</li>
+<li>Implementation</li>
+<li>Testing</li>
+</ul>
+</section><section>
+<h1 id="operations">Operations</h1>
+<ul>
+<li>IT infrastructure</li>
+<li>Deployment</li>
+<li>Maintenance</li>
+</ul>
+</section><section>
+<h1 id="silo-mentality">Silo mentality</h1>
+<img src="silos.svg" onerror="this.onerror=null; this.src='../../assets/silos.svg'" style="max-height: 70vh; object-fit: contain;"/>
+</section><section>
+<h1 id="no-silos"><strong>No</strong> silos</h1>
+<img src="no-silos.svg" onerror="this.onerror=null; this.src='../../assets/no-silos.svg'" style="max-height: 70vh; object-fit: contain;"/>
+</section><section>
+<h1 id="devops-culture">DevOps culture</h1>
+<ul>
+<li>
+<p><strong>Increased collaboration</strong></p>
+<ul>
+<li>Dev and Ops should <em>exchange information</em> and <em>work together</em></li>
+</ul>
+</li>
+<li>
+<p><strong>Shared responsibility</strong></p>
+<ul>
+<li>A team is responsible for the (sub) product for its <em>whole lifetime</em></li>
+<li><em>No handing over</em> projects from devs to ops</li>
+</ul>
+</li>
+<li>
+<p><strong>Autonomous teams</strong></p>
+<ul>
+<li><em>Lightweight decision making</em> process</li>
+</ul>
+</li>
+<li>
+<p><strong>Focus on the process, not just the product</strong></p>
+<ul>
+<li>Promote small, <em>incremental changes</em></li>
+<li><em>Automate</em> as much as possible</li>
+<li>Leverage the right <em>tool</em> for the job at hand</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="why-bother">Why bother?</h1>
+<ol>
+<li>
+<p><strong>Risk management</strong></p>
+<ul>
+<li>Reduce the probability of <em>failure</em></li>
+<li>Detect <em>defects</em> before hitting the market</li>
+<li>Quickly <em>react</em> to problems</li>
+</ul>
+</li>
+<li>
+<p><strong>Resource exploitation</strong></p>
+<ul>
+<li>Use <em>human resources</em> for human-y work</li>
+<li>Reduce <em>time to market</em></li>
+<li>Embrace <em>innovation</em></li>
+<li>Exploit <em>emerging technologies</em></li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h1 id="devops">DevOps</h1>
+<ol>
+<li><strong>Principles</strong></li>
+<li><strong>Practices</strong></li>
+<li><strong>Tools</strong></li>
+</ol>
+<p><strong>Principles</strong> <em>inspire</em> <strong>practices</strong></p>
+<p><strong>Practices</strong> <em>require</em> <strong>tools</strong></p>
+</section><section>
+<h1 id="devops-principles">DevOps principles</h1>
+<h3 id="not-exhaustive">(not exhaustive)</h3>
+<ul>
+<li>Collaboration</li>
+<li>Reproducibility</li>
+<li>Automation</li>
+<li>Incrementality</li>
+<li>Robustness</li>
+</ul>
+</section><section>
+<h1 id="devops-practices">DevOps practices</h1>
+<ul>
+<li>Workflow organization</li>
+<li>Build automation</li>
+<li>Self-testing code</li>
+<li>Code quality control</li>
+<li>Continuous Integration</li>
+<li>Continuous Delivery</li>
+<li>Continuous Deployment</li>
+<li>Continuous Monitoring</li>
+</ul>
+</section><section>
+<h1 id="a-real-world-test-case">A real-world test case</h1>
+<p>We applied DevOps (and microservice-ification) to an existing software project,
+measuring some metrics <em>before</em> and <em>after</em> the operation.</p>
+<ul>
+<li>The detailed <em>experience report</em> has been presented at the 37th International Conference on Software Maintenance and Evolution (<a href="https://icsme2021.github.io/">ICSME 2021</a>)
+<ul>
+<li><a href="https://doi.org/10.1109/ICSME52107.2021.00051">Scientific paper</a></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<iframe width="1280" height="720" src="https://www.youtube.com/embed/6qd6GG3XQXA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</section><section>
+<h2 id="the-target">The target</h2>
+<h3 id="maggioli-spa">Maggioli S.p.A</h3>
+<ul>
+<li><em>Multinational</em>, based in Italy</li>
+<li><em>~2000 collaborators</em> at the time of writing</li>
+<li>An <em>internal IT/Operations</em> team</li>
+<li>Our target team was composed of <strong>five people</strong></li>
+</ul>
+<h3 id="sisred-before-intervention">sisred (before intervention)</h3>
+<ul>
+<li><em>Client-server</em> stand-alone application</li>
+<li><em>Delphi</em> front-end, <em>Microsoft SQL Server</em> backend</li>
+<li>Editors (paid by Maggioli) are <em>experts in law entering information on the client</em></li>
+<li>The information is the exposed into a (paid access) <em>portal</em> with up-to-date legal information</li>
+</ul>
+</section><section>
+<h2 id="previous-architecture">Previous architecture</h2>
+<p><img src="sisred-old-arch.svg" alt="old-arch"></p>
+</section><section>
+<h1 id="heading"></h1>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:center">Prev.</th>
+<th style="text-align:center">Now</th>
+<th style="text-align:right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Release frequency ($\frac{releases}{day}$)</td>
+<td style="text-align:center"><a href="">0.071</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Commit to release time (hours)</td>
+<td style="text-align:center"><a href="">8 to 24</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Commits per day ($\frac{commits}{day}$)</td>
+<td style="text-align:center"><a href="">2</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">MTTR (hours)</td>
+<td style="text-align:center"><a href="">36</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Prod. env. setup (working hours)</td>
+<td style="text-align:center"><a href="">16</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Dev. env. setup (minutes)</td>
+<td style="text-align:center"><a href="">120</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td style="text-align:center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td style="text-align:center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Issue resolution time (days)</td>
+<td style="text-align:center"><a href="">4</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section><section>
+<h2 id="microservice-ified-architecture">Microservice-ified architecture</h2>
+<p><img src="sisred-new-arch.svg" alt="new-arch"></p>
+</section><section>
+<h2 id="ci-pipeline">CI Pipeline</h2>
+<p><img src="docker-publish.svg" alt="pipeline"></p>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:center">Prev.</th>
+<th style="text-align:center">Now</th>
+<th style="text-align:right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Release frequency ($\frac{releases}{day}$)</td>
+<td style="text-align:center"><a href="">0.071</a></td>
+<td style="text-align:center"><em>2.7</em></td>
+<td style="text-align:right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commit to release time (hours)</td>
+<td style="text-align:center"><a href="">8 to 24</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Commits per day ($\frac{commits}{day}$)</td>
+<td style="text-align:center"><a href="">2</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">MTTR (hours)</td>
+<td style="text-align:center"><a href="">36</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Prod. env. setup (working hours)</td>
+<td style="text-align:center"><a href="">16</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Dev. env. setup (minutes)</td>
+<td style="text-align:center"><a href="">120</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td style="text-align:center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td style="text-align:center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Issue resolution time (days)</td>
+<td style="text-align:center"><a href="">4</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:center">Prev.</th>
+<th style="text-align:center">Now</th>
+<th style="text-align:right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Release frequency ($\frac{releases}{day}$)</td>
+<td style="text-align:center"><a href="">0.071</a></td>
+<td style="text-align:center"><em>2.7</em></td>
+<td style="text-align:right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commit to release time (hours)</td>
+<td style="text-align:center"><a href="">8 to 24</a></td>
+<td style="text-align:center"><em>0.19</em></td>
+<td style="text-align:right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commits per day ($\frac{commits}{day}$)</td>
+<td style="text-align:center"><a href="">2</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">MTTR (hours)</td>
+<td style="text-align:center"><a href="">36</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Prod. env. setup (working hours)</td>
+<td style="text-align:center"><a href="">16</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Dev. env. setup (minutes)</td>
+<td style="text-align:center"><a href="">120</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td style="text-align:center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td style="text-align:center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Issue resolution time (days)</td>
+<td style="text-align:center"><a href="">4</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:center">Prev.</th>
+<th style="text-align:center">Now</th>
+<th style="text-align:right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Release frequency ($\frac{releases}{day}$)</td>
+<td style="text-align:center"><a href="">0.071</a></td>
+<td style="text-align:center"><em>2.7</em></td>
+<td style="text-align:right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commit to release time (hours)</td>
+<td style="text-align:center"><a href="">8 to 24</a></td>
+<td style="text-align:center"><em>0.19</em></td>
+<td style="text-align:right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commits per day ($\frac{commits}{day}$)</td>
+<td style="text-align:center"><a href="">2</a></td>
+<td style="text-align:center"><em>7.1</em></td>
+<td style="text-align:right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">MTTR (hours)</td>
+<td style="text-align:center"><a href="">36</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Prod. env. setup (working hours)</td>
+<td style="text-align:center"><a href="">16</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Dev. env. setup (minutes)</td>
+<td style="text-align:center"><a href="">120</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td style="text-align:center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td style="text-align:center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Issue resolution time (days)</td>
+<td style="text-align:center"><a href="">4</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:center">Prev.</th>
+<th style="text-align:center">Now</th>
+<th style="text-align:right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Release frequency ($\frac{releases}{day}$)</td>
+<td style="text-align:center"><a href="">0.071</a></td>
+<td style="text-align:center"><em>2.7</em></td>
+<td style="text-align:right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commit to release time (hours)</td>
+<td style="text-align:center"><a href="">8 to 24</a></td>
+<td style="text-align:center"><em>0.19</em></td>
+<td style="text-align:right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commits per day ($\frac{commits}{day}$)</td>
+<td style="text-align:center"><a href="">2</a></td>
+<td style="text-align:center"><em>7.1</em></td>
+<td style="text-align:right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">MTTR (hours)</td>
+<td style="text-align:center"><a href="">36</a></td>
+<td style="text-align:center"><em>0.5</em></td>
+<td style="text-align:right"><strong>-98.6%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Prod. env. setup (working hours)</td>
+<td style="text-align:center"><a href="">16</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Dev. env. setup (minutes)</td>
+<td style="text-align:center"><a href="">120</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td style="text-align:center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td style="text-align:center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Issue resolution time (days)</td>
+<td style="text-align:center"><a href="">4</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:center">Prev.</th>
+<th style="text-align:center">Now</th>
+<th style="text-align:right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Release frequency ($\frac{releases}{day}$)</td>
+<td style="text-align:center"><a href="">0.071</a></td>
+<td style="text-align:center"><em>2.7</em></td>
+<td style="text-align:right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commit to release time (hours)</td>
+<td style="text-align:center"><a href="">8 to 24</a></td>
+<td style="text-align:center"><em>0.19</em></td>
+<td style="text-align:right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commits per day ($\frac{commits}{day}$)</td>
+<td style="text-align:center"><a href="">2</a></td>
+<td style="text-align:center"><em>7.1</em></td>
+<td style="text-align:right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">MTTR (hours)</td>
+<td style="text-align:center"><a href="">36</a></td>
+<td style="text-align:center"><em>0.5</em></td>
+<td style="text-align:right"><strong>-98.6%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Prod. env. setup (working hours)</td>
+<td style="text-align:center"><a href="">16</a></td>
+<td style="text-align:center"><em>0.35</em></td>
+<td style="text-align:right"><strong>-97.8%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Dev. env. setup (minutes)</td>
+<td style="text-align:center"><a href="">120</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td style="text-align:center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td style="text-align:center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Issue resolution time (days)</td>
+<td style="text-align:center"><a href="">4</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:center">Prev.</th>
+<th style="text-align:center">Now</th>
+<th style="text-align:right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Release frequency ($\frac{releases}{day}$)</td>
+<td style="text-align:center"><a href="">0.071</a></td>
+<td style="text-align:center"><em>2.7</em></td>
+<td style="text-align:right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commit to release time (hours)</td>
+<td style="text-align:center"><a href="">8 to 24</a></td>
+<td style="text-align:center"><em>0.19</em></td>
+<td style="text-align:right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commits per day ($\frac{commits}{day}$)</td>
+<td style="text-align:center"><a href="">2</a></td>
+<td style="text-align:center"><em>7.1</em></td>
+<td style="text-align:right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">MTTR (hours)</td>
+<td style="text-align:center"><a href="">36</a></td>
+<td style="text-align:center"><em>0.5</em></td>
+<td style="text-align:right"><strong>-98.6%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Prod. env. setup (working hours)</td>
+<td style="text-align:center"><a href="">16</a></td>
+<td style="text-align:center"><em>0.35</em></td>
+<td style="text-align:right"><strong>-97.8%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Dev. env. setup (minutes)</td>
+<td style="text-align:center"><a href="">120</a></td>
+<td style="text-align:center"><em>9</em></td>
+<td style="text-align:right"><strong>-92.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td style="text-align:center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td style="text-align:center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Issue resolution time (days)</td>
+<td style="text-align:center"><a href="">4</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:center">Prev.</th>
+<th style="text-align:center">Now</th>
+<th style="text-align:right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Release frequency ($\frac{releases}{day}$)</td>
+<td style="text-align:center"><a href="">0.071</a></td>
+<td style="text-align:center"><em>2.7</em></td>
+<td style="text-align:right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commit to release time (hours)</td>
+<td style="text-align:center"><a href="">8 to 24</a></td>
+<td style="text-align:center"><em>0.19</em></td>
+<td style="text-align:right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commits per day ($\frac{commits}{day}$)</td>
+<td style="text-align:center"><a href="">2</a></td>
+<td style="text-align:center"><em>7.1</em></td>
+<td style="text-align:right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">MTTR (hours)</td>
+<td style="text-align:center"><a href="">36</a></td>
+<td style="text-align:center"><em>0.5</em></td>
+<td style="text-align:right"><strong>-98.6%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Prod. env. setup (working hours)</td>
+<td style="text-align:center"><a href="">16</a></td>
+<td style="text-align:center"><em>0.35</em></td>
+<td style="text-align:right"><strong>-97.8%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Dev. env. setup (minutes)</td>
+<td style="text-align:center"><a href="">120</a></td>
+<td style="text-align:center"><em>9</em></td>
+<td style="text-align:right"><strong>-92.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td style="text-align:center"><a href="">30</a></td>
+<td style="text-align:center"><em>0</em></td>
+<td style="text-align:right"><strong>-100%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td style="text-align:center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Issue resolution time (days)</td>
+<td style="text-align:center"><a href="">4</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:center">Prev.</th>
+<th style="text-align:center">Now</th>
+<th style="text-align:right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Release frequency ($\frac{releases}{day}$)</td>
+<td style="text-align:center"><a href="">0.071</a></td>
+<td style="text-align:center"><em>2.7</em></td>
+<td style="text-align:right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commit to release time (hours)</td>
+<td style="text-align:center"><a href="">8 to 24</a></td>
+<td style="text-align:center"><em>0.19</em></td>
+<td style="text-align:right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commits per day ($\frac{commits}{day}$)</td>
+<td style="text-align:center"><a href="">2</a></td>
+<td style="text-align:center"><em>7.1</em></td>
+<td style="text-align:right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">MTTR (hours)</td>
+<td style="text-align:center"><a href="">36</a></td>
+<td style="text-align:center"><em>0.5</em></td>
+<td style="text-align:right"><strong>-98.6%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Prod. env. setup (working hours)</td>
+<td style="text-align:center"><a href="">16</a></td>
+<td style="text-align:center"><em>0.35</em></td>
+<td style="text-align:right"><strong>-97.8%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Dev. env. setup (minutes)</td>
+<td style="text-align:center"><a href="">120</a></td>
+<td style="text-align:center"><em>9</em></td>
+<td style="text-align:right"><strong>-92.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td style="text-align:center"><a href="">30</a></td>
+<td style="text-align:center"><em>0</em></td>
+<td style="text-align:right"><strong>-100%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td style="text-align:center"><a href="">40</a></td>
+<td style="text-align:center"><em>19</em></td>
+<td style="text-align:right"><strong>-52.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Issue resolution time (days)</td>
+<td style="text-align:center"><a href="">4</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:center">Prev.</th>
+<th style="text-align:center">Now</th>
+<th style="text-align:right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Release frequency ($\frac{releases}{day}$)</td>
+<td style="text-align:center"><a href="">0.071</a></td>
+<td style="text-align:center"><em>2.7</em></td>
+<td style="text-align:right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commit to release time (hours)</td>
+<td style="text-align:center"><a href="">8 to 24</a></td>
+<td style="text-align:center"><em>0.19</em></td>
+<td style="text-align:right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commits per day ($\frac{commits}{day}$)</td>
+<td style="text-align:center"><a href="">2</a></td>
+<td style="text-align:center"><em>7.1</em></td>
+<td style="text-align:right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">MTTR (hours)</td>
+<td style="text-align:center"><a href="">36</a></td>
+<td style="text-align:center"><em>0.5</em></td>
+<td style="text-align:right"><strong>-98.6%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Prod. env. setup (working hours)</td>
+<td style="text-align:center"><a href="">16</a></td>
+<td style="text-align:center"><em>0.35</em></td>
+<td style="text-align:right"><strong>-97.8%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Dev. env. setup (minutes)</td>
+<td style="text-align:center"><a href="">120</a></td>
+<td style="text-align:center"><em>9</em></td>
+<td style="text-align:right"><strong>-92.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td style="text-align:center"><a href="">30</a></td>
+<td style="text-align:center"><em>0</em></td>
+<td style="text-align:right"><strong>-100%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td style="text-align:center"><a href="">40</a></td>
+<td style="text-align:center"><em>19</em></td>
+<td style="text-align:right"><strong>-52.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Issue resolution time (days)</td>
+<td style="text-align:center"><a href="">4</a></td>
+<td style="text-align:center"><em>3</em></td>
+<td style="text-align:right"><strong>-25%</strong></td>
+</tr>
+</tbody>
+</table>
+</section><section>
+<h2 id="benefits">Benefits</h2>
+<ul>
+<li>Much less <strong>maintenance</strong> in the traditional meaning: <em>&ldquo;Time spent to keep the system in nominal conditions&rdquo;</em>
+<ul>
+<li>No more issues with Windows updates</li>
+<li>No more downtimes related to internal network / electricity / public infrastructure maintenance</li>
+<li>Improved security</li>
+<li>No more critical failures caused by testing stored procedures directly in production my mistake</li>
+</ul>
+</li>
+<li>Much more maintenance in terms of <em>software evolution</em>
+<ul>
+<li>Application (or verification of automatic application) of updates</li>
+<li>Security audits</li>
+<li>Maintenance and update of the pipeline</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="lessons-learned">Lessons learned</h2>
+<ul>
+<li>The teams must be <strong>autonomous</strong></li>
+<li>Practices must be <em>tailored</em> to the team</li>
+<li>Time-consuming, repetitive, and cumbersome procedures must be <em>automated</em></li>
+<li>Obsolete practices must be <em>removed</em></li>
+<li><strong>Communication</strong> is key, awareness must be shed across the team of the expected benefits</li>
+</ul>
+</section><section>
+<h2 id="timeline">Timeline</h2>
+<p><img src="timeline.svg" alt="timeline"></p>
+</section><section>
+<h1 id="agile-software-development">Agile software development</h1>
+<h2 id="manifestohttpagilemanifestoorg"><a href="http://agilemanifesto.org/">Manifesto</a></h2>
+<p>We are uncovering better ways of developing software by doing it and helping others do it. Through this work we have come to value:</p>
+<ul>
+<li><strong>Individuals and interactions</strong> over <em>processes and tools</em></li>
+<li><strong>Working software</strong> over <em>comprehensive documentation</em></li>
+<li><strong>Customer collaboration</strong> over <em>contract negotiation</em></li>
+<li><strong>Responding to change</strong> over <em>following a plan</em></li>
+</ul>
+<p>That is, while <em>there is value in the items on the right</em>, <strong>we value the items on the left more</strong>.</p>
+</section><section>
+<h2 id="agile-principles-ihttpagilemanifestoorgprincipleshtml"><a href="http://agilemanifesto.org/principles.html">Agile Principles I</a></h2>
+<p><em>(emphasis mine)</em>
+<strong>(comments mine)</strong></p>
+<ol>
+<li>
+<p>Our highest priority is to satisfy the customer
+through early and <em>continuous delivery</em>
+of valuable software.</p>
+</li>
+<li>
+<p>Welcome <em>changing requirements</em>, even late in
+development. Agile processes harness change for
+the customer&rsquo;s <em>competitive advantage</em>.
+<strong>(Not an excuse for not collecting requirements upfront)</strong></p>
+</li>
+<li>
+<p><em>Deliver</em> working software <em>frequently</em>, from a
+couple of weeks to a couple of months, with a
+preference to the shorter timescale.
+<strong>(Daily, hourly)</strong></p>
+</li>
+<li>
+<p><em>Business people and developers must work together</em> daily throughout the project.
+<strong>(And understand each other!)</strong></p>
+</li>
+<li>
+<p>Build projects around <em>motivated individuals</em>.
+Give them the environment and support they need,
+and <em>trust</em> them to get the job done.
+<strong>(Teams must be independent)</strong></p>
+</li>
+<li>
+<p>The most efficient and effective method of
+conveying information to and within a development
+team is <em>face-to-face conversation</em>.
+<strong>(Yes, it is pre-covid stuff)</strong></p>
+</li>
+</ol>
+</section><section>
+<h2 id="agile-principles-iihttpagilemanifestoorgprincipleshtml"><a href="http://agilemanifesto.org/principles.html">Agile Principles II</a></h2>
+<p><em>(emphasis mine)</em>
+<strong>(comments mine)</strong></p>
+<ol start="7">
+<li>
+<p><em>Working software</em> is the primary measure of progress.
+<strong>(But if used as the only measure progress, progress will halt soon)</strong></p>
+</li>
+<li>
+<p>Agile processes promote <em>sustainable</em> development.
+The sponsors, developers, and users should be able
+to maintain a constant pace indefinitely.
+<strong>(Bureaucracy and maintenance task should not pile up)</strong></p>
+</li>
+<li>
+<p>Continuous attention to <em>technical excellence</em>
+and <em>good design</em> enhances agility.
+<strong>(First, do it well)</strong></p>
+</li>
+<li>
+<p>Simplicity&ndash;the art of maximizing the amount
+of work not done&ndash;is essential.
+<strong>(Also known as KISS)</strong></p>
+</li>
+<li>
+<p>The best architectures, requirements, and designs
+emerge from self-organizing teams.</p>
+</li>
+<li>
+<p>At regular intervals, the team reflects on how
+to become more effective, then tunes and adjusts
+its behavior accordingly.
+<strong>(Or, maybe, continuously&hellip;)</strong></p>
+</li>
+</ol>
+</section><section>
+<h2 id="practices-vs-frameworks">Practices vs. Frameworks</h2>
+<p><strong>Principles</strong> get reified into <em>practices</em></p>
+<p><strong>Practices</strong> get often interpreted and formalized into <em>frameworks</em></p>
+<p>Framework are <em>actionable</em>, but formalization may introduce <em>assumptions about projects and teams that do not hold always!</em></p>
+<p><strong>Agile principles and practices</strong> get often captured into these well-known frameworks, with slightly different focuses and goals:</p>
+<ul>
+<li><em>Scrum</em>
+<ul>
+<li>focus on team structure, roles, responsibilities, procedures</li>
+</ul>
+</li>
+<li><em>Kanban</em>
+<ul>
+<li>focus on tasks, streamlining, bottleneck mitigation</li>
+</ul>
+</li>
+<li><em>XP (Extreme Programming)</em>
+<ul>
+<li>focuses on release frequency</li>
+</ul>
+</li>
+<li><em>Feature Driven Development</em>
+<ul>
+<li>focuses on the client requests and satisfaction</li>
+</ul>
+</li>
+<li><em>Crystal</em>
+<ul>
+<li>focuses on self-management of teams</li>
+</ul>
+</li>
+<li><em>DSDM (Dynamic Systems Development Method)</em>
+<ul>
+<li>focuses on time and budget constraints</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="scrum">Scrum</h1>
+<p>Seminal paper from 1986 by Hirotaka Takeuchi and Ikujiro Nonaka:</p>
+<ul>
+<li><a href="https://hbr.org/1986/01/the-new-new-product-development-game">The New New Product Development Game</a></li>
+</ul>
+<p>Then refined to the current framework. The name is from Rugby&rsquo;s &ldquo;scrummage&rdquo;</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/ST_vs_Gloucester_-_Match_-_23.JPG" alt="Scrummage"></p>
+</section><section>
+<h2 id="scrum-key-ideas">Scrum key ideas</h2>
+<ul>
+<li>Requirements are <em>volatile</em></li>
+<li>There will be <em>unpredictability</em> along the road</li>
+<li>Accept that the problem may not be fully understood upfront, and focus on <em>quick response</em> to unexpected changes</li>
+</ul>
+</section><section>
+<h2 id="scrum-workflow">Scrum workflow</h2>
+<ul>
+<li>The development is divided in <strong>Sprints</strong></li>
+<li>A Sprint is <em>timeboxed</em>: the length is agreed in advance
+<ul>
+<li>The most commonly adopted length is two weeks</li>
+</ul>
+</li>
+<li>A Sprint must end with a <em>deliverable</em> advancement</li>
+<li>Each sprint is macro-structured as follows:
+<ol>
+<li><em>Planning</em>: define the activities of the sprint</li>
+<li><em>Daily scrums</em> (aka &ldquo;stand-up meetings&rdquo;): daily updates on the state of work</li>
+<li><em>Sprint review</em>: at the of the sprint, present the work to the stakeholders</li>
+</ol>
+</li>
+<li>At regular intervals a <em>Sprint retrospective</em> is held
+<ul>
+<li>Reason on the past sprints with the goal of <em>continuous improvement</em></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="scrum-roles">Scrum roles</h2>
+<h2 id="our-approach">Our approach</h2>
+<ol>
+<li><em>Scrum</em> as an example of agile framework
+<ul>
+<li>How it works</li>
+<li>I&rsquo;ll try to be as objective as possible</li>
+</ul>
+</li>
+<li></li>
+</ol>
+<p>**Discussion</p>
+</section><section>
+<p>know your team</p>
+<p>know your project</p>
+<p>beware of the marketing</p>
+<p>post agile?</p>
+</section>
+
+  
+
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src=/Course-DTM-SE-3/reveal-hugo/object-assign.js></script>
+
+<a href="/Course-DTM-SE-3/reveal-js/css/print/" id="print-location" style="display: none;"></a>
+<script type="text/javascript">
+  var printLocationElement = document.getElementById('print-location');
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = printLocationElement.href + (window.location.search.match(/print-pdf/gi) ? 'pdf.css' : 'paper.css');
+  document.getElementsByTagName('head')[0].appendChild(link);
+</script>
+
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"height":"1080","highlight_theme":"solarized-dark","history":true,"slide_number":true,"theme":"league","transition":"slide","transition_speed":"fast","width":"1920"}</script>
+<script type="application/json" id="reveal-hugo-page-params">null</script>
+
+<script src="/Course-DTM-SE-3/reveal-js/js/reveal.js"></script>
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+  
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams));
+  Reveal.initialize(options);
+</script>
+
+
+  
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/markdown/marked.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/zoom-js/zoom.js"></script>
+  
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+</script>
+
+<script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+    
+  </body>
+</html>
