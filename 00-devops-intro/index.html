@@ -1072,17 +1072,302 @@ its behavior accordingly.
 </ul>
 </section><section>
 <h2 id="scrum-roles">Scrum roles</h2>
-<h2 id="our-approach">Our approach</h2>
-<ol>
-<li><em>Scrum</em> as an example of agile framework
 <ul>
-<li>How it works</li>
-<li>I&rsquo;ll try to be as objective as possible</li>
+<li>
+<p><strong>Product owner (PO)</strong></p>
+<ul>
+<li><em>Goal</em>: maximimizing ROI</li>
+<li><em>Tasks</em>: identify the necessary features and prioritize them</li>
+<li><em>Vision</em>: strategic, similar to a product manager, but <em>understands the product development</em>!</li>
+<li><em>Interactions</em>: customers, development team, SM</li>
+<li><em>Responsibilities</em>: coarse-grained, high-level decision on product directions</li>
 </ul>
 </li>
-<li></li>
-</ol>
-<p>**Discussion</p>
+<li>
+<p><strong>Development team</strong></p>
+<ul>
+<li><em>Goal</em>: make things happen</li>
+<li><em>Tasks</em>: build the selected features, provide time estimates, provide feedback to the PO</li>
+<li><em>Vision</em>: tactic, cross-functional (T-shaped, the team can deal with all the aspects of a sub-project)</li>
+<li><em>Interactions</em>: PO and SM</li>
+<li><em>Responsibilities</em>: fine-grained, autonomous and hence accountable</li>
+</ul>
+</li>
+<li>
+<p><strong>Scrum master (SM)</strong></p>
+<ul>
+<li><em>Goal</em>: coaching and supervision</li>
+<li><em>Tasks</em>: explain Scrum, supervise its application, help learning the methodology</li>
+<li><em>Vision</em>: process-oriented, expert in Scrum</li>
+<li><em>Interactions</em>: PO and development team</li>
+<li><em>Responsibilities</em>: help the team understand and apply Scrum, no formal responsibility on the product.
+Optional (if the team is already experienced), often externalized.</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="scrum-tools">Scrum tools</h2>
+<ul>
+<li><strong>Product backlog</strong>
+<ul>
+<li>A <em>prioritized</em> list of <em>customer-driven</em> features</li>
+<li>Maintained and sorted by the PO</li>
+<li>Each item has an associated <em>size estimation</em> (in arbitrary measure)</li>
+<li>Refined at the conclusion of each sprint</li>
+</ul>
+</li>
+<li><strong>Sprint backlog</strong>
+<ul>
+<li><em>Refines</em> the product backlog</li>
+<li>Each product backlog item selected for the current sprint gets split into <em>sprint tasks</em></li>
+<li>Each task has an <em>effort estimation</em>, an <em>assignee</em>, and a <em>progress tracker</em></li>
+<li>The progress is often tracked by updating the &ldquo;remaining effort&rdquo; day by day
+<ul>
+<li>The <a href="https://en.wikipedia.org/wiki/Burn_down_chart">burn-down chart</a> is a common way to visualize it</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h3 id="product-backlog">Product backlog</h3>
+<p><img src="product-backlog.png" alt="product backlog"></p>
+</section><section>
+<h3 id="sprint-backlog">Sprint backlog</h3>
+<p><img src="sprint-backlog.png" alt="sprint backlog"></p>
+</section><section>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/SampleBurndownChart.svg/2880px-SampleBurndownChart.svg.png" alt="burn down chart"></p>
+</section><section>
+<h2 id="key-concept-the-definition-of-done">Key concept: <strong>the definition of done</strong></h2>
+<p>Apparently simple concept that is <em>central</em> for Scrum to work</p>
+<p>(and for many other workflows)</p>
+<p>Every actor in the process <strong>must agree</strong> and what is the meaning of a task being considered <strong>done</strong></p>
+<ul>
+<li>Is it done when the acceptance tests work?</li>
+<li>Is it done when the assignee marks it as so?</li>
+<li>Is it done when it is delivered to the main application?</li>
+<li>Is it done when it has been in production for at least one week without bug reports?</li>
+</ul>
+</section><section>
+<h2 id="process-overview">Process overview</h2>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Scrum_process.svg/2880px-Scrum_process.svg.png" alt="scrum process"></p>
+</section><section>
+<h2 id="workflow-overview">Workflow overview</h2>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/d/df/Scrum_Framework.png" alt="scrum process"></p>
+</section><section>
+<h2 id="the-problem-with-scrum">The problem with Scrum</h2>
+<p>Scrum and agile are often used as <em>synonyms</em>, but <strong>they are not</strong></p>
+<p>In the literature, Scrum and agile show mixed evidence of efficacy</p>
+<p>(even though, anecdotically, many success stories can be found)</p>
+<h3 id="warning-opinions"><strong>WARNING: opinions!</strong></h3>
+<ul>
+<li>From now on, facts are mixed with opinions of practitioners (included myself)</li>
+<li>There will be citations. Please note: many authors of these quotes, although regarded professionals, often use agile and Scrum interchangeably</li>
+<li>We are going to ask ourselves to what doesn&rsquo;t work, when, and why</li>
+<li>Let&rsquo;s see if we can find some general guidance&hellip;</li>
+</ul>
+</section><section>
+<blockquote>
+<p>Waterfall replicates the social model of a dysfunctional organization with a defined hierarchy. Agile, quite often, replicates the social model of a dysfunctional organization <em>without</em> a well-defined hierarchy.</p>
+</blockquote>
+<ul>
+<li>Michael O. Church: <a href="https://michaelochurch.wordpress.com/2015/06/06/why-agile-and-especially-scrum-are-terrible/">Why “Agile” and especially Scrum are terrible</a></li>
+</ul>
+</section><section>
+<blockquote>
+<p>If your team has combined agile with a legacy methodology such as waterfall, creating a &lsquo;water-scrum&rsquo; approach, you may have the worst of both worlds: You have combined the rigid structure of the traditional approach with the terminology of agile.</p>
+</blockquote>
+<ul>
+<li>Peter Varhol: <a href="https://techbeacon.com/app-dev-testing/8-reasons-ditch-agile">8 reasons to ditch agile</a></li>
+</ul>
+</section><section>
+<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9k4adq/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="158" width="640" scrolling="no"></iframe>
+<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9kccas/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="139" width="640" scrolling="no"></iframe>
+<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9kdpz8/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="139" width="640" scrolling="no"></iframe>
+<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9ka6tj/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="139" width="640" scrolling="no"></iframe>
+<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9kmbvv/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="139" width="640" scrolling="no"></iframe>
+<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9kmbvv/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="139" width="640" scrolling="no"></iframe>
+<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9kbutx/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="163" width="640" scrolling="no"></iframe>
+</section><section>
+<iframe id="reddit-embed" src="https://www.redditmedia.com/r/scrum/comments/t4fun4/query_from_a_sm_of_6_months/?ref_source=embed&amp;ref=share&amp;embed=true" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="319" width="640" scrolling="no"></iframe>
+</section><section>
+<blockquote>
+<p>Many practice the terminology without appreciating the underlying values.</p>
+</blockquote>
+<ul>
+<li>Peter Varhol: <a href="https://techbeacon.com/app-dev-testing/8-reasons-ditch-agile">8 reasons to ditch agile</a></li>
+</ul>
+</section><section>
+<blockquote>
+<p>I knew the end of Agile was coming when we started using hockey sticks.</p>
+</blockquote>
+<ul>
+<li>Kurt Cagle on Forbes: <a href="https://www.forbes.com/sites/cognitiveworld/2019/08/23/the-end-of-agile/?sh=1bee770a2071">The End of Agile</a></li>
+</ul>
+</section><section>
+<blockquote>
+<p>If management is essentially ignoring the developers, there are fixed deadlines to be achieved with a predefined scope, or it&rsquo;s a dog-eat-dog environment instead of a team focused on achieving the same goal, if planning ahead and thinking out of the box are not appreciated, then yes, eventually you&rsquo;ll give up and resort to just doing the assigned tasks. I&rsquo;ve been there.</p>
+</blockquote>
+<ul>
+<li>From <a href="https://softwareengineering.stackexchange.com/questions/410482/how-do-i-prevent-scrum-from-turning-great-developers-into-average-developers/410484#410484">StackOverflow</a></li>
+</ul>
+</section><section>
+<blockquote>
+<p><strong>Standup is effectively &ldquo;update management&rdquo;.</strong> The notion that standup is for developers is absurd. Does anyone actually wait until 9AM to report a problem or are they going to just ask in the group chat immediately? In practice, it is someone higher up the food chain keeping tabs on how fast things are moving so they can ask about it later in the day.</p>
+</blockquote>
+<ul>
+<li>Matthew Gaiser <a href="https://softwareengineering.stackexchange.com/a/410492/337842">on StackOverflow</a></li>
+</ul>
+</section><section>
+<blockquote>
+<p>it usually bends and breaks every other process to it and becomes this overarching process where you do nothing consistently except Scrum rituals and making those Scrum rituals seem successful</p>
+</blockquote>
+<ul>
+<li>Matthew Gaiser <a href="https://softwareengineering.stackexchange.com/a/410492/337842">on StackOverflow</a></li>
+</ul>
+</section><section>
+<h1 id="what-is-the-root-of-these-issues">What is the root of these issues?</h1>
+</section><section>
+<h2 id="bureaucratization">Bureaucratization</h2>
+<ul>
+<li>There is a very delicate trade-off between <em>standardization</em> of practices and <em>excess of buraucracy</em></li>
+<li>Agile is designed around <em>co-located medium/small teams</em> and <em>low buraucracy</em> (compared to the state of the art at the time)</li>
+<li>Larger scale requires more coordination and buraucracy</li>
+<li>Smaller scale benefits of less buraucracy</li>
+</ul>
+<blockquote>
+<p>There is no one-fits-them-all workflow!</p>
+</blockquote>
+<p><strong>Blindly adopting a pre-existing set of practices may lead to failures</strong></p>
+<p><strong>Mixing cherry-picked parts of workflows requires a great deal of experience</strong></p>
+<ul>
+<li>It is paramount that everyone understands <em>why</em> some procedure is in place</li>
+</ul>
+</section><section>
+<blockquote>
+<p><strong>It’s stupidly, dangerously short-term.</strong> Agile is designed for and by consulting firms that are marginal. That is, it’s for firms that don’t have the credibility that would enable them to negotiate with clients as equals, and that are facing tight deadlines while each client project is an existential risk. It’s for “scrappy” underdogs.</p>
+</blockquote>
+<ul>
+<li>Michael O. Church: <a href="https://michaelochurch.wordpress.com/2015/06/06/why-agile-and-especially-scrum-are-terrible/">Why “Agile” and especially Scrum are terrible</a></li>
+</ul>
+</section><section>
+<blockquote>
+<p><strong>Two-week delivery schedules are overkill</strong></p>
+</blockquote>
+<ul>
+<li>Peter Varhol: <a href="https://techbeacon.com/app-dev-testing/8-reasons-ditch-agile">8 reasons to ditch agile</a></li>
+</ul>
+</section><section>
+<h1 id="time-boxes">TIME BOXEs</h1>
+</section><section>
+<p>Abuso delle metriche / KPI</p>
+<blockquote>
+<p>Great developers are often sought out for advice and for second opinions. But any time doing that is less time spent churning out tickets, so their velocity falls.</p>
+</blockquote>
+<ul>
+<li>Matthew Gaiser <a href="https://softwareengineering.stackexchange.com/a/410492/337842">on StackOverflow</a></li>
+</ul>
+</section><section>
+<blockquote>
+<p>Scrum and infinite defects can be good friends because the infinite defects approach lets velocity be artificially high as long as bugs are found after the sprint and therefore counted as new work. You could have an ever higher velocity by constantly generating new bugs.</p>
+</blockquote>
+<ul>
+<li>Matthew Gaiser <a href="https://softwareengineering.stackexchange.com/a/410492/337842">on StackOverflow</a></li>
+</ul>
+</section><section>
+<blockquote>
+<p>Because the developers are independently working away on each ticket sequentially, the architecture rapidly begins to mirror the tickets. The tickets are typically 1-2 sentence user stories. Ticket driven architecture rapidly gets messy simply because more code gets piled on as required.</p>
+</blockquote>
+<ul>
+<li>Matthew Gaiser <a href="https://softwareengineering.stackexchange.com/a/410492/337842">on StackOverflow</a></li>
+</ul>
+</section><section>
+<p>Valorizzazione del team</p>
+<blockquote>
+<p>I call this the <em>Whisky Goggles Effect</em>: it turns the 3s and 4s into 5s, but it makes you so sloppy that the 7s and 9s want nothing to do with you. Unable to get their creative juices flowing under a system where everything has to be justified in terms of short-term business value, the best programmers leave.</p>
+</blockquote>
+<ul>
+<li>Michael O. Church: <a href="https://michaelochurch.wordpress.com/2015/06/06/why-agile-and-especially-scrum-are-terrible/">Why “Agile” and especially Scrum are terrible</a></li>
+</ul>
+<p><em>[Emphasis mine]</em></p>
+</section><section>
+<p>Valorizzazione del team</p>
+<blockquote>
+<p>Culturally, agile may threaten some team members, including those who feel they had obtained an informal leadership status under the previous process that disappeared under agile.</p>
+</blockquote>
+<ul>
+<li>Peter Varhol: <a href="https://www.reddit.com/r/programming/comments/9wcku8/comment/e9lcdaf/?utm_source=share&amp;utm_medium=web2x&amp;context=3">8 reasons to ditch agile</a></li>
+</ul>
+<p>(no, it&rsquo;s not)</p>
+</section><section>
+<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9lcdaf/?depth=2&amp;showmore=false&amp;embed=true&amp;showtitle=true&amp;context=1&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="411" width="640" scrolling="no"></iframe>
+<blockquote>
+<p>The first sign that things are going to go poorly is when you learn management will attend your standup.</p>
+</blockquote>
+<ul>
+<li>A random user <a href="https://techbeacon.com/app-dev-testing/8-reasons-ditch-agile"><code>r/programming</code></a></li>
+</ul>
+</section><section>
+<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9kclup/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="236" width="640" scrolling="no"></iframe>
+</section><section>
+<blockquote>
+<p>developers who think they are under pressure will do a crappy job in any development methodology</p>
+</blockquote>
+<ul>
+<li>From <a href="https://softwareengineering.stackexchange.com/a/410494/337842">StackOverflow</a></li>
+</ul>
+</section><section>
+<blockquote>
+<p>Great developers are usually defined as those who can solve tough problems. Scrum encourages picking work that can easily be done and rapidly churned out at a steady pace. A tough problem is a developer being slow on getting the tickets done.</p>
+</blockquote>
+<ul>
+<li>Matthew Gaiser <a href="https://softwareengineering.stackexchange.com/a/410492/337842">on StackOverflow</a></li>
+</ul>
+</section><section>
+<blockquote>
+<p>Teams might self organize if they all have the same goal and incentives. The problem is, that is rarely true. One guy wants a promotion. Another is studying for a degree on the side. A third is upskilling to go to another company. Another just doesn&rsquo;t want to have arguments so agrees to anything and lets the codebase become a mess. A lot of good design requires the developers to sit down and hash out how a thing should work.</p>
+</blockquote>
+<ul>
+<li>Matthew Gaiser <a href="https://softwareengineering.stackexchange.com/a/410492/337842">on StackOverflow</a></li>
+</ul>
+</section><section>
+<blockquote>
+<p>Even if you get a situation where you are not formally judged on the points completed (which will not happen if management is mostly interacting during Scrum rituals as that is all they have to see regarding progress), people are still going to compete for attention and rewards.</p>
+</blockquote>
+<ul>
+<li>Matthew Gaiser <a href="https://softwareengineering.stackexchange.com/a/410492/337842">on StackOverflow</a></li>
+</ul>
+</section><section>
+<p>Marketing over workflow</p>
+<blockquote>
+<p>Many practice the terminology without appreciating the underlying values.</p>
+</blockquote>
+<ul>
+<li>Peter Varhol: <a href="https://techbeacon.com/app-dev-testing/8-reasons-ditch-agile">8 reasons to ditch agile</a></li>
+</ul>
+</section><section>
+<blockquote>
+<p>If you really don&rsquo;t have an agile methodology but call it agile to attract and retain developers and other team members, you are in trouble.</p>
+</blockquote>
+<ul>
+<li>Peter Varhol: <a href="https://techbeacon.com/app-dev-testing/8-reasons-ditch-agile">8 reasons to ditch agile</a></li>
+</ul>
+</section><section>
+<p>Knowledge gaps // technical excellence</p>
+<p>QA should enforce rules bey testing</p>
+<blockquote>
+<p>In Scrum, you need to clear tickets and there is no real check on the quality of the work as &ldquo;done&rdquo; or &ldquo;not done&rdquo; is decided by a usually non-technical project owner. That incentivizes going into a void and focusing on outputting code.</p>
+</blockquote>
+<ul>
+<li>Matthew Gaiser <a href="https://softwareengineering.stackexchange.com/a/410492/337842">on StackOverflow</a></li>
+</ul>
+</section><section>
+<blockquote>
+<p>The high level of developer independence means each developer takes different approaches. [&hellip;] While it is not necessarily wrong, it makes debugging a heck of a lot harder as more places need to be checked.</p>
+</blockquote>
+<ul>
+<li>Matthew Gaiser <a href="https://softwareengineering.stackexchange.com/a/410492/337842">on StackOverflow</a></li>
+</ul>
 </section><section>
 <p>know your team</p>
 <p>know your project</p>
