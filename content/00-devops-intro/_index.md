@@ -677,7 +677,7 @@ In the literature, Scrum and agile show mixed evidence of efficacy
 
 ---
 
-> **It’s stupidly, dangerously short-term.** Agile is designed for and by consulting firms that are marginal. That is, it’s for firms that don’t have the credibility that would enable them to negotiate with clients as equals, and that are facing tight deadlines while each client project is an existential risk. It’s for “scrappy” underdogs.
+> **It’s stupidly, dangerously short-term.**
 
 * Michael O. Church: [Why “Agile” and especially Scrum are terrible](https://michaelochurch.wordpress.com/2015/06/06/why-agile-and-especially-scrum-are-terrible/)
 
@@ -689,11 +689,19 @@ In the literature, Scrum and agile show mixed evidence of efficacy
 
 ---
 
-# TIME BOXEs
+# What is the root of these issues?
 
 ---
 
-Abuso delle metriche / KPI
+## Time boxes
+
+* Estimating the effort is a *good practice*.
+* Replacing reality with estimations *is not*.
+
+* *High-risk/high-gain* activities hardly fit into time slots
+    * (hence the "dangerously short-term")
+
+---
 
 > Great developers are often sought out for advice and for second opinions. But any time doing that is less time spent churning out tickets, so their velocity falls.
 
@@ -710,11 +718,19 @@ Abuso delle metriche / KPI
 > Because the developers are independently working away on each ticket sequentially, the architecture rapidly begins to mirror the tickets. The tickets are typically 1-2 sentence user stories. Ticket driven architecture rapidly gets messy simply because more code gets piled on as required.
 
 * Matthew Gaiser [on StackOverflow](https://softwareengineering.stackexchange.com/a/410492/337842)
+---
 
+# What is the root of these issues?
 
 ---
 
-Valorizzazione del team
+## Abuse of KPIs
+
+* Measuring is *good* and *must* be done
+* But keep in mind that measures show *a view* over a *complex* system
+* Blindly using metrics to measure quality can be perilous
+
+---
 
 > I call this the *Whisky Goggles Effect*: it turns the 3s and 4s into 5s, but it makes you so sloppy that the 7s and 9s want nothing to do with you. Unable to get their creative juices flowing under a system where everything has to be justified in terms of short-term business value, the best programmers leave.
 
@@ -724,21 +740,13 @@ Valorizzazione del team
 
 ---
 
-Valorizzazione del team
-
 > Culturally, agile may threaten some team members, including those who feel they had obtained an informal leadership status under the previous process that disappeared under agile.
 
 * Peter Varhol: [8 reasons to ditch agile](https://www.reddit.com/r/programming/comments/9wcku8/comment/e9lcdaf/?utm_source=share&utm_medium=web2x&context=3)
 
-(no, it's not)
-
 ---
 
 <iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9lcdaf/?depth=2&amp;showmore=false&amp;embed=true&amp;showtitle=true&amp;context=1&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="411" width="640" scrolling="no"></iframe>
-
-> The first sign that things are going to go poorly is when you learn management will attend your standup.
-
-* A random user [`r/programming`](https://techbeacon.com/app-dev-testing/8-reasons-ditch-agile)
 
 ---
 
@@ -770,7 +778,33 @@ Valorizzazione del team
 
 ---
 
-Marketing over workflow
+> Just imagine 11 people being handed a soccer manual and being told practice is every day for fifteen minutes around 10 AM in conference room #5. Do you think that is what makes a good soccer team? But what if those 11 people were really good, professional players? Still no team? No. Even Christiano Ronaldo would be getting "average" sooner or later with that kind of "team". But that's not soccer's fault. It's just not how you build a team.
+
+* Matthew Gaiser [on StackOverflow](https://softwareengineering.stackexchange.com/questions/410482/how-do-i-prevent-scrum-from-turning-great-developers-into-average-developers/410491#410491]
+
+# What is the root of these issues?
+
+---
+
+## Managing teams is hard
+## *agile alone does not make it easier*
+
+* Daily standups may become source of *pressure*
+    * *especially if management is involved*
+    * autonomy requires trust!
+* Changes in consolidated practices have *hidden costs*
+    * they challenge a pre-existent stabiity
+    * and I have no idea how to deal with them
+    * (well you tell me)
+
+**opinion warning below** 
+* Developer quality is not linear
+* One insanely good developer can be worth 5 good developers alone
+    * still they don't get paid five times as much, and they know it
+* One good developer can be worth 5 average developers, and so on
+* $\Rightarrow$ flattening towards average is usually damaging
+
+---
 
 > Many practice the terminology without appreciating the underlying values.
 
@@ -784,9 +818,20 @@ Marketing over workflow
 
 ---
 
-Knowledge gaps // technical excellence
+# What is the root of these issues?
 
-QA should enforce rules bey testing
+---
+
+## Find solid *processess*, not just a nice packaging
+
+* It is easy to transform agile principles into a set of *rituals*
+    * See bureaucratization
+* Don't do Scrum because is cool, do it **because**:
+    1. *you understand it*
+    2. you have good reasons to think it will *help*
+    3. Don't be fearful of adapting it to the environment
+
+---
 
 > In Scrum, you need to clear tickets and there is no real check on the quality of the work as "done" or "not done" is decided by a usually non-technical project owner. That incentivizes going into a void and focusing on outputting code.
 
@@ -800,10 +845,38 @@ QA should enforce rules bey testing
 
 ---
 
-know your team
+# What is the root of these issues?
 
-know your project
+---
 
-beware of the marketing
+## Technical excellence
 
-post agile?
+* Working in a persistent *emergency state* creates *technical debt*
+* *Architectures* and *abstractions* are vital for long-term success
+    * If they get compromised, they need to be recovered
+    * (which is *paying your techical debt*)
+* There should be *consistency* across styles and techniques
+    * And controls should be as much as possible automatic
+
+## Knowledge gaps and definition of done
+
+* The **definition of done** is central
+    * Arguably, it should include the *technical debt*
+* Involve technical experts when defining what *done* means
+    * Especially if you intend to *measure people performance* based on how much they have *done*
+
+---
+
+# Doing it right
+
+* **Know your project**, there is no universal process that works every time
+* **Know your team**, there is no universal recipe that works everywhere
+* Avoid *ritualization*! Processes are not religions
+* Agree on the *definition of done*
+* Break down problems in smaller chunks, but *do not foget the long-term vision*
+* Sacrify excellence for velocity only when there is an *emergency*
+* When in "**emergency** mode", knowing that you are accumulating *technical debt* that must be paid
+* Avoid *shortcuts* that break *abstractions* and *architectures*
+* Enforce excellence by *strict QA* processes
+* Beware of *scoring individuals*, as they will likely begin to *chase the metrics* in response
+* Development is a *creative work*, excessive *management pressure* is likely to make things worse
