@@ -30,7 +30,7 @@ aliases = [
 # Module contents and action plan
 
 * **2h** [introduction to agile and DevOps, a case from the literature, SCRUM](00-devops-intro)
-* **3h** software lifecycle, dependencies, build automation (examples with virtualenv / pyenv / pip)
+* **3h** [software dependencies, build automation (examples with virtualenv / pyenv / pip)](01-build)
 * **3h** version control, basics (with git)
 * **2h** advanced version control, team organization
 * **3h** QA, reproducibility and replicability, testing, TDD (examples in Python)
