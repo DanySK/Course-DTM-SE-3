@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Software Engineering Module 3: Introduction to agile and DevOps</title>
+<meta name="description" content="Introduction to agile and DevOps, a case from the literature, SCRUM">
+<meta name="author" content="Danilo Pianini">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/css/reset.css">
+<link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/css/reveal.css">
+  <link rel="stylesheet" href="/Course-DTM-SE-3/css/custom-theme.min.2fee46db24a9ab664a9269e85066753b8576e5bf070cc86a1c857c98651d2cf0.css" id="theme"><link rel="stylesheet" href="/Course-DTM-SE-3/highlight-js/solarized-dark.min.css">
+    
+<link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
+<link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Oxygen Mono' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Ubuntu Mono' rel='stylesheet'>
+
+  </head>
+  <body>
+    
+    <div class="reveal">
+      <div class="slides">
+  
+
+    <section><h1 id="software-engineering">Software Engineering</h1>
+<h3 id="for-intelligent-distributed-systems"><strong>(for Intelligent Distributed Systems)</strong></h3>
+<h1 id="module-3-devops">Module 3: DevOps</h1>
+<h2 id="software-dependencies-build-automation"><em>Software dependencies, Build automation</em></h2>
+</section><section>
+<h1 id="the-build-life-cycle">The build &ldquo;life cycle&rdquo;</h1>
+<h4 id="not-to-be-confused-with-the-system-development-life-cycle-sdlc">(Not to be confused with the system development life cycle (SDLC))</h4>
+<p>The process of creating <em>tested deployable software artifacts</em>
+<br/>
+from <em>source</em> code</p>
+<p>May include, depending on the system specifics:</p>
+<ul>
+<li><em>Source code manipulation</em> and generation</li>
+<li>Source code <em>quality assurance</em></li>
+<li><em>Dependency management</em></li>
+<li><em>Compilation</em>, linking</li>
+<li><em>Binary manipulation</em></li>
+<li><em>Test execution</em></li>
+<li>Test <em>quality assurance</em> (e.g., coverage)</li>
+<li>API <em>documentation</em></li>
+<li><em>Packaging</em></li>
+<li><em>Delivery</em></li>
+</ul>
+</section><section>
+<h1 id="lifecycle-styles">Lifecycle styles</h1>
+<ul>
+<li>
+<p><strong>Custom</strong>: select some phases that the product needs and perform them.</p>
+<ul>
+<li><em>Flexible and configurable</em>: tailored on each project&rsquo;s needs</li>
+<li><em>Hard to adapt and port</em></li>
+</ul>
+</li>
+<li>
+<p><strong>Standard</strong>: run a sequence of pre-defined actions/phases.</p>
+<ul>
+<li><em>Portable and easy to understand</em>: replicated on every product</li>
+<li><em>Limited configuration options</em></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="build-automation">Build automation</h1>
+<p>Automation of the build lifecycle</p>
+<ul>
+<li>In principle, the lifecycle could be executed manually</li>
+<li>In reality <em>time is precious</em> and <em>repetitivy is boring</em></li>
+</ul>
+<p>$\Rightarrow$ Create software that automates the building of some software!</p>
+<ul>
+<li>All those concerns that hold for sofware creation hold for build systems creation&hellip;</li>
+</ul>
+</section><section>
+<h2 id="build-automation-basics-and-styles">Build automation: basics and styles</h2>
+<p>Different lifecycle types generate different build automation <strong>styles</strong></p>
+<p><strong>Imperative</strong>: write a script that tells the system what to do to get
+from code to artifacts</p>
+<ul>
+<li><em>Examples</em>: make, cmake, Apache Ant</li>
+<li><em>Abstraction gap</em>: verbose, repetitive</li>
+<li>Configuration (<em>declarative</em>) and actionable (<em>imperative</em>) logics <em>mixed</em> together</li>
+<li>Highly <em>configurable</em></li>
+</ul>
+<p><strong>Declarative</strong>: adhere to some convention, customizing some settings</p>
+<ul>
+<li><em>Examples</em>: Apache Maven</li>
+<li>Separation between <em>what</em> to do and <em>how</em> to do it
+<ul>
+<li>The build system decides how to do the stuff</li>
+</ul>
+</li>
+<li><em>Configuration limited</em> by the provided options</li>
+</ul>
+</section><section>
+<h2 id="hybrid-automators">Hybrid automators</h2>
+<p>Create a <em>declarative infrastructure</em> upon an <em>imperative basis</em>, and
+<em>allow easy access to the underlying machinery</em></p>
+<p><strong>Domain-Specific Languages</strong> are helpful in this context: they can &ldquo;hide&rdquo; imperativity without ruling it out</p>
+<p>Still, many challenges remain open:</p>
+<ul>
+<li>How to reuse the build logic?
+<ul>
+<li>within a project, and among projects
+automatiche</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<p>Many modern languages (such as Rust) come with a <em>build automator</em> as <em>part of their distribution</em>.</p>
+<h2 id="in-python">In Python</h2>
+<p>Python is an <em>interpreted</em> language</p>
+<ul>
+<li>An arguably old one, too (1991)</li>
+<li>Initially used mainly for scripting</li>
+<li>No need to compile (as far as the project is pure Python)</li>
+<li>Build systems were a less pressing concerns than with other platforms&hellip;</li>
+</ul>
+<p>The need for build systems in Python emerged with more complex use cases</p>
+<ul>
+<li>Since there were none, now there are several tools that do build-related jobs:
+<ul>
+<li><a href="https://pybuilder.io/">PyBuilder</a></li>
+<li><a href="https://docs.conda.io/en/latest/index.html">Conda</a></li>
+<li><a href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a></li>
+<li><a href="https://www.anaconda.com/">Anaconda</a></li>
+<li><a href="https://pypi.org/project/pip/">pip</a></li>
+<li><a href="https://github.com/pyenv/pyenv">PyEnv</a></li>
+<li><a href="https://virtualenv.pypa.io/en/latest/#">virtualenv</a></li>
+</ul>
+</li>
+<li>The feature set varies wildly</li>
+<li>They are meant to solve different problems!</li>
+</ul>
+</section><section>
+<h2 id="a-simple-financial-application">A simple financial application</h2>
+<p>Build an applicatio that performs a simple graphical MACD analysis of a financial product:</p>
+<p><img src="app.png" alt="app screenshot"></p>
+<ul>
+<li>How many Non-Comment Lines of Code (NCLoC)?</li>
+</ul>
+</section><section>
+<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'>
+    <iframe
+        sandbox='allow-scripts allow-same-origin'
+        allowfullscreen='true'
+        allowtransparency='true'
+        frameborder='0'
+        height='315'
+        src='https://www.mentimeter.com/embed/12dc23978d6774050055d681b9cd72c9/ddac3c5150cf'
+        style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;'
+        width='420'
+        >
+    </iframe>
+</div>
+</section><section>
+<h2 id="a-possible-solution">A possible solution</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">matplotlib</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">matplotlib.pyplot</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">plt</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">pandas_ta</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">ta</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">sys</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">yfinance</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">yf</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">matplotlib.backends.qt_compat</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtWidgets</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">matplotlib.backends.backend_qtagg</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">FigureCanvas</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">NavigationToolbar2QT</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">NavigationToolbar</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">matplotlib.figure</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">Figure</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">class</span> <span style="color:#000">ApplicationWindow</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">QtWidgets</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">QMainWindow</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">__init__</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">figure</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">super</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">__init__</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">_main</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">QtWidgets</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">QWidget</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">setCentralWidget</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">_main</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">layout</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">QtWidgets</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">QVBoxLayout</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">_main</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">static_canvas</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">FigureCanvas</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">figure</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">layout</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">addWidget</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">NavigationToolbar</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">static_canvas</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">layout</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">addWidget</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">static_canvas</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">__name__</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;__main__&#34;</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">arguments</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">iter</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">sys</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">argv</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">next</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">arguments</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">ticker</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">next</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">arguments</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;BTC-USD&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">period</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">next</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">arguments</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;1y&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">yf</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">Ticker</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ticker</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">history</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">period</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">period</span><span style="color:#000;font-weight:bold">)[[</span><span style="color:#4e9a06">&#39;Close&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;Open&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;High&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;Volume&#39;</span><span style="color:#000;font-weight:bold">]]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">macd</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ta</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">macd</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">close</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">data</span><span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#39;Close&#39;</span><span style="color:#000;font-weight:bold">],</span> <span style="color:#000">fast</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">12</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">slow</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">26</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">signal</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">9</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">append</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">True</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">fig</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">plt</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">figure</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">ax</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">fig</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">add_subplot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">title</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">f</span><span style="color:#4e9a06">&#39;MACD Analysis of </span><span style="color:#4e9a06">{</span><span style="color:#000">ticker</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06"> in </span><span style="color:#4e9a06">{</span><span style="color:#000">period</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">ax</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">set_title</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">title</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">ax</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">set_ylabel</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;Price ($)&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">ax</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">set_xlabel</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;Time&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">ax</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">plot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span><span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#39;Close&#39;</span><span style="color:#000;font-weight:bold">],</span> <span style="color:#000">color</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#39;black&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">linewidth</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">ax2</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ax</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">twinx</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">ax2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">plot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">macd</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">ax2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">legend</span><span style="color:#000;font-weight:bold">([</span><span style="color:#4e9a06">&#39;MACD_12_26_9&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;MACDh_12_26_9&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;MACDs_12_26_9&#39;</span><span style="color:#000;font-weight:bold">])</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">fig</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">tight_layout</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">qapp</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">QtWidgets</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">QApplication</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">instance</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#204a87;font-weight:bold">not</span> <span style="color:#000">qapp</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">qapp</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">QtWidgets</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">QApplication</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">app</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ApplicationWindow</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fig</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">app</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">windowTitle</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">title</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">app</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">show</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">app</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">activateWindow</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">app</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">raise_</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">qapp</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">exec</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></div>
+<p><a href="https://github.com/DanySK/python-finance-plot">about 45 NCLoC</a></p>
+</section><section>
+<h2 id="the-trick-using-a-few-libraries">The trick: using a few libraries</h2>
+<ul>
+<li><strong>yfinance</strong>
+<ul>
+<li>Financial data from Yahoo! Finance</li>
+</ul>
+</li>
+<li><strong>Pandas</strong>
+<ul>
+<li>Data in tabular format</li>
+</ul>
+</li>
+<li><strong>Pandas-TA</strong>
+<ul>
+<li>Pandas technical analysis enhancement</li>
+</ul>
+</li>
+<li><strong>PyQt5</strong>
+<ul>
+<li>Graphical interface</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="actual-dependency-tree">Actual dependency tree</h2>
+<pre><code>+--- commons-io:commons-io:+ -&gt; 2.8.0
++--- com.uwetrottmann.thetvdb-java:thetvdb-java:+ -&gt; 2.4.0
+|    +--- com.squareup.retrofit2:retrofit:2.6.2
+|    |    \--- com.squareup.okhttp3:okhttp:3.12.0
+|    |         \--- com.squareup.okio:okio:1.15.0
+|    \--- com.squareup.retrofit2:converter-gson:2.6.2
+|         +--- com.squareup.retrofit2:retrofit:2.6.2 (*)
+|         \--- com.google.code.gson:gson:2.8.5
+\--- org.jooq:jool-java-8:+ -&gt; 0.9.14
+</code></pre>
+<ul>
+<li>three <em>direct</em> dependencies</li>
+<li>six <em>transitive</em> dependencies</li>
+</ul>
+<p>In large projects, <em>transitive</em> dependencies often dominate</p>
+</section>
+
+  
+
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src=/Course-DTM-SE-3/reveal-hugo/object-assign.js></script>
+
+<a href="/Course-DTM-SE-3/reveal-js/css/print/" id="print-location" style="display: none;"></a>
+<script type="text/javascript">
+  var printLocationElement = document.getElementById('print-location');
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = printLocationElement.href + (window.location.search.match(/print-pdf/gi) ? 'pdf.css' : 'paper.css');
+  document.getElementsByTagName('head')[0].appendChild(link);
+</script>
+
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"height":"1080","highlight_theme":"solarized-dark","history":true,"slide_number":true,"theme":"league","transition":"slide","transition_speed":"fast","width":"1920"}</script>
+<script type="application/json" id="reveal-hugo-page-params">null</script>
+
+<script src="/Course-DTM-SE-3/reveal-js/js/reveal.js"></script>
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+  
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams));
+  Reveal.initialize(options);
+</script>
+
+
+  
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/markdown/marked.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/zoom-js/zoom.js"></script>
+  
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+</script>
+
+<script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+    
+  </body>
+</html>
