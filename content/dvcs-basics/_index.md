@@ -133,28 +133,28 @@ A *single branch*, linear development.
 ---
 
 1. first commit
-{{< gravizo >}}
+{{< gravizo width="100" >}}
   digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
     rankdir=LR;
-    rankdir=LR;
-    HEAD, branch_name [style="filled,solid", shape=box, fillcolor=orange];
-    C1 -> HEAD [dir=back, penwidth=4, color=orange];
-    C1 -> branch_name [dir=back, penwidth=4, color=orange];
+    "HEAD -> branch_name" [style="filled,solid", shape=box, fillcolor=orange];
+    C1 -> "HEAD -> branch_name" [dir=back, penwidth=4, color=orange];
   }
 {{< /gravizo >}}
 
----
-
 2. second commit
 
-{{< gravizo >}}
+{{< gravizo width="30" >}}
   digraph G {
-    rankdir=LR;
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
     rankdir=LR;
     C1 -> C2 [dir=back];
-    HEAD, branch_name [style="filled,solid", shape=box, fillcolor=orange];
-    C2 -> HEAD [dir=back, penwidth=4, color=orange];
-    C2 -> branch_name [dir=back, penwidth=4, color=orange];
+    "HEAD -> branch_name" [style="filled,solid", shape=box, fillcolor=orange];
+    C2 -> "HEAD -> branch_name" [dir=back, penwidth=4, color=orange];
   }
 {{< /gravizo >}}
 
@@ -166,12 +166,13 @@ A *single branch*, linear development.
 
 {{< gravizo >}}
   digraph G {
-    rankdir=LR;
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
     rankdir=LR;
     C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    HEAD, branch_name [style="filled,solid", shape=box, fillcolor=orange];
-    C6 -> HEAD [dir=back, penwidth=4, color=orange];
-    C6 -> branch_name [dir=back, penwidth=4, color=orange];
+    "HEAD -> branch_name" [style="filled,solid", shape=box, fillcolor=orange];
+    C6 -> "HEAD -> branch_name" [dir=back, penwidth=4, color=orange];
   }
 {{< /gravizo >}}
 
@@ -183,7 +184,9 @@ Oh, no, there was a mistake! We need to roll back!
 
 {{< gravizo >}}
   digraph G {
-    rankdir=LR;
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
     rankdir=LR;
     C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
     HEAD, branch_name [style="filled,solid", shape=box, fillcolor=orange];
@@ -201,13 +204,14 @@ Oh, no, there was a mistake! We need to roll back!
 
 {{< gravizo >}}
   digraph G {
-    rankdir=LR;
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
     rankdir=LR;
     C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
     C4 -> C7 [dir=back]
-    HEAD, branch_name, another_branch [style="filled,solid", shape=box, fillcolor=orange];
-    C7 -> HEAD [dir=back, penwidth=4, color=orange];
-    C7 -> another_branch [dir=back, penwidth=4, color=orange];
+    "HEAD -> another_branch", branch_name [style="filled,solid", shape=box, fillcolor=orange];
+    C7 -> "HEAD -> another_branch" [dir=back, penwidth=4, color=orange];
     C6 -> branch_name [dir=back, penwidth=4, color=orange];
   }
 {{< /gravizo >}}
@@ -220,14 +224,15 @@ Oh, no, there was a mistake! We need to roll back!
 
 {{< gravizo >}}
   digraph G {
-    rankdir=LR;
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
     rankdir=LR;
     C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
     C4 -> C7 [dir=back]
     C5 -> C7 [dir=back]
-    HEAD, branch_name, another_branch [style="filled,solid", shape=box, fillcolor=orange];
-    C7 -> HEAD [dir=back, penwidth=4, color=orange];
-    C7 -> another_branch [dir=back, penwidth=4, color=orange];
+    "HEAD -> another_branch", branch_name [style="filled,solid", shape=box, fillcolor=orange];
+    C7 -> "HEAD -> another_branch" [dir=back, penwidth=4, color=orange];
     C6 -> branch_name [dir=back, penwidth=4, color=orange];
   }
 {{< /gravizo >}}
@@ -358,6 +363,22 @@ Changes not staged for commit:
     * `git commit -m 'my very clear and explanatory message'`
 * The *date* is recorded automatically
 * The *commit identifier* (a cryptographic hash) is generated automatically
+
+---
+
+## Default branch
+
+At the first commit, there is no branch and no `HEAD`.
+
+Depending on the version of Git, the following behavior may happen upon the first commit:
+* Git creates a *new branch* named `master`
+  * *legacy behavior*
+  * the name is inherited from the default branch name in *Bitkeeper*
+* Git creates a *new branch* named `master`, but warns that it is a deprecated behavior
+  * although coming from the Latin "*magister*" (teacher) and not from the "master/slave" model of asymmetric communication control, many recently prefer `main` as seen as more inclusive
+* Git refuses to commit until a default branch name is specified
+  * *modern behavior*
+  * Requires configuration: `git config --global init.defaultbranch default-branch-name`
 
 ---
 
@@ -513,12 +534,418 @@ The command can be used to selectively checkout a file from another revision:
 
 ---
 
-### `.gitattributes`
-* Defines attributes for path names
-* Can enforce the correct line ending
-* Can provide ways to diff binary file (by conversion to text, needs configuration)
+## Detached head
+
+Git does **not** allow *multiple heads per branch*
+(other DVCS do, in particular Mercurial):
+for a commit to be valid, `HEAD` must be at the "end" of a branch (on its last commit), as follows:
+
+{{< gravizo >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    # Commits
+    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    # Branches
+    node [style="filled,solid", shape=box, fillcolor=orange];
+    edge [dir=back, penwidth=4, color=orange];
+    C6 -> HEAD;
+    C6 -> master;
+    # Head
+    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+    HEAD -> master [label="attached"];
+  }
+{{< /gravizo >}}
+
+When an older commit is checked out, however, this condition doesn't occur, if we run `git checkout HEAD~4`:
+
+{{< gravizo >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    # Commits
+    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    # Branches
+    node [style="filled,solid", shape=box, fillcolor=orange];
+    edge [dir=back, penwidth=4, color=orange];
+    C2 -> HEAD;
+    C6 -> master;
+    # Head
+    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+    nowhere [style=invis,shape=point]
+    HEAD -> nowhere [label="detached"];
+  }
+{{< /gravizo >}}
+
+The system enters a special workmode called *detached head*. When in detached head:
+* It is possible to make changes and experiments
+* Git allows to make commits, but they are lost!
+  * Not really, but to retrieve them we need `git reflog` and `git cherry-pick`, that we won't discuss
+
+---
+
+### Creating branches
+
+To be able to store our commits, we need to create a **branch**, then checkout the branch, so that `HEAD` returns attached.
+
+In Git, new branches are created with `git branch branch_name`
+
+{{< gravizo width=60 >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    # Commits
+    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    # Branches
+    node [style="filled,solid", shape=box, fillcolor=orange];
+    edge [dir=back, penwidth=4, color=orange];
+    C2 -> HEAD;
+    C6 -> master;
+    # Head
+    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+    nowhere [style=invis,shape=point]
+    HEAD -> nowhere [label="detached"];
+  }
+{{< /gravizo >}}
+
+
+⬇️ `git branch new-experiment` ⬇️
+
+{{< gravizo width=60 >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    # Commits
+    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    # Branches
+    node [style="filled,solid", shape=box, fillcolor=orange];
+    edge [dir=back, penwidth=4, color=orange];
+    C2 -> HEAD;
+    C6 -> master;
+    C2 -> "new-experiment";
+    # Head
+    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+    nowhere [style=invis,shape=point]
+    HEAD -> nowhere [label="detached"];
+  }
+{{< /gravizo >}}
+
+⬇️ `git checkout new-experiment` ⬇️
+
+{{< gravizo width=60 >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    # Commits
+    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    # Branches
+    node [style="filled,solid", shape=box, fillcolor=orange];
+    edge [dir=back, penwidth=4, color=orange];
+    C2 -> HEAD;
+    C6 -> master;
+    C2 -> "new-experiment";
+    # Head
+    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+    HEAD -> "new-experiment" [label="attached"];
+  }
+{{< /gravizo >}}
+
+---
+
+## One-shot branch creation
+
+As you can imagine, creating a *new branch* and *attaching `HEAD`* to the freshly created branch is pretty common
+
+When an operation is very common, usually a short-hand is provided:
+* `git checkout -b new-branch-name`
+* Creates `new-branch-name` from the current position of `HEAD`
+* Attaches `HEAD` to `new-branch-name`
+
+{{< gravizo width=60 >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    # Commits
+    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    # Branches
+    node [style="filled,solid", shape=box, fillcolor=orange];
+    edge [dir=back, penwidth=4, color=orange];
+    C2 -> HEAD;
+    C6 -> master;
+    # Head
+    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+    nowhere [style=invis,shape=point]
+    HEAD -> nowhere [label="detached"];
+  }
+{{< /gravizo >}}
+
+⬇️ `git checkout -b new-experiment` ⬇️
+
+{{< gravizo width=60 >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    # Commits
+    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    # Branches
+    node [style="filled,solid", shape=box, fillcolor=orange];
+    edge [dir=back, penwidth=4, color=orange];
+    C2 -> HEAD;
+    C6 -> master;
+    C2 -> "new-experiment";
+    # Head
+    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+    HEAD -> "new-experiment" [label="attached"];
+  }
+{{< /gravizo >}}
+
+
+---
+
+## Merging branches
+
+Reunifying diverging development lines is *much trickier* than spawning new development lines
+
+In other words, *merging* is **much trickier** than *branching*
+
+* Historically, with *centralized* version control systems, merging was considered extremely delicate and difficult
+* The *distributed* version control systems promoted *frequent*, *small-sized* merges, much easier to deal with
+* **Conflicts** *can still arise!*
+  * what if we change the same line of code in two branches differently?
+
+In Git, `git merge target` merges the branch named `target` into the current branch (`HEAD` must be attached)
+
+---
+
+## Merge visual example
+
+{{< gravizo >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    # Commits
+    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    C4 -> C7 -> C8 [dir=back];
+    # Branches
+    node [style="filled,solid", shape=box, fillcolor=orange];
+    edge [dir=back, penwidth=4, color=orange];
+    C8 -> HEAD;
+    C6 -> master;
+    C8 -> "new-experiment";
+    # Head
+    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+    HEAD -> "new-experiment" [label="attached"];
+  }
+{{< /gravizo >}}
+
+⬇️ `git merge master` ⬇️
+
+{{< gravizo >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    # Commits
+    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 -> C9 [dir=back];
+    C4 -> C7 -> C8 -> C9 [dir=back];
+    # Branches
+    node [style="filled,solid", shape=box, fillcolor=orange];
+    edge [dir=back, penwidth=4, color=orange];
+    C9 -> HEAD;
+    C6 -> master;
+    C9 -> "new-experiment";
+    # Head
+    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+    HEAD -> "new-experiment" [label="attached"];
+  }
+{{< /gravizo >}}
+
+
+---
+
+## Fast forwarding
+
+Consider this situation:
+
+{{< gravizo >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    # Commits
+    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    # Branches
+    node [style="filled,solid", shape=box, fillcolor=orange];
+    edge [dir=back, penwidth=4, color=orange];
+    C4 -> HEAD;
+    C6 -> master;
+    C4 -> "new-experiment";
+    # Head
+    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+    HEAD -> "new-experiment" [label="attached"];
+  }
+{{< /gravizo >}}
+
+* We want `another_branch` to also have the changes in `C5` and `C6`
+  * namely, to be up to date with `some_branch`
+* But `some_branch` contains all the commits of `another_branch`
+* We don't really need a merge commit, we can just move the `another_branch` to point it to `C6`
+* $\Rightarrow$ This is called a **fast-forward**
+  * It is the *default behavior* in Git when merging branches where the target is the same as the head plus something
+
+{{< gravizo >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    # Commits
+    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    # Branches
+    node [style="filled,solid", shape=box, fillcolor=orange];
+    edge [dir=back, penwidth=4, color=orange];
+    C6 -> master;
+    C6 -> HEAD;
+    C6 -> "new-experiment";
+    # Head
+    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+    HEAD -> "new-experiment" [label="attached"];
+  }
+{{< /gravizo >}}
+
+---
+
+## Merge conflicts
+
+Git tries to resolve most conflicts by *itself*
+* It's *pretty good* at it
+* but things can still require *human intervention*
+
+In case of conflict on one or more files, Git marks the subject files as *conflicted*, and modifies them adding *merge markers*:
+
+```text
+<<<<<<< HEAD
+Changes made on the branch that is being merged into,
+this is the branch currently checked out (HEAD).
+=======
+Changes made on the branch that is being merged in.
+>>>>>>> other-branch-name
+```
+
+* The user should *change the conflicted files* so that they reflect the *final desired status*
+* The (now fixed) files should get added to the stage with `git add`
+* The merge operation can be concluded through `git commit`
+  * In case of merge, the message is pre-filled in
+
+---
+
+## Good practices
+
+**Avoiding merge conflicts is *much* better than solving them**
+
+Although they are unavoidable in some cases, they can be *minimized* by following a few *good practices*:
+
+* **Do not** *track files that can be generated*
+  * This is harmful under many points of view, and merge conflicts are one
+* **Do** *make many small commits*
+  * Each coherent change should be reified into a commit
+  * Even very small changes, like modification of the whitespaces
+  * Smaller commits help Git better figure out what changed and in which order,
+  generally leading to finer grained (and easier to solve) conflicts
+* **Do** *enforce style rules* across the team
+  * Style changes are legitimate changes
+  * Style is often enforced at the IDE level
+  * Minimal logical changes may cause widespread changes due to style modifications
+* **Do** *pay attention to newlines*
+  * Different OSs use different newline characters
+  * Git tries to be smart about it, often failing catastrophically
+
+---
+
+## Going to a new line is more complicated than it seems
+
+Going to a new line is a two-phased operation:
+1. Bring the cursor back to the begin of the line
+2. Bring the cursor down one line
+
+In *electromechanic teletypewriters* (and in typewriters, too), they were two distinct operations:
+1. *Carriage Return* (bringing the carriage to its leftmost position)
+2. *Line Feed* (rotating the carriage of one step)
+
+---
+
+## A teletypewriter
+
+![teletypewriter](https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Telescrivente_CEP_-_Calcolatrice_Elettronica_Pisana.jpg/1080px-Telescrivente_CEP_-_Calcolatrice_Elettronica_Pisana.jpg)
+
+* driving them text without drivers required to *explicitly send* *carriage return* and *line feed* commands
+
+---
+
+## Newlines in the modern world
+
+Terminals were designed to behave like virtual teletypewriters
+* Indeed, they are still called **TTY** (**T**ele**TY**pewriter)
+* In Unix-like systems, they are still implemented as *virtual devices*
+  * If you have MacOS X or Linux, you can see which virtual device backs your current terminal using `tty`
+* At some point, Unix decided that `LF` was sufficient in virtual TTYs to go to a new line
+  * Probably *inspired by the C language*, where `\n` means "newline"
+  * The behaviour can still be disabled
+```text
+we would get
+            lines
+                 like these
+```
+
+####  Consequence:
+* Windows systems go to a new line with a `CR` character followed by an `LF` character: `\r\n`
+* Unix-like systems go to a new line with an `LF` character: `\n`
+* Old Mac systems used to go to a new line with a `CR` character: `\r`
+  * Basically they decided to use a single character like Unix did, but made the opposite choice
+  * MacOS X is POSIX-compliant, uses `\n`
+
+---
+
+## Newlines and Git
+
+If your team uses *multiple OSs*, it is likely that, by default, the text editors use either `LF` (on Unix) or `CRLF`
+
+It is also very likely that, upon saving, the whole file gets rewritten with the "*locally* correct" *line endings*
+
+* This however would result in *all the lines being changed*!
+* The differential would be huge
+* *Conflicts would arise everywhere*!
+
+Git tries to tackle this issue by converting the line endings so that they match the initial line endings of the file,
+resulting in repositories with *illogically mixed line endings*
+(depending on who created a file first)
+and loads of warnings about `LF`/`CRLF` conversions.
+
+Line endings should instead be **configured per file type!**
+
+* A sensible strategy is to use `LF` everywhere, but for Windows scripts (`bat`, `cmd`, `ps1`)
+* Git can be configured through a `.gitattributes` file in the repository root
+  * It can do [much more than enforcing line endings](https://git-scm.com/docs/gitattributes), actually
 * Example: 
-```.gitattributes
+```text
 * text=auto eol=lf
 *.[cC][mM][dD] text eol=crlf
 *.[bB][aA][tT] text eol=crlf
@@ -527,58 +954,279 @@ The command can be used to selectively checkout a file from another revision:
 
 ---
 
-## Distributed version control with git: a recap
+## Associating symbolic names to commits
 
-### `git tag -a`
-* Associates a **symbolic name** to a commit
-* Often used for **versioning**
-* Advanced uses in **{{< course_name >}}**
+It is often handful to associate some commits with a *symbolic name*,
+most of the time to assign *versions*.
+* e.g., identify commit `8d400c0` as version `1.2.3`
+
+Although in principle *branches* could be used to do so, their nature is of *moving labels*:
+when `HEAD` is attached, new commits move the branch forward.
+We would like to have *branches to which `HEAD` cannot attach* (hence, they can't be moved from their creation point).
+
+{{< gravizo width=60 >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    # Commits
+    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    # Branches
+    node [style="filled,solid", shape=box, fillcolor=orange];
+    edge [dir=back, penwidth=4, color=orange];
+    C6 -> master;
+    C6 -> HEAD;
+    # Head
+    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+    HEAD -> master [label="attached"];
+  }
+{{< /gravizo >}}
+
+
+⬇️ `git checkout C4 && git branch 1.2.3 && git checkout master` ⬇️
+
+{{< gravizo width=60 >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    # Commits
+    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    # Branches
+    node [style="filled,solid", shape=box, fillcolor=orange];
+    edge [dir=back, penwidth=4, color=orange];
+    C6 -> master;
+    C6 -> HEAD;
+    C4 -> "1.2.3"
+    # Head
+    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+    HEAD -> master [label="attached"];
+  }
+{{< /gravizo >}}
+
+Appears good, but if by mistake we do something like: ⬇️ `git checkout 1.2.3` [some changes] `git commit` ⬇️
+
+{{< gravizo width=60 >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    # Commits
+    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    C4 -> C7 [dir=back];
+    # Branches
+    node [style="filled,solid", shape=box, fillcolor=orange];
+    edge [dir=back, penwidth=4, color=orange];
+    C6 -> master;
+    C6 -> HEAD;
+    C7 -> "1.2.3"
+    # Head
+    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+    HEAD -> master [label="attached"];
+  }
+{{< /gravizo >}}
+
+
+Our version **moved**, *we never want this to happen*!
 
 ---
 
-## Distributed version control with git: a recap
+## Tagging
 
-### *Branch*
-* A **named** development line
-<br>
-{{< image src="branches.svg" >}}
+Git provides a dedicated `tag` subcommand to create *permanent labels* attached to commits.
+Tags come in two fashions:
+* **Lightweight** *tags* are very similar to a "permanent branch": *pointers to commits that never change*
+* **Annotated** *tags* store additional information: a *message* (often used for logging changes), and, optionally, a *signature*
+  * created by adding the `-a` option (or `-s`/`-u` for signed tags)
 
-### `master`
-* Default branch name
-  * legacy of BitKeeper
-  * Modern versions of git let user select
-  * Some prefer `main`
+{{< gravizo width=60 >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    "HEAD -> master" [style="filled,solid", shape=box, fillcolor=orange];
+    C6 -> "HEAD -> master" [dir=back, penwidth=4, color=orange];
+  }
+{{< /gravizo >}}
+
+⬇️ `git checkout C4 && git tag 1.2.3` ⬇️
+
+{{< gravizo width=60 >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    "HEAD (detached)", "master", "1.2.3" [style="filled,solid", shape=box, fillcolor=orange];
+    C6 -> "master" [dir=back, penwidth=4, color=orange];
+    C4 -> "1.2.3" [dir=back, penwidth=4, color=orange];
+    C4 -> "HEAD (detached)" [dir=back, penwidth=4, color=orange];
+  }
+{{< /gravizo >}}
+
+`HEAD` cannot attach to tags!
 
 ---
 
-## Distributed version control with git: a recap
+## Branches as labels: deletion
 
-### `git checkout`
-* Moves *HEAD* across commits
-* Used to switch *branches*
-* Can be used to create new *branches* (with `-b`)
+As we discussed, *branches* in Git work like *special labels* that move forward if `HEAD` is attached to them and commit is performed.
 
-### *detached HEAD*
-* Special mode in which commits are not saved
-* The system goes in *detached HEAD* when *HEAD* is not the last commit on a *branch*
+Also, the *history* tracked by git is a *directed acyclic graph* (each commit has a reference to its parents)
+
+$\Rightarrow$ *Branches can be removed without information loss*, as far as there is at least *another branch* from which *all the commits* of the deleted branch are *reachable*
+
+Branch deletion is performed with `git branch -d branch-name`. It is *safe* (fails if there is potential information loss).
+
+{{< gravizo width=60 >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    C4 -> C7 [dir=back];
+    "HEAD -> master", "fix/bug22", "feat/serverless" [style="filled,solid", shape=box, fillcolor=orange];
+    C6 -> "HEAD -> master" [dir=back, penwidth=4, color=orange];
+    C7 -> "feat/serverless" [dir=back, penwidth=4, color=orange];
+    C3 -> "fix/bug22" [dir=back, penwidth=4, color=orange];
+  }
+{{< /gravizo >}}
+
+
+⬇️ `git branch -d fix/bug22` ⬇️
+
+{{< gravizo width=60 >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    C4 -> C7 [dir=back];
+    "HEAD -> master", "feat/serverless" [style="filled,solid", shape=box, fillcolor=orange];
+    C6 -> "HEAD -> master" [dir=back, penwidth=4, color=orange];
+    C7 -> "feat/serverless" [dir=back, penwidth=4, color=orange];
+  }
+{{< /gravizo >}}
+
+No commit is lost, branch `fix/bug22` is removed
+* `git branch -d feat/serverless` would **fail** with an error message, as `C7` would be lost
 
 ---
 
-## Distributed version control with git: a recap
+## Importing a repository
 
-### `git branch`
-* Controls creation, visualization, and deletion (`-d`) of branches
+* We can initialize an **emtpy** repository with `git init`
+* But most of the time we want to start from a *local copy* of an **existing** repository
 
-### `git merge`
-* **Unifies** a target branch with the current branch
-* Creates a *merge commit*
-* The merging algorithm is configurable
-* **Conflicts** must be solved manually
+Git provides a `clone` subcommand that copies *the whole history* of a repository locally
+* `git clone URI destination` creates the folder `destination` and clones the repository found at `URI`
+  * If `destination` is not empty, fails
+  * if `destination` is omitted, a folder with the same namen of the last segment of `URI` is created
+  * `URI` can be remote or local, Git supports the `file://`, `https://`, and `ssh` protocols
+      * `ssh` *recommended* when available
+* The `clone` subcommand checks out the remote branch where the `HEAD` is attached
+  * the "default branch"
 
-### *fast-forward*
-* A special merge mode applicable when a branch is *behind* another
-* The target branch is *updated without a commit*
-* Active by default, can be disabled (`--no-ff`)
+Examples:
+* `git clone /some/repository/on/my/file/system destination`
+  * creates a local folder called `destination` and copies the repository from the local directory
+* `git clone https://somewebsite.com/someRepository.git myfolder`
+  * creates a local folder called `myfolder` and copies the repository located at the specified `URL`
+* `git clone user@sshserver.com:SomePath/SomeRepo.git`
+  * creates a local folder called `SomeRepo` and copies the repository located at the specified `URL`
+
+---
+
+## Remotes
+
+* Remotes are the *known copies* of the repository that exist somewhere (usually in the Internet)
+* Each remote has a *name* and a *URI*
+* When a repository is created via `init`, no remote is known.
+* When a repository is imported via `clone`, a remote called `origin` is created automatically
+
+*Non-local branches can be referenced* as `remoteName/branchName`
+
+The `remote` subcommand is used to inspect and manage remotes:
+* `git remote -v` *lists* the known remotes
+* `git remote add a-remote URI` *adds* a new remote named `a-remote` and pointing to `URI`
+* `git remote show a-remote` displays *extended information* on `a-remote`
+* `git remote remove a-remote` *removes* `a-remote` (it does not delete information on the remote, it *locally* forgets that it exits)
+
+---
+
+## Upstream branches
+
+Remote branches can be *associated* with local branches, with the intended meaning that the local and the remote branch are *intended to be two copies of the same branch*
+
+* A remote branch associated to a local branch is its **upstream branch**
+* upstream branches can be configured via `git branch --set-upstream-to=remote/branchName`
+  * e.g.: `git branch --set-upstream-to=origin/develop` sets the current branch upstream to `origin/develop`
+* When a repository is initialize by `clone`, its default branch is checked out locally with the same name it has on the remote, and the remote branch is automatically set as *upstream*
+
+---
+
+## Actual result of `git clone somesite.com/repo.git`
+
+{{< gravizo width=100 >}}
+  digraph pippo {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    compound=true
+
+    subgraph cluster_remote {
+      color=black
+      label="somesite.com/repo.git"
+      
+      # Commits
+      C0r [label=C0]
+      C1r [label=C1]
+      C2r [label=C2]
+      C3r [label=C3]
+      C4r [label=C4]
+      C0r -> C1r -> C2r -> C3r -> C4r [dir=back];
+      
+      # Branches
+      node [style="filled,solid", shape=box, fillcolor=orange];
+      master_r [label=master]
+      HEAD_r [label=HEAD]
+      C4r -> HEAD_r [dir=back, penwidth=4, color=orange];
+      C4r -> master_r [dir=back, penwidth=4, color=orange];
+      HEAD_r -> master_r [arrowhead=tee, penwidth=2, color=red, label="attached"];
+    }
+
+    subgraph cluster_local {
+      label="Local"
+      color=black
+      
+      # Commits
+      C0 -> C1 -> C2 -> C3 -> C4 [dir=back];
+      
+      # Branches
+      node [style="filled,solid", shape=box, fillcolor=orange];
+      C4 -> HEAD [dir=back, penwidth=4, color=orange];
+      C4 -> master [dir=back, penwidth=4, color=orange];
+      HEAD -> master [arrowhead=tee, penwidth=2, color=red, label="attached"];
+      master -> master_r [arrowhead=dot, penwidth=2, color=blue, label="upstream"];
+      
+      # Remotes
+      node [style="filled,solid", shape=box, fillcolor=green];
+      origin -> C4r [lhead=cluster_remote]
+    }
+
+  }
+{{< /gravizo >}}
+
+---
 
 ---
 
@@ -619,3 +1267,5 @@ The command can be used to selectively checkout a file from another revision:
 * If remote and branch are omitted, updates are sent to the *upstream*
 
 ---
+
+--follow-tags
