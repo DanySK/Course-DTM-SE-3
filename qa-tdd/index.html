@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Software Engineering Module 3: Introduction to agile and DevOps</title>
+<meta name="description" content="Distributed version control systems, basics of Git">
+<meta name="author" content="Danilo Pianini">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/css/reset.css">
+<link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/css/reveal.css">
+  <link rel="stylesheet" href="/Course-DTM-SE-3/css/custom-theme.min.2fee46db24a9ab664a9269e85066753b8576e5bf070cc86a1c857c98651d2cf0.css" id="theme"><link rel="stylesheet" href="/Course-DTM-SE-3/highlight-js/github.min.css">
+    
+<link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
+<link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Oxygen Mono' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Ubuntu Mono' rel='stylesheet'>
+
+  </head>
+  <body>
+    
+    <div class="reveal">
+      <div class="slides">
+  
+
+    <section><h1 id="software-engineering">Software Engineering</h1>
+<h3 id="for-intelligent-distributed-systems"><strong>(for Intelligent Distributed Systems)</strong></h3>
+<h1 id="module-3-devops">Module 3: DevOps</h1>
+<h2 id="quality-assurance-reproducibility-test-driven-development"><em>Quality assurance, reproducibility, test-driven development</em></h2>
+</section><section>
+<h2 id="quality-assurance">Quality assurance</h2>
+<p>As any engineered product, software should be <em>subject to quality assurance control</em>.</p>
+<ul>
+<li>Would you drive a car that has not been succefully passed its <em>quality control</em>?</li>
+<li>What does it mean that a car <strong>passed</strong> its <em>quality control checks</em>?
+<ul>
+<li>What does it mean for a bridge?</li>
+<li>What does it mean for a chair?</li>
+<li>What does it mean for a robot?</li>
+<li>What does it mean for a medical software?</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="some-common-elements">Some common elements</h2>
+<p>Verify that the software meets quality criteria.</p>
+<ul>
+<li><strong>Functional</strong> criteria:
+<ul>
+<li>Does <em>what</em> we expect it to do?</li>
+</ul>
+</li>
+<li><strong>Non-functional</strong> criteria:
+*</li>
+</ul>
+</section><section>
+<h2 id="testing">Testing</h2>
+</section><section>
+<h2 id="testing-in-python">Testing in Python</h2>
+</section><section>
+<h2 id="bugs--reproducibility">Bugs / reproducibility</h2>
+</section><section>
+<h2 id="quality-assurance-1">Quality Assurance</h2>
+<p><em>&ldquo;It works&rdquo;</em> <strong>is <em>not</em> good enough</strong></p>
+<p>(besides, the very notion of &ldquo;it works&rdquo; is debatable)</p>
+<ul>
+<li>Software quality should be <em>continuously assessed</em></li>
+<li>The assessment should <em>automatic</em> whenever possible</li>
+<li><strong>QA should be integrated in the build system!</strong>
+<ul>
+<li>It is fine to <em>fail the build</em> if quality criteria are not met</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="quality-assurance-levels">Quality Assurance: levels</h2>
+<ul>
+<li><em>Style</em> and <em>coherence</em></li>
+<li><em>Flawed programming</em> patterns</li>
+<li>Violations of the <em>DRY</em> principle</li>
+<li><strong>Testing</strong>
+<ul>
+<li>Multifaceted issue</li>
+<li>To be executed along the whole software lifecycle</li>
+<li>$\Rightarrow$ Plenty of detail in upcoming lectures</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="quality-assurance-style-and-coherence">Quality Assurance: style and coherence</h2>
+<p>Automated checkers are also called <em>linters</em>, often provide an auto-formatting tool</p>
+<p><strong>Idiomatic</strong> and <strong>standardized</strong> code:</p>
+<ul>
+<li>reduces <em>complexity</em></li>
+<li>improves <em>understandandability</em></li>
+<li>prevents <em>style-changing commits</em> with <em>unintelligible diffs</em></li>
+<li>lowers the <em>maintenance</em> burden and related <em>costs</em></li>
+<li>simplifies <em>code reviews</em></li>
+</ul>
+<p>In <em>Java</em>:
+<a href="https://checkstyle.sourceforge.io/">Checkstyle</a>,
+<a href="https://pmd.github.io/">PMD</a></p>
+<p>In <em>Kotlin</em>:
+<a href="https://github.com/JetBrains/inspection-plugin">IDEA Inspection</a>,
+<a href="https://ktlint.github.io/">Ktlint</a></p>
+<p>In <em>Scala</em>:
+<a href="https://scalameta.org/scalafmt/">Scalafmt</a>,
+<a href="http://www.scalastyle.org/rules-1.0.0.html">Scalastyle</a></p>
+</section><section>
+<h2 id="quality-assurance-flawed-programming-patterns">Quality Assurance: flawed programming patterns</h2>
+<p>Identification and reporting of <em>patterns</em> known to be <em>problematic</em></p>
+<ul>
+<li>Early-interception of <em>potential bugs</em></li>
+<li>Enforce <em>good programming principles</em></li>
+<li>Improves <em>performance</em></li>
+<li>Reduces <em>complexity</em></li>
+<li>Reduces <em>maintenance cost</em></li>
+</ul>
+<p>In <em>Java</em>:
+<a href="https://pmd.github.io/">PMD</a>,
+<a href="https://spotbugs.github.io/">SpotBugs</a></p>
+<p>In <em>Kotlin</em>:
+<a href="https://detekt.github.io/detekt/">Detekt</a>
+<a href="https://github.com/JetBrains/inspection-plugin">IDEA Inspection</a></p>
+<p>In <em>Scala</em>:
+<a href="htthttps://scalacenter.github.io/scalafix/">Scalafix</a>,
+<a href="http://www.wartremover.org/">Wartremover</a></p>
+</section><section>
+<h2 id="quality-assurance-violations-of-the-dry-principle">Quality Assurance: violations of the DRY principle</h2>
+<p>Code <em>replicated</em> rather than <em>reused</em></p>
+<ul>
+<li>improves <em>understandandability</em></li>
+<li>Reduces <em>maintenance cost</em></li>
+<li>simplifies <em>code reviews</em></li>
+</ul>
+<p>General advice: <strong>never copy/paste</strong> your code</p>
+<ul>
+<li>If you need to copy something, you probably need to <em>refactor</em> something</li>
+</ul>
+<p>Multi-language tool: <a href="https://pmd.github.io/latest/pmd_userdocs_cpd.html">Copy/Paste Detector (CPD)</a> (part of PMD)</p>
+</section><section>
+<h2 id="quality-assurance-testing-and-coverage">Quality Assurance: testing and coverage</h2>
+<p><strong>Automated</strong> software verification</p>
+<ul>
+<li>Unit level</li>
+<li>Integration testing</li>
+<li>End-to-end testing</li>
+</ul>
+<p>Extension of testing can be evaluated via <strong>coverage</strong>.</p>
+<ul>
+<li>Coverage tells you <em>how much code is <strong>untested</strong>, not how much is tested</em></li>
+</ul>
+<p>Several frameworks, recommended ones:</p>
+<ul>
+<li>Testing for <em>all JVM languages</em>: <a href="https://junit.org/junit5/docs/current/user-guide/">Junit/Jupiter (JUnit 5)</a></li>
+<li>Testing for <em>Kotlin</em>: <a href="https://kotest.io/">Kotest</a></li>
+<li>Testing for <em>Scala</em>: <a href="https://www.scalatest.org/">Scalatest</a></li>
+<li>Coverage for all JVM languages: <a href="https://www.eclemma.org/jacoco/">JaCoCo</a></li>
+<li>Coverage for Scala: <a href="http://scoverage.org/">Scoverage</a></li>
+</ul>
+</section><section>
+<h2 id="quality-assurance-junit--gradle">Quality Assurance: JUnit + Gradle</h2>
+<p><code>src/main/scala/it/unibo/test/Test.scala</code></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">package</span> <span style="color:#000">it.unibo.test</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">trait</span> <span style="color:#000">Sometrait</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">f</span><span style="color:#204a87;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">Int</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">g</span><span style="color:#204a87;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">Int</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">object</span> <span style="color:#000">Someobject</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">f</span> <span style="color:#204a87;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">10</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">g</span> <span style="color:#204a87;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">77</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span></code></pre></div>
+</section><section>
+<h2 id="quality-assurance-junit--gradle-1">Quality Assurance: JUnit + Gradle</h2>
+<p><code>src/test/scala/MyTest.scala</code></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">it.unibo.test.</span><span style="color:#ce5c00;font-weight:bold">{</span><span style="color:#000">Someobject</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">Sometrait</span><span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">org.junit.jupiter.api.Assertions._</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">org.junit.jupiter.api.Test</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">class</span> <span style="color:#000">MyTest</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#5c35cc;font-weight:bold">@Test</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">emptySetShouldHaveSizeZero</span><span style="color:#ce5c00;font-weight:bold">()</span><span style="color:#204a87;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">Unit</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">assertEquals</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">Set</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">empty</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">size</span><span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#5c35cc;font-weight:bold">@Test</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">thisTestIsActuallyUseless</span><span style="color:#ce5c00;font-weight:bold">()</span><span style="color:#204a87;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">Unit</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">val</span> <span style="color:#000">someStub</span> <span style="color:#204a87;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">new</span> <span style="color:#000">Sometrait</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#204a87;font-weight:bold">override</span> <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">f</span><span style="color:#204a87;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">Int</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">42</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#204a87;font-weight:bold">override</span> <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">g</span><span style="color:#204a87;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">Int</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">???</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">assertEquals</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">42</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">someStub</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">f</span><span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">assertNotEquals</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">Someobject</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">f</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">someStub</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">f</span><span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span></code></pre></div>
+</section><section>
+<h2 id="quality-assurance-junit--gradle-2">Quality Assurance: JUnit + Gradle</h2>
+<p><code>build.gradle.kts</code></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#000">plugins</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">java</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">scala</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">jacoco</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">repositories</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">mavenCentral</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">dependencies</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">implementation</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.scala-lang:scala-library:+&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">testImplementation</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.junit.jupiter:junit-jupiter-api:+&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">testRuntimeOnly</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.junit.jupiter:junit-jupiter-engine:+&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// Enables JUnit Platform (needed for JUnit 5)
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">tasks</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">named</span><span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000">Test</span><span style="color:#000;font-weight:bold">&gt;(</span><span style="color:#4e9a06">&#34;test&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">useJUnitPlatform</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div>
+</section><section>
+<h2 id="quality-assurance-scalatest--scoverage">Quality Assurance: Scalatest + Scoverage</h2>
+<p>Let&rsquo;s switch <em>testing framework</em> and enable <em>coverage</em></p>
+<p><code>src/main/scala/it/unibo/test/Test.scala</code></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">package</span> <span style="color:#000">it.unibo.test</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">trait</span> <span style="color:#000">Sometrait</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">f</span><span style="color:#204a87;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">Int</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">g</span><span style="color:#204a87;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">Int</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">object</span> <span style="color:#000">Someobject</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">f</span> <span style="color:#204a87;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">10</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">g</span> <span style="color:#204a87;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">77</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span></code></pre></div>
+</section><section>
+<h2 id="quality-assurance-scalatest--scoverage-1">Quality Assurance: Scalatest + Scoverage</h2>
+<p><code>src/test/scala/Test.scala</code></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">it.unibo.test.Sometrait</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">org.scalamock.scalatest.MockFactory</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">org.scalatest.funsuite.AnyFunSuite</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">class</span> <span style="color:#000">MyTests</span> <span style="color:#204a87;font-weight:bold">extends</span> <span style="color:#000">AnyFunSuite</span> <span style="color:#204a87;font-weight:bold">with</span> <span style="color:#000">MockFactory</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">test</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;An empty Set should have size 0&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">println</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Test1&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">assert</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">Set</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">empty</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">size</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">test</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Some useless test&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">println</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Test2&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">val</span> <span style="color:#000">someStub</span> <span style="color:#204a87;font-weight:bold">=</span> <span style="color:#000">stub</span><span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#204a87;font-weight:bold">Sometrait</span><span style="color:#ce5c00;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">someStub</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">f</span> <span style="color:#204a87;font-weight:bold">_</span><span style="color:#ce5c00;font-weight:bold">).</span><span style="color:#000">when</span><span style="color:#ce5c00;font-weight:bold">().</span><span style="color:#000">returns</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">42</span><span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">assert</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">someStub</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">f</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">42</span><span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span></code></pre></div>
+</section><section>
+<h2 id="quality-assurance-scalatest--scoverage-2">Quality Assurance: Scalatest + Scoverage</h2>
+<p><code>build.gradle.kts</code></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#000">plugins</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">java</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">scala</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">id</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.scoverage&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000">version</span> <span style="color:#4e9a06">&#34;5.0.0&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">id</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;com.github.maiflai.scalatest&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000">version</span> <span style="color:#4e9a06">&#34;0.31&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">repositories</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">mavenCentral</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">dependencies</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">implementation</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.scala-lang:scala-library:+&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">testImplementation</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.scalatest:scalatest_2.13:+&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">testImplementation</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.scalamock:scalamock_2.13:+&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">testRuntimeOnly</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;com.vladsch.flexmark:flexmark-profile-pegdown:0.36.8&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">scoverage</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.scoverage:scalac-scoverage-plugin_2.13:+&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">scoverage</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.scoverage:scalac-scoverage-runtime_2.13:+&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// gradle clean reportScoverage
+</span></span></span></code></pre></div>
+</section><section>
+<h2 id="gradle-qa-execution">Gradle: QA execution</h2>
+<ul>
+<li>The <code>java</code> plugin (applied by the <code>scala</code> plugin under the hood) also introduces:
+<ul>
+<li><code>test</code>: a task that runs all tests</li>
+<li><code>check</code>: a task that runs the whole quality assurance suite</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="additional-checks-and-reportings">Additional checks and reportings</h2>
+<p>There exist a number of recommended services that provide additional QA and reports.</p>
+<p>Non exhaustive list:</p>
+<ul>
+<li><a href="https://codecov.io/">Codecov.io</a>
+<ul>
+<li>Code coverage</li>
+<li>Supports Jacoco XML reports</li>
+<li>Nice data reporting system</li>
+</ul>
+</li>
+<li><a href="https://sonarcloud.io/">Sonarcloud</a>
+<ul>
+<li>Multiple measures, covering reliability, security, maintainability, duplication, complexity&hellip;</li>
+</ul>
+</li>
+<li><a href="https://www.codacy.com/">Codacy</a>
+<ul>
+<li>Automated software QA for several languages</li>
+</ul>
+</li>
+<li><a href="https://www.codefactor.io/">Code Factor</a>
+<ul>
+<li>Automated software QA</li>
+</ul>
+</li>
+</ul>
+</section>
+
+  
+
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src=/Course-DTM-SE-3/reveal-hugo/object-assign.js></script>
+
+<a href="/Course-DTM-SE-3/reveal-js/css/print/" id="print-location" style="display: none;"></a>
+<script type="text/javascript">
+  var printLocationElement = document.getElementById('print-location');
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = printLocationElement.href + (window.location.search.match(/print-pdf/gi) ? 'pdf.css' : 'paper.css');
+  document.getElementsByTagName('head')[0].appendChild(link);
+</script>
+
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"height":"1080","highlight_theme":"github","history":true,"slide_number":true,"theme":"league","transition":"slide","transition_speed":"fast","width":"1920"}</script>
+<script type="application/json" id="reveal-hugo-page-params">null</script>
+
+<script src="/Course-DTM-SE-3/reveal-js/js/reveal.js"></script>
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+  
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams));
+  Reveal.initialize(options);
+</script>
+
+
+  
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/markdown/marked.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/zoom-js/zoom.js"></script>
+  
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+</script>
+
+<script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+    
+  </body>
+</html>
