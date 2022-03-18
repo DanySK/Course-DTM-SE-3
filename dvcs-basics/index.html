@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <title>Software Engineering Module 3: Introduction to agile and DevOps</title>
-<meta name="description" content="Introduction to agile and DevOps, a case from the literature, SCRUM">
+<meta name="description" content="Distributed version control systems, basics of Git">
 <meta name="author" content="Danilo Pianini">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -1089,9 +1089,9 @@ Tags come in two fashions:</p>
 
 <figure>
   <img
-    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20fontname%3d%22Helvetica%2cArial%2csans-serif%22%0a%20%20%20%09node%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%09edge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20C0%20-%3e%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20-%3e%20C5%20-%3e%20C6%20%5bdir%3dback%5d%3b%0a%20%20%20%20%22HEAD%20-%3e%20master%22%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20C6%20-%3e%20%22HEAD%20-%3e%20master%22%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%7d%0a'
+    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20fontname%3d%22Helvetica%2cArial%2csans-serif%22%0a%20%20%20%09node%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%09edge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20%23%20Commits%0a%20%20%20%20C0%20-%3e%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20-%3e%20C5%20-%3e%20C6%20%5bdir%3dback%5d%3b%0a%20%20%20%20%23%20Branches%0a%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20edge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20C6%20-%3e%20master%3b%0a%20%20%20%20C6%20-%3e%20HEAD%3b%0a%20%20%20%20%23%20Head%0a%20%20%20%20edge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%3b%0a%20%20%20%20HEAD%20-%3e%20master%20%5blabel%3d%22attached%22%5d%3b%0a%20%20%7d%0a'
     alt=''
-    width="60%"
+    width="70%"
     />
     <figcaption></figcaption>
 </figure>
@@ -1108,9 +1108,9 @@ Tags come in two fashions:</p>
 
 <figure>
   <img
-    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20fontname%3d%22Helvetica%2cArial%2csans-serif%22%0a%20%20%20%09node%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%09edge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20C0%20-%3e%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20-%3e%20C5%20-%3e%20C6%20%5bdir%3dback%5d%3b%0a%20%20%20%20%22HEAD%20%28detached%29%22%2c%20%22master%22%2c%20%221.2.3%22%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20C6%20-%3e%20%22master%22%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20C4%20-%3e%20%221.2.3%22%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20C4%20-%3e%20%22HEAD%20%28detached%29%22%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%7d%0a'
+    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20fontname%3d%22Helvetica%2cArial%2csans-serif%22%0a%20%20%20%09node%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%09edge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20%23%20Commits%0a%20%20%20%20C0%20-%3e%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20-%3e%20C5%20-%3e%20C6%20%5bdir%3dback%5d%3b%0a%20%20%20%20%23%20Branches%0a%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20edge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20C4%20-%3e%20HEAD%3b%0a%20%20%20%20C6%20-%3e%20master%3b%0a%20%20%20%20%23%20Tags%0a%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dcyan%5d%3b%0a%20%20%20%20C4%20-%3e%20%221.2.3%22%0a%20%20%20%20%23%20Head%0a%20%20%20%20edge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%3b%0a%20%20%20%20nowhere%20%5bstyle%3dinvis%2cshape%3dpoint%5d%0a%20%20%20%20HEAD%20-%3e%20nowhere%20%5blabel%3d%22detached%22%5d%3b%0a%20%20%7d%0a'
     alt=''
-    width="60%"
+    width="70%"
     />
     <figcaption></figcaption>
 </figure>
@@ -1133,9 +1133,9 @@ Tags come in two fashions:</p>
 
 <figure>
   <img
-    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20fontname%3d%22Helvetica%2cArial%2csans-serif%22%0a%20%20%20%09node%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%09edge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20C0%20-%3e%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20-%3e%20C5%20-%3e%20C6%20%5bdir%3dback%5d%3b%0a%20%20%20%20C4%20-%3e%20C7%20%5bdir%3dback%5d%3b%0a%20%20%20%20%22HEAD%20-%3e%20master%22%2c%20%22fix%2fbug22%22%2c%20%22feat%2fserverless%22%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20C6%20-%3e%20%22HEAD%20-%3e%20master%22%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20C7%20-%3e%20%22feat%2fserverless%22%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20C3%20-%3e%20%22fix%2fbug22%22%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%7d%0a'
+    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20fontname%3d%22Helvetica%2cArial%2csans-serif%22%0a%20%20%20%09node%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%09edge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20%23%20Commits%0a%20%20%20%20C0%20-%3e%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20-%3e%20C5%20-%3e%20C6%20%5bdir%3dback%5d%3b%0a%20%20%20%20C4%20-%3e%20C7%0a%20%20%20%20%23%20Branches%0a%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20edge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20C6%20-%3e%20master%3b%0a%20%20%20%20C7%20-%3e%20%22feat%2fserverless%22%3b%0a%20%20%20%20C3%20-%3e%20%22fix%2fbug22%22%3b%0a%20%20%20%20%23%20Head%0a%20%20%20%20C6%20-%3e%20HEAD%3b%0a%20%20%20%20edge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%3b%0a%20%20%20%20HEAD%20-%3e%20master%20%5blabel%3d%22attached%22%5d%3b%0a%20%20%7d%0a'
     alt=''
-    width="60%"
+    width="70%"
     />
     <figcaption></figcaption>
 </figure>
@@ -1152,9 +1152,9 @@ Tags come in two fashions:</p>
 
 <figure>
   <img
-    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20fontname%3d%22Helvetica%2cArial%2csans-serif%22%0a%20%20%20%09node%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%09edge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20C0%20-%3e%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20-%3e%20C5%20-%3e%20C6%20%5bdir%3dback%5d%3b%0a%20%20%20%20C4%20-%3e%20C7%20%5bdir%3dback%5d%3b%0a%20%20%20%20%22HEAD%20-%3e%20master%22%2c%20%22feat%2fserverless%22%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20C6%20-%3e%20%22HEAD%20-%3e%20master%22%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20C7%20-%3e%20%22feat%2fserverless%22%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%7d%0a'
+    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20fontname%3d%22Helvetica%2cArial%2csans-serif%22%0a%20%20%20%09node%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%09edge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20%23%20Commits%0a%20%20%20%20C0%20-%3e%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20-%3e%20C5%20-%3e%20C6%20%5bdir%3dback%5d%3b%0a%20%20%20%20C4%20-%3e%20C7%0a%20%20%20%20%23%20Branches%0a%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20edge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20C6%20-%3e%20master%3b%0a%20%20%20%20C7%20-%3e%20%22feat%2fserverless%22%3b%0a%20%20%20%20%23%20Head%0a%20%20%20%20C6%20-%3e%20HEAD%3b%0a%20%20%20%20edge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%3b%0a%20%20%20%20HEAD%20-%3e%20master%20%5blabel%3d%22attached%22%5d%3b%0a%20%20%7d%0a'
     alt=''
-    width="60%"
+    width="70%"
     />
     <figcaption></figcaption>
 </figure>
@@ -1217,10 +1217,18 @@ Tags come in two fashions:</p>
 <p><em>Non-local branches can be referenced</em> as <code>remoteName/branchName</code></p>
 <p>The <code>remote</code> subcommand is used to inspect and manage remotes:</p>
 <ul>
-<li><code>git remote -v</code> <em>lists</em> the known remotes</li>
-<li><code>git remote add a-remote URI</code> <em>adds</em> a new remote named <code>a-remote</code> and pointing to <code>URI</code></li>
-<li><code>git remote show a-remote</code> displays <em>extended information</em> on <code>a-remote</code></li>
-<li><code>git remote remove a-remote</code> <em>removes</em> <code>a-remote</code> (it does not delete information on the remote, it <em>locally</em> forgets that it exits)</li>
+<li>
+<p><code>git remote -v</code> <em>lists</em> the known remotes    C3 -&gt; &ldquo;fix/bug22&rdquo;;</p>
+</li>
+<li>
+<p><code>git remote add a-remote URI</code> <em>adds</em> a new remote named <code>a-remote</code> and pointing to <code>URI</code></p>
+</li>
+<li>
+<p><code>git remote show a-remote</code> displays <em>extended information</em> on <code>a-remote</code></p>
+</li>
+<li>
+<p><code>git remote remove a-remote</code> <em>removes</em> <code>a-remote</code> (it does not delete information on the remote, it <em>locally</em> forgets that it exits)</p>
+</li>
 </ul>
 </section><section>
 <h2 id="upstream-branches">Upstream branches</h2>
@@ -1235,7 +1243,7 @@ Tags come in two fashions:</p>
 <li>When a repository is initialize by <code>clone</code>, its default branch is checked out locally with the same name it has on the remote, and the remote branch is automatically set as <em>upstream</em></li>
 </ul>
 </section><section>
-<h2 id="actual-result-of-git-clone-somesitecomrepogit">Actual result of <code>git clone somesite.com/repo.git</code></h2>
+<h2 id="actual-result-of-git-clone-gitsomesitecomrepogit">Actual result of <code>git clone git@somesite.com/repo.git</code></h2>
 
 
 
@@ -1247,14 +1255,97 @@ Tags come in two fashions:</p>
 
 <figure>
   <img
-    src='https://g.gravizo.com/svg?%0a%20%20digraph%20pippo%20%7b%0a%20%20%20%20fontname%3d%22Helvetica%2cArial%2csans-serif%22%0a%20%20%20%09node%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%09edge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20compound%3dtrue%0a%0a%20%20%20%20subgraph%20cluster_remote%20%7b%0a%20%20%20%20%20%20color%3dblack%0a%20%20%20%20%20%20label%3d%22somesite.com%2frepo.git%22%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Commits%0a%20%20%20%20%20%20C0r%20%5blabel%3dC0%5d%0a%20%20%20%20%20%20C1r%20%5blabel%3dC1%5d%0a%20%20%20%20%20%20C2r%20%5blabel%3dC2%5d%0a%20%20%20%20%20%20C3r%20%5blabel%3dC3%5d%0a%20%20%20%20%20%20C4r%20%5blabel%3dC4%5d%0a%20%20%20%20%20%20C0r%20-%3e%20C1r%20-%3e%20C2r%20-%3e%20C3r%20-%3e%20C4r%20%5bdir%3dback%5d%3b%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Branches%0a%20%20%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20%20%20master_r%20%5blabel%3dmaster%5d%0a%20%20%20%20%20%20HEAD_r%20%5blabel%3dHEAD%5d%0a%20%20%20%20%20%20C4r%20-%3e%20HEAD_r%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20%20%20C4r%20-%3e%20master_r%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20%20%20HEAD_r%20-%3e%20master_r%20%5barrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%2c%20label%3d%22attached%22%5d%3b%0a%20%20%20%20%7d%0a%0a%20%20%20%20subgraph%20cluster_local%20%7b%0a%20%20%20%20%20%20label%3d%22Local%22%0a%20%20%20%20%20%20color%3dblack%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Commits%0a%20%20%20%20%20%20C0%20-%3e%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20%5bdir%3dback%5d%3b%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Branches%0a%20%20%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20%20%20C4%20-%3e%20HEAD%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20%20%20C4%20-%3e%20master%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20%20%20HEAD%20-%3e%20master%20%5barrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%2c%20label%3d%22attached%22%5d%3b%0a%20%20%20%20%20%20master%20-%3e%20master_r%20%5barrowhead%3ddot%2c%20penwidth%3d2%2c%20color%3dblue%2c%20label%3d%22upstream%22%5d%3b%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Remotes%0a%20%20%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dgreen%5d%3b%0a%20%20%20%20%20%20origin%20-%3e%20C4r%20%5blhead%3dcluster_remote%5d%0a%20%20%20%20%7d%0a%0a%20%20%7d%0a'
+    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20fontname%3d%22Helvetica%2cArial%2csans-serif%22%0a%20%20%20%09node%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%09edge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20compound%3dtrue%0a%0a%20%20%20%20subgraph%20cluster_remote%20%7b%0a%20%20%20%20%20%20color%3dblack%0a%20%20%20%20%20%20label%3d%22somesite.com%2frepo.git%22%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Commits%0a%20%20%20%20%20%20C0r%20%5blabel%3dC0%5d%0a%20%20%20%20%20%20C1r%20%5blabel%3dC1%5d%0a%20%20%20%20%20%20C2r%20%5blabel%3dC2%5d%0a%20%20%20%20%20%20C3r%20%5blabel%3dC3%5d%0a%20%20%20%20%20%20C4r%20%5blabel%3dC4%5d%0a%20%20%20%20%20%20C5r%20%5blabel%3dC5%5d%0a%20%20%20%20%20%20C6r%20%5blabel%3dC6%5d%0a%20%20%20%20%20%20C7r%20%5blabel%3dC7%5d%0a%20%20%20%20%20%20C0r%20-%3e%20C1r%20-%3e%20C2r%20-%3e%20C3r%20-%3e%20C4r%20%5bdir%3dback%5d%3b%0a%20%20%20%20%20%20C2r%20-%3e%20C5r%20-%3e%20C6r%20-%3e%20C7r%20%5bdir%3dback%5d%3b%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Branches%0a%20%20%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20%20%20edge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20%20%20master_r%20%5blabel%3dmaster%5d%3b%0a%20%20%20%20%20%20feat_r%20%5blabel%3d%22feat%2fnew-client%22%5d%0a%20%20%20%20%20%20C4r%20-%3e%20master_r%3b%0a%20%20%20%20%20%20C7r%20-%3e%20feat_r%3b%0a%0a%20%20%20%20%20%20%23%20Head%0a%20%20%20%20%20%20HEAD_r%20%5blabel%3dHEAD%5d%3b%0a%20%20%20%20%20%20C4r%20-%3e%20HEAD_r%3b%0a%20%20%20%20%20%20edge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%3b%0a%20%20%20%20%20%20HEAD_r%20-%3e%20master_r%20%5barrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%2c%20label%3d%22attached%22%5d%3b%0a%20%20%20%20%7d%0a%0a%20%20%20%20subgraph%20cluster_local%20%7b%0a%20%20%20%20%20%20label%3d%22Local%22%0a%20%20%20%20%20%20color%3dblack%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Commits%0a%20%20%20%20%20%20C0%20-%3e%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20%5bdir%3dback%5d%3b%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Branches%0a%20%20%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20%20%20edge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20%20%20C4%20-%3e%20master%3b%0a%0a%20%20%20%20%20%20%23%20Head%0a%20%20%20%20%20%20C4%20-%3e%20HEAD%3b%0a%20%20%20%20%20%20edge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%2c%20label%3d%22%22%5d%3b%0a%20%20%20%20%20%20HEAD%20-%3e%20master%20%5blabel%3d%22attached%22%5d%3b%0a%0a%20%20%20%20%20%20%23%20Upstreams%0a%20%20%20%20%20%20edge%20%5barrowhead%3ddot%2c%20dir%3dforward%2c%20penwidth%3d2%2c%20color%3dblue%5d%3b%0a%20%20%20%20%20%20master%20-%3e%20master_r%20%5blabel%3d%22upstream%22%5d%3b%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Remotes%0a%20%20%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3daquamarine3%5d%3b%0a%20%20%20%20%20%20edge%20%5barrowhead%3ddot%2c%20dir%3dforward%2c%20penwidth%3d3%2c%20color%3daquamarine3%5d%3b%0a%20%20%20%20%20%20origin%20-%3e%20C4r%20%5blhead%3dcluster_remote%5d%0a%20%20%20%20%7d%0a%20%20%7d%0a'
     alt=''
     width="100%"
     />
     <figcaption></figcaption>
 </figure>
 
+<ul>
+<li><code>git@somesite.com/repo.git</code> is saved as <code>origin</code></li>
+<li>The main branch (the branch where <code>HEAD</code> is attached, in our case <code>master</code>) on <code>origin</code> gets checked out locally with the same name</li>
+<li>The local branch <code>master</code> is set up to track <code>origin/master</code> as upstream</li>
+<li>Additional branches are <em>fetched</em> (they are known locally), but they are not checked out</li>
+</ul>
 </section><section>
+<h2 id="importing-remote-branches">Importing remote branches</h2>
+<p><code>git branch</code> (or <code>git checkout -b</code>) can be used to check out remote branches locally <em>after they have been fetched</em>.</p>
+
+
+
+  
+  
+    
+  
+
+
+<figure>
+  <img
+    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20fontname%3d%22Helvetica%2cArial%2csans-serif%22%0a%20%20%20%09node%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%09edge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20compound%3dtrue%0a%0a%20%20%20%20subgraph%20cluster_remote%20%7b%0a%20%20%20%20%20%20color%3dblack%0a%20%20%20%20%20%20label%3d%22somesite.com%2frepo.git%22%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Commits%0a%20%20%20%20%20%20C0r%20%5blabel%3dC0%5d%0a%20%20%20%20%20%20C1r%20%5blabel%3dC1%5d%0a%20%20%20%20%20%20C2r%20%5blabel%3dC2%5d%0a%20%20%20%20%20%20C3r%20%5blabel%3dC3%5d%0a%20%20%20%20%20%20C4r%20%5blabel%3dC4%5d%0a%20%20%20%20%20%20C5r%20%5blabel%3dC5%5d%0a%20%20%20%20%20%20C6r%20%5blabel%3dC6%5d%0a%20%20%20%20%20%20C7r%20%5blabel%3dC7%5d%0a%20%20%20%20%20%20C0r%20-%3e%20C1r%20-%3e%20C2r%20-%3e%20C3r%20-%3e%20C4r%20%5bdir%3dback%5d%3b%0a%20%20%20%20%20%20C2r%20-%3e%20C5r%20-%3e%20C6r%20-%3e%20C7r%20%5bdir%3dback%5d%3b%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Branches%0a%20%20%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20%20%20edge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20%20%20master_r%20%5blabel%3dmaster%5d%3b%0a%20%20%20%20%20%20feat_r%20%5blabel%3d%22feat%2fnew-client%22%5d%0a%20%20%20%20%20%20C4r%20-%3e%20master_r%3b%0a%20%20%20%20%20%20C7r%20-%3e%20feat_r%3b%0a%0a%20%20%20%20%20%20%23%20Head%0a%20%20%20%20%20%20HEAD_r%20%5blabel%3dHEAD%5d%3b%0a%20%20%20%20%20%20C4r%20-%3e%20HEAD_r%3b%0a%20%20%20%20%20%20edge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%3b%0a%20%20%20%20%20%20HEAD_r%20-%3e%20master_r%20%5barrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%2c%20label%3d%22attached%22%5d%3b%0a%20%20%20%20%7d%0a%0a%20%20%20%20subgraph%20cluster_local%20%7b%0a%20%20%20%20%20%20label%3d%22Local%22%0a%20%20%20%20%20%20color%3dblack%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Commits%0a%20%20%20%20%20%20C0%20-%3e%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20%5bdir%3dback%5d%3b%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Branches%0a%20%20%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20%20%20edge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20%20%20C4%20-%3e%20master%3b%0a%0a%20%20%20%20%20%20%23%20Head%0a%20%20%20%20%20%20C4%20-%3e%20HEAD%3b%0a%20%20%20%20%20%20edge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%3b%0a%20%20%20%20%20%20HEAD%20-%3e%20master%20%5blabel%3d%22attached%22%5d%3b%0a%0a%20%20%20%20%20%20%23%20Upstreams%0a%20%20%20%20%20%20edge%20%5barrowhead%3ddot%2c%20dir%3dforward%2c%20penwidth%3d2%2c%20color%3dblue%5d%3b%0a%20%20%20%20%20%20master%20-%3e%20master_r%20%5blabel%3d%22upstream%22%5d%3b%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Remotes%0a%20%20%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3daquamarine3%5d%3b%0a%20%20%20%20%20%20edge%20%5barrowhead%3ddot%2c%20dir%3dforward%2c%20penwidth%3d3%2c%20color%3daquamarine3%5d%3b%0a%20%20%20%20%20%20origin%20-%3e%20C0r%20%5blhead%3dcluster_remote%5d%0a%20%20%20%20%7d%0a%0a%20%20%7d%0a'
+    alt=''
+    width="60%"
+    />
+    <figcaption></figcaption>
+</figure>
+
+<p>⬇️ <code>git checkout -b imported-feat origin/feat/new-client</code> ⬇️</p>
+
+
+
+  
+  
+    
+  
+
+
+<figure>
+  <img
+    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20fontname%3d%22Helvetica%2cArial%2csans-serif%22%0a%20%20%20%09node%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%09edge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20compound%3dtrue%0a%0a%20%20%20%20subgraph%20cluster_remote%20%7b%0a%20%20%20%20%20%20color%3dblack%0a%20%20%20%20%20%20label%3d%22somesite.com%2frepo.git%22%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Commits%0a%20%20%20%20%20%20C0r%20%5blabel%3dC0%5d%0a%20%20%20%20%20%20C1r%20%5blabel%3dC1%5d%0a%20%20%20%20%20%20C2r%20%5blabel%3dC2%5d%0a%20%20%20%20%20%20C3r%20%5blabel%3dC3%5d%0a%20%20%20%20%20%20C4r%20%5blabel%3dC4%5d%0a%20%20%20%20%20%20C5r%20%5blabel%3dC5%5d%0a%20%20%20%20%20%20C6r%20%5blabel%3dC6%5d%0a%20%20%20%20%20%20C7r%20%5blabel%3dC7%5d%0a%20%20%20%20%20%20C0r%20-%3e%20C1r%20-%3e%20C2r%20-%3e%20C3r%20-%3e%20C4r%20%5bdir%3dback%5d%3b%0a%20%20%20%20%20%20C2r%20-%3e%20C5r%20-%3e%20C6r%20-%3e%20C7r%20%5bdir%3dback%5d%3b%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Branches%0a%20%20%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20%20%20edge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20%20%20master_r%20%5blabel%3dmaster%5d%3b%0a%20%20%20%20%20%20feat_r%20%5blabel%3d%22feat%2fnew-client%22%5d%0a%20%20%20%20%20%20C4r%20-%3e%20master_r%3b%0a%20%20%20%20%20%20C7r%20-%3e%20feat_r%3b%0a%0a%20%20%20%20%20%20%23%20Head%0a%20%20%20%20%20%20HEAD_r%20%5blabel%3dHEAD%5d%3b%0a%20%20%20%20%20%20C4r%20-%3e%20HEAD_r%3b%0a%20%20%20%20%20%20edge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%3b%0a%20%20%20%20%20%20HEAD_r%20-%3e%20master_r%20%5barrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%2c%20label%3d%22attached%22%5d%3b%0a%20%20%20%20%7d%0a%0a%20%20%20%20subgraph%20cluster_local%20%7b%0a%20%20%20%20%20%20label%3d%22Local%22%0a%20%20%20%20%20%20color%3dblack%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Commits%0a%20%20%20%20%20%20C0%20-%3e%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20%5bdir%3dback%5d%3b%0a%20%20%20%20%20%20C2%20-%3e%20C5%20-%3e%20C6%20-%3e%20C7%20%5bdir%3dback%5d%3b%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Branches%0a%20%20%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20%20%20edge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20%20%20C4%20-%3e%20master%3b%0a%20%20%20%20%20%20C7%20-%3e%20%22imported-feat%22%3b%0a%0a%20%20%20%20%20%20%23%20Head%0a%20%20%20%20%20%20C7%20-%3e%20HEAD%3b%0a%20%20%20%20%20%20edge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%3b%0a%20%20%20%20%20%20HEAD%20-%3e%20%22imported-feat%22%20%5blabel%3d%22attached%22%5d%3b%0a%0a%20%20%20%20%20%20%23%20Upstreams%0a%20%20%20%20%20%20edge%20%5barrowhead%3ddot%2c%20dir%3dforward%2c%20penwidth%3d2%2c%20color%3dblue%5d%3b%0a%20%20%20%20%20%20master%20-%3e%20master_r%20%5blabel%3d%22upstream%22%5d%3b%0a%20%20%20%20%20%20%22imported-feat%22%20-%3e%20feat_r%20%5blabel%3d%22upstream%22%5d%3b%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Remotes%0a%20%20%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3daquamarine3%5d%3b%0a%20%20%20%20%20%20edge%20%5barrowhead%3ddot%2c%20dir%3dforward%2c%20penwidth%3d3%2c%20color%3daquamarine3%5d%3b%0a%20%20%20%20%20%20origin%20-%3e%20C0r%20%5blhead%3dcluster_remote%5d%0a%20%20%20%20%7d%0a%0a%20%20%7d%0a'
+    alt=''
+    width="60%"
+    />
+    <figcaption></figcaption>
+</figure>
+
+<ul>
+<li>A new branch <code>imported-feat</code> is created locally, and <code>origin/feat/new-client</code> is set as its <em>upstream</em></li>
+<li>It is actually customary to reuse the upstream name if there are no conflicts
+<ul>
+<li><code>git checkout -b feat/new-client origin/feat/new-client</code></li>
+</ul>
+</li>
+<li>Modern versions of Git automatically checkout remote branches if there are no local branches with the same name and no ambiguities
+<ul>
+<li><code>git checkout feat/new-client</code></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="example-with-multiple-remotes">Example with multiple remotes</h2>
+<pre><code class="language-bash">git clone git@somesite.com/repo.git
+git checkout -b feat/new-client origin/feat/new-client
+git remote add other git@somewhereelse.org/repo.git
+git checkout -b other-master other/master
+</code></pre>
+
+
+
+  
+  
+    
+  
+
+
+<figure>
+  <img
+    src='https://g.gravizo.com/svg?%0a%20%20digraph%20G%20%7b%0a%20%20%20%20fontname%3d%22Helvetica%2cArial%2csans-serif%22%0a%20%20%20%09node%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%09edge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0a%20%20%20%20rankdir%3dLR%3b%0a%20%20%20%20compound%3dtrue%0a%0a%20%20%20%20subgraph%20cluster_remote%20%7b%0a%20%20%20%20%20%20color%3dblack%0a%20%20%20%20%20%20label%3d%22somesite.com%2frepo.git%22%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Commits%0a%20%20%20%20%20%20C0r%20%5blabel%3dC0%5d%0a%20%20%20%20%20%20C1r%20%5blabel%3dC1%5d%0a%20%20%20%20%20%20C2r%20%5blabel%3dC2%5d%0a%20%20%20%20%20%20C3r%20%5blabel%3dC3%5d%0a%20%20%20%20%20%20C4r%20%5blabel%3dC4%5d%0a%20%20%20%20%20%20C5r%20%5blabel%3dC5%5d%0a%20%20%20%20%20%20C6r%20%5blabel%3dC6%5d%0a%20%20%20%20%20%20C7r%20%5blabel%3dC7%5d%0a%20%20%20%20%20%20C0r%20-%3e%20C1r%20-%3e%20C2r%20-%3e%20C3r%20-%3e%20C4r%20%5bdir%3dback%5d%3b%0a%20%20%20%20%20%20C2r%20-%3e%20C5r%20-%3e%20C6r%20-%3e%20C7r%20%5bdir%3dback%5d%3b%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Branches%0a%20%20%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20%20%20edge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20%20%20master_r%20%5blabel%3dmaster%5d%3b%0a%20%20%20%20%20%20feat_r%20%5blabel%3d%22feat%2fnew-client%22%5d%0a%20%20%20%20%20%20C4r%20-%3e%20master_r%3b%0a%20%20%20%20%20%20C7r%20-%3e%20feat_r%3b%0a%0a%20%20%20%20%20%20%23%20Head%0a%20%20%20%20%20%20HEAD_r%20%5blabel%3dHEAD%5d%3b%0a%20%20%20%20%20%20C4r%20-%3e%20HEAD_r%3b%0a%20%20%20%20%20%20edge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%3b%0a%20%20%20%20%20%20HEAD_r%20-%3e%20master_r%20%5barrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%2c%20label%3d%22attached%22%5d%3b%0a%20%20%20%20%7d%0a%0a%20%20%20%20subgraph%20cluster_other%20%7b%0a%20%20%20%20%20%20color%3dblack%0a%20%20%20%20%20%20label%3d%22git%40somewhereelse.org%2frepo.git%22%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Commits%0a%20%20%20%20%20%20C0r2%20%5blabel%3dC0%5d%0a%20%20%20%20%20%20C1r2%20%5blabel%3dC1%5d%0a%20%20%20%20%20%20C2r2%20%5blabel%3dC2%5d%0a%20%20%20%20%20%20C3r2%20%5blabel%3dC3%5d%0a%20%20%20%20%20%20C4r2%20%5blabel%3dC4%5d%0a%20%20%20%20%20%20C8r2%20%5blabel%3dC8%5d%0a%20%20%20%20%20%20C9r2%20%5blabel%3dC9%5d%0a%20%20%20%20%20%20C0r2%20-%3e%20C1r2%20-%3e%20C2r2%20-%3e%20C3r2%20-%3e%20C4r2%20-%3e%20C8r2%20-%3e%20C9r2%20%5bdir%3dback%5d%3b%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Branches%0a%20%20%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20%20%20edge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20%20%20master_r2%20%5blabel%3dmaster%5d%3b%0a%20%20%20%20%20%20C9r2%20-%3e%20master_r2%3b%0a%0a%20%20%20%20%20%20%23%20Head%0a%20%20%20%20%20%20HEAD_r2%20%5blabel%3dHEAD%5d%3b%0a%20%20%20%20%20%20C9r2%20-%3e%20HEAD_r2%3b%0a%20%20%20%20%20%20edge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%3b%0a%20%20%20%20%20%20HEAD_r2%20-%3e%20master_r2%20%5blabel%3d%22attached%22%5d%3b%0a%20%20%20%20%7d%0a%0a%20%20%20%20subgraph%20cluster_local%20%7b%0a%20%20%20%20%20%20label%3d%22Local%22%0a%20%20%20%20%20%20color%3dblack%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Commits%0a%20%20%20%20%20%20C0%20-%3e%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20%5bdir%3dback%5d%3b%0a%20%20%20%20%20%20C2%20-%3e%20C5%20-%3e%20C6%20-%3e%20C7%20%5bdir%3dback%5d%3b%0a%20%20%20%20%20%20C4%20-%3e%20C8%20-%3e%20C9%20%5bdir%3dback%5d%3b%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Branches%0a%20%20%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0a%20%20%20%20%20%20edge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%20%20%20%20%20%20C4%20-%3e%20master%3b%0a%20%20%20%20%20%20C7%20-%3e%20%22feat%2fnew-client%22%3b%0a%20%20%20%20%20%20C9%20-%3e%20%22other-master%22%3b%0a%0a%20%20%20%20%20%20%23%20Head%0a%20%20%20%20%20%20C9%20-%3e%20HEAD%3b%0a%20%20%20%20%20%20edge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%3b%0a%20%20%20%20%20%20HEAD%20-%3e%20%22other-master%22%20%5blabel%3d%22attached%22%5d%3b%0a%0a%20%20%20%20%20%20%23%20Upstreams%0a%20%20%20%20%20%20edge%20%5barrowhead%3ddot%2c%20dir%3dforward%2c%20penwidth%3d2%2c%20color%3dblue%5d%3b%0a%20%20%20%20%20%20master%20-%3e%20master_r%20%5blabel%3d%22upstream%22%5d%3b%0a%20%20%20%20%20%20%22feat%2fnew-client%22%20-%3e%20feat_r%20%5blabel%3d%22upstream%22%5d%3b%0a%20%20%20%20%20%20%22other-master%22%20-%3e%20master_r2%20%5blabel%3d%22upstream%22%5d%3b%0a%20%20%20%20%20%20%0a%20%20%20%20%20%20%23%20Remotes%0a%20%20%20%20%20%20node%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3daquamarine3%5d%3b%0a%20%20%20%20%20%20edge%20%5barrowhead%3ddot%2c%20dir%3dforward%2c%20penwidth%3d3%2c%20color%3daquamarine3%5d%3b%0a%20%20%20%20%20%20origin%20-%3e%20C0r%20%5blhead%3dcluster_remote%5d%0a%20%20%20%20%20%20other%20-%3e%20C0r2%20%5blhead%3dcluster_other%5d%0a%20%20%20%20%7d%0a%20%20%7d%0a'
+    alt=''
+    width="100%"
+    />
+    <figcaption></figcaption>
+</figure>
+
 </section><section>
 <h2 id="distributed-version-control-with-git-a-recap">Distributed version control with git: a recap</h2>
 <h3 id="remote"><em>Remote</em></h3>
