@@ -1,7 +1,7 @@
  +++
 
 title = "Software Engineering Module 3: Introduction to agile and DevOps"
-description = "Introduction to agile and DevOps, a case from the literature, SCRUM"
+description = "Distributed version control systems, basics of Git"
 outputs = ["Reveal"]
 
 +++
@@ -1042,31 +1042,47 @@ Tags come in two fashions:
 * **Annotated** *tags* store additional information: a *message* (often used for logging changes), and, optionally, a *signature*
   * created by adding the `-a` option (or `-s`/`-u` for signed tags)
 
-{{< gravizo width=60 >}}
+{{< gravizo width=70 >}}
   digraph G {
     fontname="Helvetica,Arial,sans-serif"
    	node [fontname="Helvetica,Arial,sans-serif"]
   	edge [fontname="Helvetica,Arial,sans-serif"]
     rankdir=LR;
+    # Commits
     C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    "HEAD -> master" [style="filled,solid", shape=box, fillcolor=orange];
-    C6 -> "HEAD -> master" [dir=back, penwidth=4, color=orange];
+    # Branches
+    node [style="filled,solid", shape=box, fillcolor=orange];
+    edge [dir=back, penwidth=4, color=orange];
+    C6 -> master;
+    C6 -> HEAD;
+    # Head
+    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+    HEAD -> master [label="attached"];
   }
 {{< /gravizo >}}
 
 ⬇️ `git checkout C4 && git tag 1.2.3` ⬇️
 
-{{< gravizo width=60 >}}
+{{< gravizo width=70 >}}
   digraph G {
     fontname="Helvetica,Arial,sans-serif"
    	node [fontname="Helvetica,Arial,sans-serif"]
   	edge [fontname="Helvetica,Arial,sans-serif"]
     rankdir=LR;
+    # Commits
     C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    "HEAD (detached)", "master", "1.2.3" [style="filled,solid", shape=box, fillcolor=orange];
-    C6 -> "master" [dir=back, penwidth=4, color=orange];
-    C4 -> "1.2.3" [dir=back, penwidth=4, color=orange];
-    C4 -> "HEAD (detached)" [dir=back, penwidth=4, color=orange];
+    # Branches
+    node [style="filled,solid", shape=box, fillcolor=orange];
+    edge [dir=back, penwidth=4, color=orange];
+    C4 -> HEAD;
+    C6 -> master;
+    # Tags
+    node [style="filled,solid", shape=box, fillcolor=cyan];
+    C4 -> "1.2.3"
+    # Head
+    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+    nowhere [style=invis,shape=point]
+    HEAD -> nowhere [label="detached"];
   }
 {{< /gravizo >}}
 
@@ -1084,35 +1100,48 @@ $\Rightarrow$ *Branches can be removed without information loss*, as far as ther
 
 Branch deletion is performed with `git branch -d branch-name`. It is *safe* (fails if there is potential information loss).
 
-{{< gravizo width=60 >}}
+{{< gravizo width=70 >}}
   digraph G {
     fontname="Helvetica,Arial,sans-serif"
    	node [fontname="Helvetica,Arial,sans-serif"]
   	edge [fontname="Helvetica,Arial,sans-serif"]
     rankdir=LR;
+    # Commits
     C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    C4 -> C7 [dir=back];
-    "HEAD -> master", "fix/bug22", "feat/serverless" [style="filled,solid", shape=box, fillcolor=orange];
-    C6 -> "HEAD -> master" [dir=back, penwidth=4, color=orange];
-    C7 -> "feat/serverless" [dir=back, penwidth=4, color=orange];
-    C3 -> "fix/bug22" [dir=back, penwidth=4, color=orange];
+    C4 -> C7
+    # Branches
+    node [style="filled,solid", shape=box, fillcolor=orange];
+    edge [dir=back, penwidth=4, color=orange];
+    C6 -> master;
+    C7 -> "feat/serverless";
+    C3 -> "fix/bug22";
+    # Head
+    C6 -> HEAD;
+    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+    HEAD -> master [label="attached"];
   }
 {{< /gravizo >}}
 
-
 ⬇️ `git branch -d fix/bug22` ⬇️
 
-{{< gravizo width=60 >}}
+{{< gravizo width=70 >}}
   digraph G {
     fontname="Helvetica,Arial,sans-serif"
    	node [fontname="Helvetica,Arial,sans-serif"]
   	edge [fontname="Helvetica,Arial,sans-serif"]
     rankdir=LR;
+    # Commits
     C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    C4 -> C7 [dir=back];
-    "HEAD -> master", "feat/serverless" [style="filled,solid", shape=box, fillcolor=orange];
-    C6 -> "HEAD -> master" [dir=back, penwidth=4, color=orange];
-    C7 -> "feat/serverless" [dir=back, penwidth=4, color=orange];
+    C4 -> C7
+    # Branches
+    node [style="filled,solid", shape=box, fillcolor=orange];
+    edge [dir=back, penwidth=4, color=orange];
+    C6 -> master;
+    C7 -> "feat/serverless";
+    # Head
+    C6 -> HEAD;
+    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+    HEAD -> master [label="attached"];
   }
 {{< /gravizo >}}
 
@@ -1155,7 +1184,8 @@ Examples:
 *Non-local branches can be referenced* as `remoteName/branchName`
 
 The `remote` subcommand is used to inspect and manage remotes:
-* `git remote -v` *lists* the known remotes
+* `git remote -v` *lists* the known remotes    C3 -> "fix/bug22";
+
 * `git remote add a-remote URI` *adds* a new remote named `a-remote` and pointing to `URI`
 * `git remote show a-remote` displays *extended information* on `a-remote`
 * `git remote remove a-remote` *removes* `a-remote` (it does not delete information on the remote, it *locally* forgets that it exits)
@@ -1173,10 +1203,10 @@ Remote branches can be *associated* with local branches, with the intended meani
 
 ---
 
-## Actual result of `git clone somesite.com/repo.git`
+## Actual result of `git clone git@somesite.com/repo.git`
 
 {{< gravizo width=100 >}}
-  digraph pippo {
+  digraph G {
     fontname="Helvetica,Arial,sans-serif"
    	node [fontname="Helvetica,Arial,sans-serif"]
   	edge [fontname="Helvetica,Arial,sans-serif"]
@@ -1193,14 +1223,24 @@ Remote branches can be *associated* with local branches, with the intended meani
       C2r [label=C2]
       C3r [label=C3]
       C4r [label=C4]
+      C5r [label=C5]
+      C6r [label=C6]
+      C7r [label=C7]
       C0r -> C1r -> C2r -> C3r -> C4r [dir=back];
+      C2r -> C5r -> C6r -> C7r [dir=back];
       
       # Branches
       node [style="filled,solid", shape=box, fillcolor=orange];
-      master_r [label=master]
-      HEAD_r [label=HEAD]
-      C4r -> HEAD_r [dir=back, penwidth=4, color=orange];
-      C4r -> master_r [dir=back, penwidth=4, color=orange];
+      edge [dir=back, penwidth=4, color=orange];
+      master_r [label=master];
+      feat_r [label="feat/new-client"]
+      C4r -> master_r;
+      C7r -> feat_r;
+
+      # Head
+      HEAD_r [label=HEAD];
+      C4r -> HEAD_r;
+      edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
       HEAD_r -> master_r [arrowhead=tee, penwidth=2, color=red, label="attached"];
     }
 
@@ -1213,20 +1253,299 @@ Remote branches can be *associated* with local branches, with the intended meani
       
       # Branches
       node [style="filled,solid", shape=box, fillcolor=orange];
-      C4 -> HEAD [dir=back, penwidth=4, color=orange];
-      C4 -> master [dir=back, penwidth=4, color=orange];
-      HEAD -> master [arrowhead=tee, penwidth=2, color=red, label="attached"];
-      master -> master_r [arrowhead=dot, penwidth=2, color=blue, label="upstream"];
+      edge [dir=back, penwidth=4, color=orange];
+      C4 -> master;
+
+      # Head
+      C4 -> HEAD;
+      edge [dir=forward, arrowhead=tee, penwidth=2, color=red, label=""];
+      HEAD -> master [label="attached"];
+
+      # Upstreams
+      edge [arrowhead=dot, dir=forward, penwidth=2, color=blue];
+      master -> master_r [label="upstream"];
       
       # Remotes
-      node [style="filled,solid", shape=box, fillcolor=green];
+      node [style="filled,solid", shape=box, fillcolor=aquamarine3];
+      edge [arrowhead=dot, dir=forward, penwidth=3, color=aquamarine3];
       origin -> C4r [lhead=cluster_remote]
+    }
+  }
+{{< /gravizo >}}
+
+* `git@somesite.com/repo.git` is saved as `origin`
+* The main branch (the branch where `HEAD` is attached, in our case `master`) on `origin` gets checked out locally with the same name
+* The local branch `master` is set up to track `origin/master` as upstream
+* Additional branches are *fetched* (they are known locally), but they are not checked out
+
+---
+
+## Importing remote branches
+
+`git branch` (or `git checkout -b`) can be used to check out remote branches locally *after they have been fetched*.
+
+{{< gravizo width=60 >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    compound=true
+
+    subgraph cluster_remote {
+      color=black
+      label="somesite.com/repo.git"
+      
+      # Commits
+      C0r [label=C0]
+      C1r [label=C1]
+      C2r [label=C2]
+      C3r [label=C3]
+      C4r [label=C4]
+      C5r [label=C5]
+      C6r [label=C6]
+      C7r [label=C7]
+      C0r -> C1r -> C2r -> C3r -> C4r [dir=back];
+      C2r -> C5r -> C6r -> C7r [dir=back];
+      
+      # Branches
+      node [style="filled,solid", shape=box, fillcolor=orange];
+      edge [dir=back, penwidth=4, color=orange];
+      master_r [label=master];
+      feat_r [label="feat/new-client"]
+      C4r -> master_r;
+      C7r -> feat_r;
+
+      # Head
+      HEAD_r [label=HEAD];
+      C4r -> HEAD_r;
+      edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+      HEAD_r -> master_r [arrowhead=tee, penwidth=2, color=red, label="attached"];
+    }
+
+    subgraph cluster_local {
+      label="Local"
+      color=black
+      
+      # Commits
+      C0 -> C1 -> C2 -> C3 -> C4 [dir=back];
+      
+      # Branches
+      node [style="filled,solid", shape=box, fillcolor=orange];
+      edge [dir=back, penwidth=4, color=orange];
+      C4 -> master;
+
+      # Head
+      C4 -> HEAD;
+      edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+      HEAD -> master [label="attached"];
+
+      # Upstreams
+      edge [arrowhead=dot, dir=forward, penwidth=2, color=blue];
+      master -> master_r [label="upstream"];
+      
+      # Remotes
+      node [style="filled,solid", shape=box, fillcolor=aquamarine3];
+      edge [arrowhead=dot, dir=forward, penwidth=3, color=aquamarine3];
+      origin -> C0r [lhead=cluster_remote]
     }
 
   }
 {{< /gravizo >}}
 
+⬇️ `git checkout -b imported-feat origin/feat/new-client` ⬇️
+
+{{< gravizo width=60 >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    compound=true
+
+    subgraph cluster_remote {
+      color=black
+      label="somesite.com/repo.git"
+      
+      # Commits
+      C0r [label=C0]
+      C1r [label=C1]
+      C2r [label=C2]
+      C3r [label=C3]
+      C4r [label=C4]
+      C5r [label=C5]
+      C6r [label=C6]
+      C7r [label=C7]
+      C0r -> C1r -> C2r -> C3r -> C4r [dir=back];
+      C2r -> C5r -> C6r -> C7r [dir=back];
+      
+      # Branches
+      node [style="filled,solid", shape=box, fillcolor=orange];
+      edge [dir=back, penwidth=4, color=orange];
+      master_r [label=master];
+      feat_r [label="feat/new-client"]
+      C4r -> master_r;
+      C7r -> feat_r;
+
+      # Head
+      HEAD_r [label=HEAD];
+      C4r -> HEAD_r;
+      edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+      HEAD_r -> master_r [arrowhead=tee, penwidth=2, color=red, label="attached"];
+    }
+
+    subgraph cluster_local {
+      label="Local"
+      color=black
+      
+      # Commits
+      C0 -> C1 -> C2 -> C3 -> C4 [dir=back];
+      C2 -> C5 -> C6 -> C7 [dir=back];
+      
+      # Branches
+      node [style="filled,solid", shape=box, fillcolor=orange];
+      edge [dir=back, penwidth=4, color=orange];
+      C4 -> master;
+      C7 -> "imported-feat";
+
+      # Head
+      C7 -> HEAD;
+      edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+      HEAD -> "imported-feat" [label="attached"];
+
+      # Upstreams
+      edge [arrowhead=dot, dir=forward, penwidth=2, color=blue];
+      master -> master_r [label="upstream"];
+      "imported-feat" -> feat_r [label="upstream"];
+      
+      # Remotes
+      node [style="filled,solid", shape=box, fillcolor=aquamarine3];
+      edge [arrowhead=dot, dir=forward, penwidth=3, color=aquamarine3];
+      origin -> C0r [lhead=cluster_remote]
+    }
+
+  }
+{{< /gravizo >}}
+
+* A new branch `imported-feat` is created locally, and `origin/feat/new-client` is set as its *upstream*
+* It is actually customary to reuse the upstream name if there are no conflicts
+  * `git checkout -b feat/new-client origin/feat/new-client`
+* Modern versions of Git automatically checkout remote branches if there are no local branches with the same name and no ambiguities
+  * `git checkout feat/new-client`
+
 ---
+
+## Example with multiple remotes
+
+```bash
+git clone git@somesite.com/repo.git
+git checkout -b feat/new-client origin/feat/new-client
+git remote add other git@somewhereelse.org/repo.git
+git checkout -b other-master other/master
+```
+
+{{< gravizo width=100 >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    compound=true
+
+    subgraph cluster_remote {
+      color=black
+      label="somesite.com/repo.git"
+      
+      # Commits
+      C0r [label=C0]
+      C1r [label=C1]
+      C2r [label=C2]
+      C3r [label=C3]
+      C4r [label=C4]
+      C5r [label=C5]
+      C6r [label=C6]
+      C7r [label=C7]
+      C0r -> C1r -> C2r -> C3r -> C4r [dir=back];
+      C2r -> C5r -> C6r -> C7r [dir=back];
+      
+      # Branches
+      node [style="filled,solid", shape=box, fillcolor=orange];
+      edge [dir=back, penwidth=4, color=orange];
+      master_r [label=master];
+      feat_r [label="feat/new-client"]
+      C4r -> master_r;
+      C7r -> feat_r;
+
+      # Head
+      HEAD_r [label=HEAD];
+      C4r -> HEAD_r;
+      edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+      HEAD_r -> master_r [arrowhead=tee, penwidth=2, color=red, label="attached"];
+    }
+
+    subgraph cluster_other {
+      color=black
+      label="git@somewhereelse.org/repo.git"
+      
+      # Commits
+      C0r2 [label=C0]
+      C1r2 [label=C1]
+      C2r2 [label=C2]
+      C3r2 [label=C3]
+      C4r2 [label=C4]
+      C8r2 [label=C8]
+      C9r2 [label=C9]
+      C0r2 -> C1r2 -> C2r2 -> C3r2 -> C4r2 -> C8r2 -> C9r2 [dir=back];
+      
+      # Branches
+      node [style="filled,solid", shape=box, fillcolor=orange];
+      edge [dir=back, penwidth=4, color=orange];
+      master_r2 [label=master];
+      C9r2 -> master_r2;
+
+      # Head
+      HEAD_r2 [label=HEAD];
+      C9r2 -> HEAD_r2;
+      edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+      HEAD_r2 -> master_r2 [label="attached"];
+    }
+
+    subgraph cluster_local {
+      label="Local"
+      color=black
+      
+      # Commits
+      C0 -> C1 -> C2 -> C3 -> C4 [dir=back];
+      C2 -> C5 -> C6 -> C7 [dir=back];
+      C4 -> C8 -> C9 [dir=back];
+      
+      # Branches
+      node [style="filled,solid", shape=box, fillcolor=orange];
+      edge [dir=back, penwidth=4, color=orange];
+      C4 -> master;
+      C7 -> "feat/new-client";
+      C9 -> "other-master";
+
+      # Head
+      C9 -> HEAD;
+      edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+      HEAD -> "other-master" [label="attached"];
+
+      # Upstreams
+      edge [arrowhead=dot, dir=forward, penwidth=2, color=blue];
+      master -> master_r [label="upstream"];
+      "feat/new-client" -> feat_r [label="upstream"];
+      "other-master" -> master_r2 [label="upstream"];
+      
+      # Remotes
+      node [style="filled,solid", shape=box, fillcolor=aquamarine3];
+      edge [arrowhead=dot, dir=forward, penwidth=3, color=aquamarine3];
+      origin -> C0r [lhead=cluster_remote]
+      other -> C0r2 [lhead=cluster_other]
+    }
+  }
+{{< /gravizo >}}
+
 
 ---
 
