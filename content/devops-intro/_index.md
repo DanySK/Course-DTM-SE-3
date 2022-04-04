@@ -875,7 +875,7 @@ In the literature, Scrum and agile show mixed evidence of efficacy
 * Agree on the *definition of done*
 * Break down problems in smaller chunks, but *do not foget the long-term vision*
 * Sacrify excellence for velocity only when there is an *emergency*
-* When in "**emergency** mode", knowing that you are accumulating *technical debt* that must be paid
+* When in "**emergency** mode", be aware that you are accumulating *technical debt* that must be paid
 * Avoid *shortcuts* that break *abstractions* and *architectures*
 * Enforce excellence by *strict QA* processes
 * Beware of *scoring individuals*, as they will likely begin to *chase the metrics* in response
