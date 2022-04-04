@@ -822,7 +822,7 @@ In the literature, Scrum and agile show mixed evidence of efficacy
 
 ---
 
-## Find solid *processess*, not just a nice packaging
+## Find solid *processes*, not just a nice packaging
 
 * It is easy to transform agile principles into a set of *rituals*
     * See bureaucratization
