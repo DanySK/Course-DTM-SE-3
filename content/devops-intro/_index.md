@@ -778,7 +778,9 @@ In the literature, Scrum and agile show mixed evidence of efficacy
 
 > Just imagine 11 people being handed a soccer manual and being told practice is every day for fifteen minutes around 10 AM in conference room #5. Do you think that is what makes a good soccer team? But what if those 11 people were really good, professional players? Still no team? No. Even Christiano Ronaldo would be getting "average" sooner or later with that kind of "team". But that's not soccer's fault. It's just not how you build a team.
 
-* Matthew Gaiser [on StackOverflow](https://softwareengineering.stackexchange.com/questions/410482/how-do-i-prevent-scrum-from-turning-great-developers-into-average-developers/410491#410491]
+* Matthew Gaiser [on StackOverflow](https://softwareengineering.stackexchange.com/questions/410482/how-do-i-prevent-scrum-from-turning-great-developers-into-average-developers/410491#410491)
+
+---
 
 # What is the root of these issues?
 
