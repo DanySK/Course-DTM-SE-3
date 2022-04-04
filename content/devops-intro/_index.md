@@ -144,7 +144,7 @@ measuring some metrics *before* and *after* the operation.
 * *Client-server* stand-alone application
 * *Delphi* front-end, *Microsoft SQL Server* backend
 * Editors (paid by Maggioli) are *experts in law entering information on the client*
-* The information is the exposed into a (paid access) *portal* with up-to-date legal information
+* The information is then exposed into a (paid access) *portal* with up-to-date legal information
 
 ---
 
