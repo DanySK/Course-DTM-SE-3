@@ -336,7 +336,7 @@ measuring some metrics *before* and *after* the operation.
     * No more issues with Windows updates
     * No more downtimes related to internal network / electricity / public infrastructure maintenance
     * Improved security
-    * No more critical failures caused by testing stored procedures directly in production my mistake
+    * No more critical failures caused by testing stored procedures directly in production by mistake
 * Much more maintenance in terms of *software evolution*
     * Application (or verification of automatic application) of updates
     * Security audits
