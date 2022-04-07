@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/css/reset.css">
 <link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/css/reveal.css">
-  <link rel="stylesheet" href="/Course-DTM-SE-3/css/custom-theme.min.2fee46db24a9ab664a9269e85066753b8576e5bf070cc86a1c857c98651d2cf0.css" id="theme"><link rel="stylesheet" href="/Course-DTM-SE-3/highlight-js/github.min.css">
+  <link rel="stylesheet" href="/Course-DTM-SE-3/css/custom-theme.min.a33630144b0d974bea851532cdb87a94ad3f7724f77dad6ea5c6e267a7a211ec.css" id="theme"><link rel="stylesheet" href="/Course-DTM-SE-3/highlight-js/github.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
@@ -98,17 +98,17 @@
 </ul>
 <p><strong>Git</strong> is now the dominant DVCS (although Mercurial is still in use, e.g., for Python, Java, Facebook).</p>
 </section><section>
-<h2 id="google-trends-to-hahahugoshortcode-s0-hbhb">Google trends to 2022-04-04</h2>
+<h2 id="google-trends-to-hahahugoshortcode-s0-hbhb">Google trends to 2022-04-07</h2>
 <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/2884_RC01/embed_loader.js"></script>
 <script type="text/javascript">
 trends.embed.renderExploreWidget(
   "TIMESERIES",
   {"comparisonItem":
     [
-      {"keyword":"/m/05vqwg","geo":"","time":"2004-01-01 2022-04-04"},
-      {"keyword":"/m/012ct9","geo":"","time":"2004-01-01 2022-04-04"},
-      {"keyword":"/m/08441_","geo":"","time":"2004-01-01 2022-04-04"},
-      {"keyword":"/m/09d6g","geo":"","time":"2004-01-01 2022-04-04" }
+      {"keyword":"/m/05vqwg","geo":"","time":"2004-01-01 2022-04-07"},
+      {"keyword":"/m/012ct9","geo":"","time":"2004-01-01 2022-04-07"},
+      {"keyword":"/m/08441_","geo":"","time":"2004-01-01 2022-04-07"},
+      {"keyword":"/m/09d6g","geo":"","time":"2004-01-01 2022-04-07" }
     ],
     "category":0,
     "property":""
@@ -473,6 +473,8 @@ Changes not staged for commit:
 <li>it is a list of paths that git will ignore (unless <code>git add</code> is called with the <code>--force</code> option)</li>
 <li>it is possible to add exceptions</li>
 </ul>
+</section><section>
+<h2 id="gitignore-example"><code>.gitignore</code> example</h2>
 <pre><code class="language-gitignore"># ignore the bin folder and all its contents
 bin/
 # ignore every pdf file
@@ -514,7 +516,8 @@ Git provides a dedicated sub-command:</p>
 <li>visualization of a lateral <em>graph</em>: <code>git log --graph</code></li>
 <li>compact visualization of all branches with a graph: <code>git log --oneline --all --graph</code></li>
 </ul>
-<p>example output of <code>git log --oneline --all --graph</code></p>
+</section><section>
+<h3 id="example-output-of-git-log---oneline---all---graph">example output of <code>git log --oneline --all --graph</code></h3>
 <pre><code class="language-text">* d114802 (HEAD -&gt; master, origin/master, origin/HEAD) moar contribution
 | * edb658b (origin/renovate/gohugoio-hugo-0.94.x) ci(deps): update gohugoio/hugo action to v0.94.2
 |/  
@@ -537,6 +540,8 @@ Git provides a dedicated sub-command:</p>
 <li><code>HEAD</code>, a special name referring to the current commit (the head, indeed).</li>
 <li><em>Tag names</em> (we will discuss what a tag is later on).</li>
 </ul>
+</section><section>
+<h2 id="relative-references">Relative references</h2>
 <p>It is possible to build <em>relative references</em>, e.g., &ldquo;get me the commit before this <code>&lt;tree-ish&gt;</code>&rdquo;,
 by following the commit <code>&lt;tree-ish&gt;</code> with a tilde (<code>~</code>) and with the number of parents to get to:</p>
 <ul>
@@ -578,7 +583,8 @@ by following the commit <code>&lt;tree-ish&gt;</code> with a tilde (<code>~</cod
 <li><code>git diff --staged &lt;tree-ish&gt;</code> shows the difference between <code>&lt;tree-ish&gt;</code> and the <em>working tree</em>, <em>including staged changes</em></li>
 <li><code>git diff &lt;from&gt; &lt;to&gt;</code>, where <code>&lt;from&gt;</code> and <code>&lt;to&gt;</code> are <code>&lt;tree-ish&gt;</code>es, shows the differences between <code>&lt;from&gt;</code> and <code>&lt;to&gt;</code></li>
 </ul>
-<p>Example output:</p>
+</section><section>
+<h3 id="git-diff-example-output"><code>git diff</code> Example output:</h3>
 <pre><code class="language-diff">diff --git a/.github/workflows/build-and-deploy.yml b/.github/workflows/build-and-deploy.yml
 index b492a8c..28302ff 100644
 --- a/.github/workflows/build-and-deploy.yml
@@ -640,7 +646,7 @@ for a commit to be valid, <code>HEAD</code> must be at the &ldquo;end&rdquo; of 
     <figcaption></figcaption>
 </figure>
 
-<p>When an older commit is checked out, however, this condition doesn&rsquo;t occur, if we run <code>git checkout HEAD~4</code>:</p>
+<p>When an old commit is checked out this condition doesn&rsquo;t hold, if we run <code>git checkout HEAD~4</code>:</p>
 
 
 
@@ -656,18 +662,12 @@ for a commit to be valid, <code>HEAD</code> must be at the &ldquo;end&rdquo; of 
     <figcaption></figcaption>
 </figure>
 
-<p>The system enters a special workmode called <em>detached head</em>. When in detached head:</p>
-<ul>
-<li>It is possible to make changes and experiments</li>
-<li>Git allows to make commits, but they are lost!
-<ul>
-<li>Not really, but to retrieve them we need <code>git reflog</code> and <code>git cherry-pick</code>, that we won&rsquo;t discuss</li>
-</ul>
-</li>
-</ul>
+<p>The system enters a special workmode called <em>detached head</em>.</p>
+<p>When <strong>in detached head</strong>, Git allows to make <strong>commits</strong>, but they <strong>are lost</strong>!</p>
+<p>(Not really, but to retrieve them we need <code>git reflog</code> and <code>git cherry-pick</code>, that we won&rsquo;t discuss)</p>
 </section><section>
 <h3 id="creating-branches">Creating branches</h3>
-<p>To be able to store our commits, we need to create a <strong>branch</strong>, then checkout the branch, so that <code>HEAD</code> returns attached.</p>
+<p>To store our commits, we need to <em>create</em> a <strong>branch</strong>, then attach the <code>HEAD</code> by checking it out.</p>
 <p>In Git, new branches are created with <code>git branch branch_name</code></p>
 
 
@@ -837,16 +837,12 @@ for a commit to be valid, <code>HEAD</code> must be at the &ldquo;end&rdquo; of 
 </figure>
 
 <ul>
-<li>We want <code>another_branch</code> to also have the changes in <code>C5</code> and <code>C6</code>
-<ul>
-<li>namely, to be up to date with <code>some_branch</code></li>
-</ul>
-</li>
-<li>But <code>some_branch</code> contains all the commits of <code>another_branch</code></li>
-<li>We don&rsquo;t really need a merge commit, we can just move the <code>another_branch</code> to point it to <code>C6</code></li>
+<li>We want <code>new-experiment</code> to also have the changes in <code>C5</code> and <code>C6</code> (to be up to date with <code>master</code>)</li>
+<li><code>master</code> contains all the commits of <code>new-experiment</code></li>
+<li>We don&rsquo;t really need a merge commit, we can just move <code>new-experiment</code> to point it to <code>C6</code></li>
 <li>$\Rightarrow$ This is called a <strong>fast-forward</strong>
 <ul>
-<li>It is the <em>default behavior</em> in Git when merging branches where the target is the same as the head plus something</li>
+<li>It is the <em>default behavior</em> in Git when merging branches where the target is the head plus something</li>
 </ul>
 </li>
 </ul>
@@ -972,7 +968,7 @@ generally leading to finer grained (and easier to solve) conflicts</li>
 </li>
 </ul>
 </section><section>
-<h2 id="newlines-and-git">Newlines and Git</h2>
+<h2 id="newlines-and-version-control">Newlines and version control</h2>
 <p>If your team uses <em>multiple OSs</em>, it is likely that, by default, the text editors use either <code>LF</code> (on Unix) or <code>CRLF</code></p>
 <p>It is also very likely that, upon saving, the whole file gets rewritten with the &ldquo;<em>locally</em> correct&rdquo; <em>line endings</em></p>
 <ul>
@@ -985,6 +981,8 @@ resulting in repositories with <em>illogically mixed line endings</em>
 (depending on who created a file first)
 and loads of warnings about <code>LF</code>/<code>CRLF</code> conversions.</p>
 <p>Line endings should instead be <strong>configured per file type!</strong></p>
+</section><section>
+<h2 id="gitattributes"><code>.gitattributes</code></h2>
 <ul>
 <li>A sensible strategy is to use <code>LF</code> everywhere, but for Windows scripts (<code>bat</code>, <code>cmd</code>, <code>ps1</code>)</li>
 <li>Git can be configured through a <code>.gitattributes</code> file in the repository root
@@ -1046,7 +1044,27 @@ We would like to have <em>branches to which <code>HEAD</code> cannot attach</em>
     <figcaption></figcaption>
 </figure>
 
-<p>Appears good, but if by mistake we do something like: ⬇️ <code>git checkout 1.2.3</code> [some changes] <code>git commit</code> ⬇️</p>
+</section><section>
+<h2 id="branches-as-attachable-and-movable-labels">Branches as attachable (and movable) labels</h2>
+
+
+
+  
+  
+    
+  
+
+
+<figure>
+  <img
+    src='https://g.gravizo.com/svg?%0adigraph%20G%20%7b%0afontname%3d%22Helvetica%2cArial%2csans-serif%22%0anode%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0aedge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0arankdir%3dLR%3b%0a%23%20Commits%0aC0%20-%3e%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20-%3e%20C5%20-%3e%20C6%20%5bdir%3dback%5d%3b%0a%23%20Branches%0anode%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0aedge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0aC6%20-%3e%20master%3b%0aC6%20-%3e%20HEAD%3b%0aC4%20-%3e%20%221.2.3%22%0a%23%20Head%0aedge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%3b%0aHEAD%20-%3e%20master%20%5blabel%3d%22attached%22%5d%3b%0a%7d%0a'
+    alt=''
+    width="60%"
+    />
+    <figcaption></figcaption>
+</figure>
+
+<p>Looks good, but if we do something like: ⬇️ <code>git checkout 1.2.3</code> [some changes] <code>git commit</code> ⬇️</p>
 
 
 
@@ -1068,11 +1086,11 @@ We would like to have <em>branches to which <code>HEAD</code> cannot attach</em>
 <p>Our version <strong>moved</strong>, <em>we never want this to happen</em>!</p>
 </section><section>
 <h2 id="tagging">Tagging</h2>
-<p>Git provides a dedicated <code>tag</code> subcommand to create <em>permanent labels</em> attached to commits.
+<p>The <code>tag</code> subcommand to create <em>permanent labels</em> attached to commits.
 Tags come in two fashions:</p>
 <ul>
 <li><strong>Lightweight</strong> <em>tags</em> are very similar to a &ldquo;permanent branch&rdquo;: <em>pointers to commits that never change</em></li>
-<li><strong>Annotated</strong> <em>tags</em> store additional information: a <em>message</em> (often used for logging changes), and, optionally, a <em>signature</em>
+<li><strong>Annotated</strong> <em>tags</em> store additional information: a <em>message</em>, and, optionally, a <em>signature</em>
 <ul>
 <li>created by adding the <code>-a</code> option (or <code>-s</code>/<code>-u</code> for signed tags)</li>
 </ul>
@@ -1182,30 +1200,16 @@ Tags come in two fashions:</p>
 </li>
 </ul>
 </li>
-<li>The <code>clone</code> subcommand checks out the remote branch where the <code>HEAD</code> is attached
-<ul>
-<li>the &ldquo;default branch&rdquo;</li>
-</ul>
-</li>
+<li>The <code>clone</code> subcommand checks out the remote branch where the <code>HEAD</code> is attached (<em>default branch</em>)</li>
 </ul>
 <p>Examples:</p>
-<ul>
-<li><code>git clone /some/repository/on/my/file/system destination</code>
-<ul>
-<li>creates a local folder called <code>destination</code> and copies the repository from the local directory</li>
-</ul>
-</li>
-<li><code>git clone https://somewebsite.com/someRepository.git myfolder</code>
-<ul>
-<li>creates a local folder called <code>myfolder</code> and copies the repository located at the specified <code>URL</code></li>
-</ul>
-</li>
-<li><code>git clone user@sshserver.com:SomePath/SomeRepo.git</code>
-<ul>
-<li>creates a local folder called <code>SomeRepo</code> and copies the repository located at the specified <code>URL</code></li>
-</ul>
-</li>
-</ul>
+<pre><code class="language-bash"># creates a local folder called `destination` and copies the repository from the local directory
+git clone /some/repository/on/my/file/system destination
+# creates a local folder called `myfolder` and copies the repository located at the specified `URL`
+git clone https://somewebsite.com/someRepository.git myfolder
+# creates a local folder called `SomeRepo` and copies the repository located at the specified `URL`
+git clone user@sshserver.com:SomePath/SomeRepo.git
+</code></pre>
 </section><section>
 <h2 id="remotes">Remotes</h2>
 <ul>
@@ -1243,7 +1247,7 @@ Tags come in two fashions:</p>
 <li>When a repository is initialize by <code>clone</code>, its default branch is checked out locally with the same name it has on the remote, and the remote branch is automatically set as <em>upstream</em></li>
 </ul>
 </section><section>
-<h2 id="actual-result-of-git-clone-gitsomesitecomrepogit">Actual result of <code>git clone git@somesite.com/repo.git</code></h2>
+<h3 id="actual-result-of-git-clone-gitsomesitecomrepogit">Actual result of <code>git clone git@somesite.com/repo.git</code></h3>
 
 
 
@@ -1270,7 +1274,7 @@ Tags come in two fashions:</p>
 </ul>
 </section><section>
 <h2 id="importing-remote-branches">Importing remote branches</h2>
-<p><code>git branch</code> (or <code>git checkout -b</code>) can be used to check out remote branches locally <em>after they have been fetched</em>.</p>
+<p><code>git branch</code> (or <code>git checkout -b</code>) can checkout remote branches locally <em>once they have been fetched</em>.</p>
 
 
 
@@ -1284,7 +1288,7 @@ Tags come in two fashions:</p>
   <img
     src='https://g.gravizo.com/svg?%0adigraph%20G%20%7b%0afontname%3d%22Helvetica%2cArial%2csans-serif%22%0afontsize%3d%2220%22%0anode%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0aedge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0arankdir%3dLR%3b%0acompound%3dtrue%0asubgraph%20cluster_remote%20%7b%0acolor%3dblack%0alabel%3d%22somesite.com%2frepo.git%22%0a%23%20Commits%0aC0r%20%5blabel%3dC0%5d%0aC1r%20%5blabel%3dC1%5d%0aC2r%20%5blabel%3dC2%5d%0aC3r%20%5blabel%3dC3%5d%0aC4r%20%5blabel%3dC4%5d%0aC5r%20%5blabel%3dC5%5d%0aC6r%20%5blabel%3dC6%5d%0aC7r%20%5blabel%3dC7%5d%0aC0r%20-%3e%20C1r%20-%3e%20C2r%20-%3e%20C3r%20-%3e%20C4r%20%5bdir%3dback%5d%3b%0aC2r%20-%3e%20C5r%20-%3e%20C6r%20-%3e%20C7r%20%5bdir%3dback%5d%3b%0a%23%20Branches%0anode%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0aedge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0amaster_r%20%5blabel%3dmaster%5d%3b%0afeat_r%20%5blabel%3d%22feat%2fnew-client%22%5d%0aC4r%20-%3e%20master_r%3b%0aC7r%20-%3e%20feat_r%3b%0a%23%20Head%0aHEAD_r%20%5blabel%3dHEAD%5d%3b%0aC4r%20-%3e%20HEAD_r%3b%0aedge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%3b%0aHEAD_r%20-%3e%20master_r%20%5barrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%2c%20label%3d%22attached%22%5d%3b%0a%7d%0asubgraph%20cluster_local%20%7b%0alabel%3d%22Local%22%0acolor%3dblack%0a%23%20Commits%0aC0%20-%3e%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20%5bdir%3dback%5d%3b%0a%23%20Branches%0anode%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0aedge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0aC4%20-%3e%20master%3b%0a%23%20Head%0aC4%20-%3e%20HEAD%3b%0aedge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%3b%0aHEAD%20-%3e%20master%20%5blabel%3d%22attached%22%5d%3b%0a%23%20Upstreams%0aedge%20%5barrowhead%3ddot%2c%20dir%3dforward%2c%20penwidth%3d2%2c%20color%3dblue%5d%3b%0amaster%20-%3e%20master_r%20%5blabel%3d%22upstream%22%5d%3b%0a%23%20Remotes%0anode%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3daquamarine3%5d%3b%0aedge%20%5barrowhead%3ddot%2c%20dir%3dforward%2c%20penwidth%3d3%2c%20color%3daquamarine3%5d%3b%0aorigin%20-%3e%20C0r%20%5blhead%3dcluster_remote%5d%0a%7d%0a%7d%0a'
     alt=''
-    width="60%"
+    width="50%"
     />
     <figcaption></figcaption>
 </figure>
@@ -1303,19 +1307,19 @@ Tags come in two fashions:</p>
   <img
     src='https://g.gravizo.com/svg?%0adigraph%20G%20%7b%0afontname%3d%22Helvetica%2cArial%2csans-serif%22%0afontsize%3d%2220%22%0anode%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0aedge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0arankdir%3dLR%3b%0acompound%3dtrue%0asubgraph%20cluster_remote%20%7b%0acolor%3dblack%0alabel%3d%22somesite.com%2frepo.git%22%0a%23%20Commits%0aC0r%20%5blabel%3dC0%5d%0aC1r%20%5blabel%3dC1%5d%0aC2r%20%5blabel%3dC2%5d%0aC3r%20%5blabel%3dC3%5d%0aC4r%20%5blabel%3dC4%5d%0aC5r%20%5blabel%3dC5%5d%0aC6r%20%5blabel%3dC6%5d%0aC7r%20%5blabel%3dC7%5d%0aC0r%20-%3e%20C1r%20-%3e%20C2r%20-%3e%20C3r%20-%3e%20C4r%20%5bdir%3dback%5d%3b%0aC2r%20-%3e%20C5r%20-%3e%20C6r%20-%3e%20C7r%20%5bdir%3dback%5d%3b%0a%23%20Branches%0anode%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0aedge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0amaster_r%20%5blabel%3dmaster%5d%3b%0afeat_r%20%5blabel%3d%22feat%2fnew-client%22%5d%0aC4r%20-%3e%20master_r%3b%0aC7r%20-%3e%20feat_r%3b%0a%23%20Head%0aHEAD_r%20%5blabel%3dHEAD%5d%3b%0aC4r%20-%3e%20HEAD_r%3b%0aedge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%3b%0aHEAD_r%20-%3e%20master_r%20%5barrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%2c%20label%3d%22attached%22%5d%3b%0a%7d%0asubgraph%20cluster_local%20%7b%0alabel%3d%22Local%22%0acolor%3dblack%0a%23%20Commits%0aC0%20-%3e%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20%5bdir%3dback%5d%3b%0aC2%20-%3e%20C5%20-%3e%20C6%20-%3e%20C7%20%5bdir%3dback%5d%3b%0a%23%20Branches%0anode%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0aedge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0aC4%20-%3e%20master%3b%0aC7%20-%3e%20%22imported-feat%22%3b%0a%23%20Head%0aC7%20-%3e%20HEAD%3b%0aedge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%3b%0aHEAD%20-%3e%20%22imported-feat%22%20%5blabel%3d%22attached%22%5d%3b%0a%23%20Upstreams%0aedge%20%5barrowhead%3ddot%2c%20dir%3dforward%2c%20penwidth%3d2%2c%20color%3dblue%5d%3b%0amaster%20-%3e%20master_r%20%5blabel%3d%22upstream%22%5d%3b%0a%22imported-feat%22%20-%3e%20feat_r%20%5blabel%3d%22upstream%22%5d%3b%0a%23%20Remotes%0anode%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3daquamarine3%5d%3b%0aedge%20%5barrowhead%3ddot%2c%20dir%3dforward%2c%20penwidth%3d3%2c%20color%3daquamarine3%5d%3b%0aorigin%20-%3e%20C0r%20%5blhead%3dcluster_remote%5d%0a%7d%0a%7d%0a'
     alt=''
-    width="60%"
+    width="50%"
     />
     <figcaption></figcaption>
 </figure>
 
 <ul>
 <li>A new branch <code>imported-feat</code> is created locally, and <code>origin/feat/new-client</code> is set as its <em>upstream</em></li>
-<li>It is actually customary to reuse the upstream name if there are no conflicts
+<li>It is customary to reuse the upstream name if there are no conflicts
 <ul>
 <li><code>git checkout -b feat/new-client origin/feat/new-client</code></li>
 </ul>
 </li>
-<li>Modern versions of Git automatically checkout remote branches if there are no local branches with the same name and no ambiguities
+<li>Modern versions of Git automatically checkout remote branches if there are no ambiguities:
 <ul>
 <li><code>git checkout feat/new-client</code></li>
 </ul>
@@ -1618,7 +1622,7 @@ still, it is important to understand that <em>it is not a primitive operation</e
   <img
     src='https://g.gravizo.com/svg?%0adigraph%20G%20%7b%0afontname%3d%22Helvetica%2cArial%2csans-serif%22%0afontsize%3d%2220%22%0anode%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0aedge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0arankdir%3dLR%3b%0acompound%3dtrue%0asubgraph%20cluster_remote%20%7b%0acolor%3dblack%0alabel%3d%22somesite.com%2frepo.git%22%0a%23%20Commits%0aC0r%20%5blabel%3dC0%5d%0aC1r%20%5blabel%3dC1%5d%0aC2r%20%5blabel%3dC2%5d%0aC3r%20%5blabel%3dC3%5d%0aC0r%20-%3e%20C1r%20-%3e%20C2r%20-%3e%20C3r%20%5bdir%3dback%5d%0a%23%20Branches%0anode%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%0aedge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%0amaster_r%20%5blabel%3dmaster%5d%0aC3r%20-%3e%20master_r%0a%23%20Head%0aHEAD_r%20%5blabel%3dHEAD%5d%0aC3r%20-%3e%20HEAD_r%0aedge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%0aHEAD_r%20-%3e%20master_r%20%5barrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%2c%20label%3d%22attached%22%5d%0a%7d%0asubgraph%20cluster_local%20%7b%0alabel%3d%22Local%22%0acolor%3dblack%0a%23%20Commits%0aC0%20-%3e%20C1%20-%3e%20C2%20-%3e%20C3%20%5bdir%3dback%5d%0a%23%20Branches%0anode%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%0aedge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%0aC3%20-%3e%20master%0a%23%20Head%0aC3%20-%3e%20HEAD%0aedge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%0aHEAD%20-%3e%20%22master%22%20%5blabel%3d%22attached%22%5d%0a%23%20Upstreams%0aedge%20%5barrowhead%3ddot%2c%20dir%3dforward%2c%20penwidth%3d2%2c%20color%3dblue%5d%0amaster%20-%3e%20master_r%20%5blabel%3d%22upstream%22%5d%0a%23%20Remotes%0anode%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3daquamarine3%5d%0aedge%20%5barrowhead%3ddot%2c%20dir%3dforward%2c%20penwidth%3d3%2c%20color%3daquamarine3%5d%0aorigin%20-%3e%20C0r%20%5blhead%3dcluster_remote%5d%0a%7d%0a%7d%0a'
     alt=''
-    width="100%"
+    width="90%"
     />
     <figcaption></figcaption>
 </figure>
@@ -1637,7 +1641,7 @@ still, it is important to understand that <em>it is not a primitive operation</e
   <img
     src='https://g.gravizo.com/svg?%0adigraph%20G%20%7b%0afontname%3d%22Helvetica%2cArial%2csans-serif%22%0afontsize%3d%2220%22%0anode%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0aedge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0arankdir%3dLR%3b%0acompound%3dtrue%0asubgraph%20cluster_remote%20%7b%0acolor%3dblack%0alabel%3d%22somesite.com%2frepo.git%22%0a%23%20Commits%0aC0r%20%5blabel%3dC0%5d%0aC1r%20%5blabel%3dC1%5d%0aC2r%20%5blabel%3dC2%5d%0aC3r%20%5blabel%3dC3%5d%0aC0r%20-%3e%20C1r%20-%3e%20C2r%20-%3e%20C3r%20%5bdir%3dback%5d%0a%23%20Branches%0anode%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%0aedge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%0amaster_r%20%5blabel%3dmaster%5d%0aC3r%20-%3e%20master_r%0a%23%20Head%0aHEAD_r%20%5blabel%3dHEAD%5d%0aC3r%20-%3e%20HEAD_r%0aedge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%0aHEAD_r%20-%3e%20master_r%20%5barrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%2c%20label%3d%22attached%22%5d%0a%7d%0asubgraph%20cluster_local%20%7b%0alabel%3d%22Local%22%0acolor%3dblack%0a%23%20Commits%0aC0%20-%3e%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20%5bdir%3dback%5d%0a%23%20Branches%0anode%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%0aedge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%0aC4%20-%3e%20master%0a%23%20Head%0aC4%20-%3e%20HEAD%0aedge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%0aHEAD%20-%3e%20%22master%22%20%5blabel%3d%22attached%22%5d%0a%23%20Upstreams%0aedge%20%5barrowhead%3ddot%2c%20dir%3dforward%2c%20penwidth%3d2%2c%20color%3dblue%5d%0amaster%20-%3e%20master_r%20%5blabel%3d%22upstream%22%5d%0a%23%20Remotes%0anode%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3daquamarine3%5d%0aedge%20%5barrowhead%3ddot%2c%20dir%3dforward%2c%20penwidth%3d3%2c%20color%3daquamarine3%5d%0aorigin%20-%3e%20C0r%20%5blhead%3dcluster_remote%5d%0a%7d%0a%7d%0a'
     alt=''
-    width="100%"
+    width="90%"
     />
     <figcaption></figcaption>
 </figure>
@@ -1657,7 +1661,7 @@ still, it is important to understand that <em>it is not a primitive operation</e
   <img
     src='https://g.gravizo.com/svg?%0adigraph%20G%20%7b%0afontname%3d%22Helvetica%2cArial%2csans-serif%22%0afontsize%3d%2220%22%0anode%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0aedge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0arankdir%3dLR%3b%0acompound%3dtrue%0asubgraph%20cluster_remote%20%7b%0acolor%3dblack%0alabel%3d%22somesite.com%2frepo.git%22%0a%23%20Commits%0aC0r%20%5blabel%3dC0%5d%0aC1r%20%5blabel%3dC1%5d%0aC2r%20%5blabel%3dC2%5d%0aC3r%20%5blabel%3dC3%5d%0aC0r%20-%3e%20C1r%20-%3e%20C2r%20-%3e%20C3r%20%5bdir%3dback%5d%0a%23%20Branches%0anode%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%0aedge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%0amaster_r%20%5blabel%3dmaster%5d%0aC3r%20-%3e%20master_r%0a%23%20Head%0aHEAD_r%20%5blabel%3dHEAD%5d%0aC3r%20-%3e%20HEAD_r%0aedge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%0aHEAD_r%20-%3e%20master_r%20%5barrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%2c%20label%3d%22attached%22%5d%0a%7d%0asubgraph%20cluster_local%20%7b%0alabel%3d%22Local%22%0acolor%3dblack%0a%23%20Commits%0aC0%20-%3e%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20%5bdir%3dback%5d%0a%23%20Branches%0anode%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%0aedge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%0aC4%20-%3e%20master%0a%23%20Head%0aC4%20-%3e%20HEAD%0aedge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%0aHEAD%20-%3e%20%22master%22%20%5blabel%3d%22attached%22%5d%0a%23%20Upstreams%0aedge%20%5barrowhead%3ddot%2c%20dir%3dforward%2c%20penwidth%3d2%2c%20color%3dblue%5d%0amaster%20-%3e%20master_r%20%5blabel%3d%22upstream%22%5d%0a%23%20Remotes%0anode%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3daquamarine3%5d%0aedge%20%5barrowhead%3ddot%2c%20dir%3dforward%2c%20penwidth%3d3%2c%20color%3daquamarine3%5d%0aorigin%20-%3e%20C0r%20%5blhead%3dcluster_remote%5d%0a%7d%0a%7d%0a'
     alt=''
-    width="90%"
+    width="85%"
     />
     <figcaption></figcaption>
 </figure>
@@ -1676,7 +1680,7 @@ still, it is important to understand that <em>it is not a primitive operation</e
   <img
     src='https://g.gravizo.com/svg?%0adigraph%20G%20%7b%0afontname%3d%22Helvetica%2cArial%2csans-serif%22%0afontsize%3d%2220%22%0anode%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0aedge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0arankdir%3dLR%3b%0acompound%3dtrue%0asubgraph%20cluster_remote%20%7b%0acolor%3dblack%0alabel%3d%22somesite.com%2frepo.git%22%0a%23%20Commits%0aC0r%20%5blabel%3dC0%5d%0aC1r%20%5blabel%3dC1%5d%0aC2r%20%5blabel%3dC2%5d%0aC3r%20%5blabel%3dC3%5d%0aC4r%20%5blabel%3dC4%5d%0aC0r%20-%3e%20C1r%20-%3e%20C2r%20-%3e%20C3r%20-%3e%20C4r%20%5bdir%3dback%5d%0a%23%20Branches%0anode%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%0aedge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%0amaster_r%20%5blabel%3dmaster%5d%0aC4r%20-%3e%20master_r%0a%23%20Head%0aHEAD_r%20%5blabel%3dHEAD%5d%0aC4r%20-%3e%20HEAD_r%0aedge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%0aHEAD_r%20-%3e%20master_r%20%5barrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%2c%20label%3d%22attached%22%5d%0a%7d%0asubgraph%20cluster_local%20%7b%0alabel%3d%22Local%22%0acolor%3dblack%0a%23%20Commits%0aC0%20-%3e%20C1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20%5bdir%3dback%5d%0a%23%20Branches%0anode%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%0aedge%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%0aC4%20-%3e%20master%0a%23%20Head%0aC4%20-%3e%20HEAD%0aedge%20%5bdir%3dforward%2c%20arrowhead%3dtee%2c%20penwidth%3d2%2c%20color%3dred%5d%0aHEAD%20-%3e%20%22master%22%20%5blabel%3d%22attached%22%5d%0a%23%20Upstreams%0aedge%20%5barrowhead%3ddot%2c%20dir%3dforward%2c%20penwidth%3d2%2c%20color%3dblue%5d%0amaster%20-%3e%20master_r%20%5blabel%3d%22upstream%22%5d%0a%23%20Remotes%0anode%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3daquamarine3%5d%0aedge%20%5barrowhead%3ddot%2c%20dir%3dforward%2c%20penwidth%3d3%2c%20color%3daquamarine3%5d%0aorigin%20-%3e%20C0r%20%5blhead%3dcluster_remote%5d%0a%7d%0a%7d%0a'
     alt=''
-    width="90%"
+    width="85%"
     />
     <figcaption></figcaption>
 </figure>
