@@ -34,7 +34,7 @@ Verify that the software meets quality criteria.
 * **Functional** criteria:
   * Does *what* we expect it to do?
 * **Non-functional** criteria:
-  * 
+  * Does it do it *how* we want it?
 
 ---
 

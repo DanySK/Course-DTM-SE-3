@@ -399,6 +399,10 @@ This is achieved through a *special `.gitignore` file*.
   * it is a list of paths that git will ignore (unless `git add` is called with the `--force` option)
   * it is possible to add exceptions
 
+---
+
+## `.gitignore` example
+
 ```gitignore
 # ignore the bin folder and all its contents
 bin/
@@ -440,7 +444,9 @@ Git provides a dedicated sub-command:
 * visualization of a lateral *graph*: `git log --graph`
 * compact visualization of all branches with a graph: `git log --oneline --all --graph`
 
-example output of `git log --oneline --all --graph`
+---
+
+### example output of `git log --oneline --all --graph`
 
 ```text
 * d114802 (HEAD -> master, origin/master, origin/HEAD) moar contribution
@@ -466,6 +472,10 @@ In git, a reference to a commit is called `<tree-ish>`. Valid `<tree-ish>`es are
 * *Branch names*, in which case the reference is to the last commit of the branch.
 * `HEAD`, a special name referring to the current commit (the head, indeed).
 * *Tag names* (we will discuss what a tag is later on).
+
+---
+
+## Relative references
 
 It is possible to build *relative references*, e.g., "get me the commit before this `<tree-ish>`",
 by following the commit `<tree-ish>` with a tilde (`~`) and with the number of parents to get to:
@@ -494,7 +504,10 @@ Git provides support to visualize the changes in terms of *modified lines* throu
 * `git diff --staged <tree-ish>` shows the difference between `<tree-ish>` and the *working tree*, *including staged changes*
 * `git diff <from> <to>`, where `<from>` and `<to>` are `<tree-ish>`es, shows the differences between `<from>` and `<to>`
 
-Example output:
+---
+
+### `git diff` Example output:
+
 ```diff
 diff --git a/.github/workflows/build-and-deploy.yml b/.github/workflows/build-and-deploy.yml
 index b492a8c..28302ff 100644
@@ -559,7 +572,7 @@ for a commit to be valid, `HEAD` must be at the "end" of a branch (on its last c
   }
 {{< /gravizo >}}
 
-When an older commit is checked out, however, this condition doesn't occur, if we run `git checkout HEAD~4`:
+When an old commit is checked out this condition doesn't hold, if we run `git checkout HEAD~4`:
 
 {{< gravizo >}}
   digraph G {
@@ -581,16 +594,17 @@ When an older commit is checked out, however, this condition doesn't occur, if w
   }
 {{< /gravizo >}}
 
-The system enters a special workmode called *detached head*. When in detached head:
-* It is possible to make changes and experiments
-* Git allows to make commits, but they are lost!
-  * Not really, but to retrieve them we need `git reflog` and `git cherry-pick`, that we won't discuss
+The system enters a special workmode called *detached head*.
+
+When **in detached head**, Git allows to make **commits**, but they **are lost**!
+
+(Not really, but to retrieve them we need `git reflog` and `git cherry-pick`, that we won't discuss)
 
 ---
 
 ### Creating branches
 
-To be able to store our commits, we need to create a **branch**, then checkout the branch, so that `HEAD` returns attached.
+To store our commits, we need to *create* a **branch**, then attach the `HEAD` by checking it out.
 
 In Git, new branches are created with `git branch branch_name`
 
@@ -804,12 +818,11 @@ Consider this situation:
   }
 {{< /gravizo >}}
 
-* We want `another_branch` to also have the changes in `C5` and `C6`
-  * namely, to be up to date with `some_branch`
-* But `some_branch` contains all the commits of `another_branch`
-* We don't really need a merge commit, we can just move the `another_branch` to point it to `C6`
+* We want `new-experiment` to also have the changes in `C5` and `C6` (to be up to date with `master`)
+* `master` contains all the commits of `new-experiment`
+* We don't really need a merge commit, we can just move `new-experiment` to point it to `C6`
 * $\Rightarrow$ This is called a **fast-forward**
-  * It is the *default behavior* in Git when merging branches where the target is the same as the head plus something
+  * It is the *default behavior* in Git when merging branches where the target is the head plus something
 
 {{< gravizo >}}
   digraph G {
@@ -924,7 +937,7 @@ we would get
 
 ---
 
-## Newlines and Git
+## Newlines and version control
 
 If your team uses *multiple OSs*, it is likely that, by default, the text editors use either `LF` (on Unix) or `CRLF`
 
@@ -940,6 +953,10 @@ resulting in repositories with *illogically mixed line endings*
 and loads of warnings about `LF`/`CRLF` conversions.
 
 Line endings should instead be **configured per file type!**
+
+---
+
+## `.gitattributes`
 
 * A sensible strategy is to use `LF` everywhere, but for Windows scripts (`bat`, `cmd`, `ps1`)
 * Git can be configured through a `.gitattributes` file in the repository root
@@ -1006,7 +1023,31 @@ We would like to have *branches to which `HEAD` cannot attach* (hence, they can'
   }
 {{< /gravizo >}}
 
-Appears good, but if by mistake we do something like: ⬇️ `git checkout 1.2.3` [some changes] `git commit` ⬇️
+---
+
+## Branches as attachable (and movable) labels
+
+{{< gravizo width=60 >}}
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+   	node [fontname="Helvetica,Arial,sans-serif"]
+  	edge [fontname="Helvetica,Arial,sans-serif"]
+    rankdir=LR;
+    # Commits
+    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
+    # Branches
+    node [style="filled,solid", shape=box, fillcolor=orange];
+    edge [dir=back, penwidth=4, color=orange];
+    C6 -> master;
+    C6 -> HEAD;
+    C4 -> "1.2.3"
+    # Head
+    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
+    HEAD -> master [label="attached"];
+  }
+{{< /gravizo >}}
+
+Looks good, but if we do something like: ⬇️ `git checkout 1.2.3` [some changes] `git commit` ⬇️
 
 {{< gravizo width=60 >}}
   digraph G {
@@ -1036,10 +1077,10 @@ Our version **moved**, *we never want this to happen*!
 
 ## Tagging
 
-Git provides a dedicated `tag` subcommand to create *permanent labels* attached to commits.
+The `tag` subcommand to create *permanent labels* attached to commits.
 Tags come in two fashions:
 * **Lightweight** *tags* are very similar to a "permanent branch": *pointers to commits that never change*
-* **Annotated** *tags* store additional information: a *message* (often used for logging changes), and, optionally, a *signature*
+* **Annotated** *tags* store additional information: a *message*, and, optionally, a *signature*
   * created by adding the `-a` option (or `-s`/`-u` for signed tags)
 
 {{< gravizo width=70 >}}
@@ -1161,16 +1202,17 @@ Git provides a `clone` subcommand that copies *the whole history* of a repositor
   * if `destination` is omitted, a folder with the same namen of the last segment of `URI` is created
   * `URI` can be remote or local, Git supports the `file://`, `https://`, and `ssh` protocols
       * `ssh` *recommended* when available
-* The `clone` subcommand checks out the remote branch where the `HEAD` is attached
-  * the "default branch"
+* The `clone` subcommand checks out the remote branch where the `HEAD` is attached (*default branch*)
 
 Examples:
-* `git clone /some/repository/on/my/file/system destination`
-  * creates a local folder called `destination` and copies the repository from the local directory
-* `git clone https://somewebsite.com/someRepository.git myfolder`
-  * creates a local folder called `myfolder` and copies the repository located at the specified `URL`
-* `git clone user@sshserver.com:SomePath/SomeRepo.git`
-  * creates a local folder called `SomeRepo` and copies the repository located at the specified `URL`
+```bash
+# creates a local folder called `destination` and copies the repository from the local directory
+git clone /some/repository/on/my/file/system destination
+# creates a local folder called `myfolder` and copies the repository located at the specified `URL`
+git clone https://somewebsite.com/someRepository.git myfolder
+# creates a local folder called `SomeRepo` and copies the repository located at the specified `URL`
+git clone user@sshserver.com:SomePath/SomeRepo.git
+```
 
 ---
 
@@ -1203,7 +1245,7 @@ Remote branches can be *associated* with local branches, with the intended meani
 
 ---
 
-## Actual result of `git clone git@somesite.com/repo.git`
+### Actual result of `git clone git@somesite.com/repo.git`
 
 {{< gravizo width=100 >}}
   digraph G {
@@ -1283,9 +1325,9 @@ Remote branches can be *associated* with local branches, with the intended meani
 
 ## Importing remote branches
 
-`git branch` (or `git checkout -b`) can be used to check out remote branches locally *after they have been fetched*.
+`git branch` (or `git checkout -b`) can checkout remote branches locally *once they have been fetched*.
 
-{{< gravizo width=60 >}}
+{{< gravizo width=50 >}}
   digraph G {
     fontname="Helvetica,Arial,sans-serif"
     fontsize="20"
@@ -1357,7 +1399,7 @@ Remote branches can be *associated* with local branches, with the intended meani
 
 ⬇️ `git checkout -b imported-feat origin/feat/new-client` ⬇️
 
-{{< gravizo width=60 >}}
+{{< gravizo width=50 >}}
   digraph G {
     fontname="Helvetica,Arial,sans-serif"
     fontsize="20"
@@ -1431,9 +1473,9 @@ Remote branches can be *associated* with local branches, with the intended meani
 {{< /gravizo >}}
 
 * A new branch `imported-feat` is created locally, and `origin/feat/new-client` is set as its *upstream*
-* It is actually customary to reuse the upstream name if there are no conflicts
+* It is customary to reuse the upstream name if there are no conflicts
   * `git checkout -b feat/new-client origin/feat/new-client`
-* Modern versions of Git automatically checkout remote branches if there are no local branches with the same name and no ambiguities
+* Modern versions of Git automatically checkout remote branches if there are no ambiguities:
   * `git checkout feat/new-client`
 
 ---
@@ -2395,7 +2437,7 @@ By default, `git push` does not send *tags*
 
 ## Example with git pull and git push
 
-{{< gravizo width=100 >}}
+{{< gravizo width=90 >}}
 digraph G {
   fontname="Helvetica,Arial,sans-serif"
   fontsize="20"
@@ -2449,7 +2491,7 @@ digraph G {
 
 ⬇️ [some changes] `git add . && git commit` ⬇️
 
-{{< gravizo width=100 >}}
+{{< gravizo width=90 >}}
 digraph G {
   fontname="Helvetica,Arial,sans-serif"
   fontsize="20"
@@ -2505,7 +2547,7 @@ digraph G {
 
 ## Example with git pull and git push
 
-{{< gravizo width=90 >}}
+{{< gravizo width=85 >}}
 digraph G {
   fontname="Helvetica,Arial,sans-serif"
   fontsize="20"
@@ -2559,7 +2601,7 @@ digraph G {
 
 ⬇️ [some changes] `git push` ⬇️
 
-{{< gravizo width=90 >}}
+{{< gravizo width=85 >}}
 digraph G {
   fontname="Helvetica,Arial,sans-serif"
   fontsize="20"

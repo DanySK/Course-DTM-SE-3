@@ -447,18 +447,12 @@ its behavior accordingly.
 Framework are *actionable*, but formalization may introduce *assumptions about projects and teams that do not hold always!*
 
 **Agile principles and practices** get often captured into these well-known frameworks, with slightly different focuses and goals:
-* *Scrum*
-    * focus on team structure, roles, responsibilities, procedures
-* *Kanban*
-    * focus on tasks, streamlining, bottleneck mitigation
-* *XP (Extreme Programming)*
-    * focuses on release frequency
-* *Feature Driven Development*
-    * focuses on the client requests and satisfaction
-* *Crystal*
-    * focuses on self-management of teams
-* *DSDM (Dynamic Systems Development Method)*
-    * focuses on time and budget constraints
+* *Scrum*: focus on team structure, roles, responsibilities, procedures
+* *Kanban*: focus on tasks, streamlining, bottleneck mitigation
+* *XP (Extreme Programming)*: focus on release frequency
+* *Feature Driven Development*: focus on clients' requests and satisfaction
+* *Crystal*: focus on self-management of teams
+* *DSDM (Dynamic Systems Development Method)*: focus on time and budget constraints
 
 ---
 
@@ -498,22 +492,19 @@ Then refined to the current framework. The name is from Rugby's "scrummage"
 
 ## Scrum roles
 
-* **Product owner (PO)**
-    * *Goal*: maximimizing ROI
+* **Product owner (PO)**, *Goal*: maximimizing ROI
     * *Tasks*: identify the necessary features and prioritize them
     * *Vision*: strategic, similar to a product manager, but *understands the product development*!
     * *Interactions*: customers, development team, SM
     * *Responsibilities*: coarse-grained, high-level decision on product directions
 
-* **Development team**
-    * *Goal*: make things happen
+* **Development team**, *Goal*: make things happen
     * *Tasks*: build the selected features, provide time estimates, provide feedback to the PO
     * *Vision*: tactic, cross-functional (T-shaped, the team can deal with all the aspects of a sub-project)
     * *Interactions*: PO and SM
     * *Responsibilities*: fine-grained, autonomous and hence accountable
 
-* **Scrum master (SM)**
-    * *Goal*: coaching and supervision
+* **Scrum master (SM)**, *Goal*: coaching and supervision
     * *Tasks*: explain Scrum, supervise its application, help learning the methodology
     * *Vision*: process-oriented, expert in Scrum
     * *Interactions*: PO and development team
