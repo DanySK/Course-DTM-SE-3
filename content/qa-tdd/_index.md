@@ -27,14 +27,17 @@ As any engineered product, software should be *subject to quality assurance cont
 
 ---
 
-## Some common elements
+## Testing: critieria
 
 Verify that the software meets quality criteria.
 
 * **Functional** criteria:
   * Does *what* we expect it to do?
+    * Does the software produce the expected results?
 * **Non-functional** criteria:
   * Does it do it *how* we want it?
+    * Is it secure?
+    * Are performance acceptable?
 
 ---
 
@@ -46,9 +49,13 @@ Verify that the software meets quality criteria.
 
 ## Testing in Python
 
+
+
 ---
 
 ## Bugs / reproducibility
+
+
 
 ---
 

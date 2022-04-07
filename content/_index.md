@@ -30,9 +30,8 @@ aliases = [
 # Module contents and action plan
 
 * **2h** [introduction to agile and DevOps, a case from the literature, SCRUM](devops-intro)
-* **3h** [decentralized version control, basics (with git)](dvcs-basics)
-* **3h** [QA, reproducibility and replicability, testing, TDD (examples in Python)](qa-tdd)
-* **2h** advanced version control, team organization
+* **3h+3h** [decentralized version control (with git) and team organization](dvcs-basics)
+* **2h** [QA, testing, TDD, reproducibility and replicability (examples in Python)](qa-tdd)
 * **3h** [software dependencies, build automation (examples with virtualenv / pyenv / pip)](build)
 * **3h** Continuous integration (examples with GitHub Actions)
 * **2h** versioning, semantic release, licenses (if we got time)
