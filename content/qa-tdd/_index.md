@@ -41,21 +41,127 @@ Verify that the software meets quality criteria.
 
 ---
 
-## Testing
+## Automated vs. manual
 
+Running an application manually is a form of testing: *exploratory testing*.
+* Done **without a plan**
 
-
----
-
-## Testing in Python
-
-
+If there is a plan that can be followed step-by-step, then *there is a program that can do it for you*
+* If a program can do it for you, the it *should* do it for you
 
 ---
 
-## Bugs / reproducibility
+## Testing scope
 
+As any engineering product, software can be tested at different levels of abstraction.
+* **Unit** testing: test *single software components*
+  * Is this `class` behavior the expected one?
+  * Is this *suspension spring* behavior the expected one?
+  * Is this *steel rod* mechanical properties the expected ones?
+* **Integration** testing: test *an entire subsystem*, with *multiple components*
+  * Is this *OCR server* behavior the expected ones?
+  * Is this *engine*  working as expected?
+  * Is this *span of a bridge* working correctly?
+* **End-to-end** (or **acceptance**) testing: test *an entire system*
+  * Is this whole application functional?
+  * Is the car lapping under 2 minutes?
+  * Does the bridge work nominally with high traffic and strong wind?
 
+A well-maintained engineering product must have tests at all granularity levels
+
+---
+
+## Reproducibility
+
+**Reproducibility** is **central** for testing
+
+(true for any engineering, but in particular for software)
+
+* *Tests should always provide the same results*
+  * Tests that work sometimets but sometimes not are called *flaky tests*
+* Tests should be *self-contained* (they should not depend on the results of previous tests)
+* *Random* events can be tested by *seeding* the random generators
+
+Would you be comfortable with a car that passes the crash test 99.9% of time, but on the 0.1% of the cases fails unexplicably?
+
+---
+
+## Test plan
+
+Testing should be *planned for in advance*.
+
+A good test plan can guide the development, and should be ready *early* in the project.
+
+When designing cars,
+the crash testing procedure,
+the engine test bench,
+and so on are prepared well before the car prototype is ready!
+
+---
+
+## Test-Driven Development (TDD)
+
+The practice of:
+* converting requirements to (executable) test cases
+* preparing tests before development
+* define the expected behavior via test cases
+* track all development by always testing all cases
+
+---
+
+## Development cycle in TDD
+
+1. *Capture* a requirement into an executable *test*
+2. Run the test suite, the _new test should **fail**_
+3. Fix the code so that the new test passes
+4. Re-run the whole test suite, all tests should pass
+5. Improve the quality as needed (refactor, style, duplication...)
+
+---
+
+## Injecting tests into projects started without tests
+
+Developing without testing is *unsustainable*
+
+Yet many software projects have no or minimal tests, as:
+
+> We do not have time (or money) for testing
+
+Beware: **testing saves times in the long run**, not testing is a *cost*!
+* Untested software components are likely sources of *technical debt*
+
+---
+
+## A much better quotation
+
+> we never have the money to do it *right* but somehow we always have the fucking money to do it *twice*
+
+$---$ UserInputSucks (@UserInputSucks) [May 27, 2019](https://twitter.com/UserInputSucks/status/1132904286415929345)
+
+---
+
+## Tackling bugs and regressions
+
+When a new **bug** (or a **regression**, namely, a feature that was working and it is now compromised) is discovered,
+*resist the temptation to "fix" the issue right away*
+
+* A fix without a test could be *insufficient*
+* The "fix" could break another feature (create a *regression*)
+
+A more **robust approach**:
+1. Reproduce the issue in a *minimal context*
+2. Create a new *test case* that *correctly fails*
+3. *Fix* the issue, and make sure that the test now *passes*
+
+Writing the test *after* the fix is much less effective.
+
+---
+
+## Coverage
+
+---
+
+## Stubbing, mocking, spying
 
 ---
 
@@ -242,4 +348,27 @@ Non exhaustive list:
 * [Code Factor](https://www.codefactor.io/)
     * Automated software QA
 
+---
+
+## Unit testing in Python
+
+An example repository: [https://github.com/DanySK/python-testing-101/tree/master/example-py-unittest](https://github.com/DanySK/python-testing-101/tree/master/example-py-unittest)
+
+Try the following:
+1. Clone the repository
+2. Move into `example-py-unittest` folder
+3. Run the tests with `python -m unittest discover` (option `-m` runs a module as script, `discover` is an option that instructs `unittest` to find and run all tests), observe the results
+4. Introduce a bug in `calc.py` and re-run the tests. Observe the behavior
+
+---
+
+### Do it yourself!
+1. Based on the project structure of the examplar, prepare a `complex.py` implementing a complex number
+2. The class should support methods for adding, subtracting, multiplying, and dividing complex numbers. Create the number and implement them with `pass`
+3. Prepare the test cases to verify that the behaviour is the intended one
+4. Implement the methods!
+
+**Notes**:
+* A complex number can be modelled as a couple of real numbers, one for the real part, one for the imaginary part.
+* Try to emulate the behavior of a number [operator overloading](https://docs.python.org/3/reference/datamodel.html#emulating-numeric-types)!
 
