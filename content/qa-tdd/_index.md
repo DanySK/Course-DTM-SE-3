@@ -155,13 +155,100 @@ A more **robust approach**:
 
 Writing the test *after* the fix is much less effective.
 
----
-
-## Coverage
+See this [example interaction](https://github.com/AlchemistSimulator/Alchemist/issues/1002) of a reasonable way to tackle bugs.
 
 ---
 
-## Stubbing, mocking, spying
+## Testing software before it is ready: boundaries
+
+Problem: how is it possible to test code that *does not exist*?
+
+More in general: how to design a testbed for an engineering product that is not prototypied yet?
+
+**clean boundaries**: the component must have a well-defined interface with the rest of the world.
+In software, it means that the component has a *well-defined Application Programming Interface* (API).
+Our artifact must be **modularized** correctly
+(this also helps with development, simplicity and maintenance)
+
+**clear scope**: well engineered (software) components usually *do one thing well*.
+Test plans are conceived to test that the one thing is performed correctly.
+
+---
+
+## Testing software before it is ready: missing components
+
+We can now *design our tests*,
+but how to **run** them if *the components surrounding the tested one are not ready*?
+
+How to test a new suspension system if the "surrounding" car is not ready (not even fully designed) yet?
+
+How to test that our new rocket engine works as expected with no rocket?
+
+How to test that our multi-engine rocket works as expected without payload?
+
+---
+
+{{< youtube "QMcj58TbsyU" >}}
+
+---
+
+{{< youtube "kchq9AGXsyA" >}}
+
+---
+
+## Testing software before it is ready: test doubles
+
+The trick: *simulate components that are not ready yet*!
+
+When writing software, components required for the execution that are not ready yet can be simulated
+**if their API has been clearly defined**
+
+The simulated component are called *test doubles*
+
+* *dummy*: a (usually unimplemented) placeholder (e.g., unused mandatory argument)
+  * a weight put on the suspension
+* *stub*: partly implemented dummy
+  * a system applying variable weight to the suspension
+* *spy*: a stub that tracks information of the way it is being used
+  * a dynamometer recording the suspension behavior under different conditions
+* *mock*: a spy that expects to be used in a certain way, and fails if the expectation is unmet
+  * a smart dynamometer that interrupts testing if the suspension behavior is not nominal
+* *fake*: a fully implemented version of the component unsuitable for production
+  * a car prototype
+
+---
+
+## Test doubles and development cost
+
+> Why should the team "waste" time creating doubles instead of just writing the thing?
+
+doubles are **cheaper**: dedicated libraries make doubles *implementation extremely quick*
+* In Python, [`unittest.mock`](https://docs.python.org/3/library/unittest.mock.html) is included in the distribution, and [Doubles](https://doubles.readthedocs.io/en/latest/) is a valid alternative.
+
+doubles are **simpler**: only encode the behavior required to check some part of the behaviour. The probability of them being bugged is lower. *Debugging is easier*.
+
+---
+
+## Checking (**un**)tested components: coverage
+
+*Code coverage* is a set of **metrics** that measure how much of the source code of a program has been executed when testing.
+
+Common metrics:
+* *function coverage*: did the flow control get through this function?
+* *branch coverage*: did the flow control tried both branches of this condition?
+* *line-of-code coverage*: did the flow control get through this line during tests?
+  * *most common*, usually combined with *branch coverage*
+
+[Example coverage report](https://app.codecov.io/gh/AlchemistSimulator/Alchemist)
+
+{{% fragment %}}
+**WARNING**
+
+* the actual information coverage provides is which code is **partly tested** or **untested**!
+* we *know nothing of the testing quality* on the covered part, but that control flow goes through.
+* *Useful* metric, but it cannot be the *only* metric to evaluate testing
+  * Dramatically high coverage requirements may induce *metric-chasing*!
+{{% /fragment  %}}
 
 ---
 
@@ -183,16 +270,16 @@ Writing the test *after* the fix is much less effective.
 * *Style* and *coherence*
 * *Flawed programming* patterns
 * Violations of the *DRY* principle
-* **Testing**
-  * Multifaceted issue
-  * To be executed along the whole software lifecycle
-  * $\Rightarrow$ Plenty of detail in upcoming lectures
+* **Runtime Testing**
 
 ---
 
-## Quality Assurance: style and coherence
+## Quality Assurance: static analysis
 
-Automated checkers are also called *linters*, often provide an auto-formatting tool
+Code analysis without execution is called *static analysis*.
+
+Static analysis tools are often referred to as *linters*
+(especially those providing auto-formatting tools)
 
 **Idiomatic** and **standardized** code:
 * reduces *complexity*
@@ -200,18 +287,14 @@ Automated checkers are also called *linters*, often provide an auto-formatting t
 * prevents *style-changing commits* with *unintelligible diffs*
 * lowers the *maintenance* burden and related *costs*
 * simplifies *code reviews*
+* improves *security*
 
-In *Java*:
-[Checkstyle](https://checkstyle.sourceforge.io/),
-[PMD](https://pmd.github.io/)
-
-In *Kotlin*:
-[IDEA Inspection](https://github.com/JetBrains/inspection-plugin),
-[Ktlint](https://ktlint.github.io/)
-
-In *Scala*:
-[Scalafmt](https://scalameta.org/scalafmt/),
-[Scalastyle](http://www.scalastyle.org/rules-1.0.0.html)
+In *Python*:
+* [Mypy](http://mypy-lang.org/): static analysis for bug detection (requires [annotations](https://www.python.org/dev/peps/pep-0484/))
+* [Pyflakes](https://github.com/PyCQA/pyflakes): effective programming, excluding style
+* [Pylint](https://pylint.org/): reverse engineering via [Pyreverse](https://www.logilab.org/blogentry/6883), style (enforces [PEP8](https://www.python.org/dev/peps/pep-0008/)), and effective programming
+* [Bandit](https://github.com/PyCQA/bandit): security scanner
+* [Prospector](https://prospector.landscape.io/en/master): tool collection. Includes Pylint and Pyflakes, adds [PEP27](https://www.python.org/dev/peps/pep-0257/)-compliance checks for comments, complexity, packaging (via [pyroma](https://github.com/regebro/pyroma)), secrets leaking (via [dodgy](https://github.com/landscapeio/dodgy)), and unused code (via [vulture](https://github.com/jendrikseipp/vulture)) checks.
 
 ---
 
@@ -224,18 +307,6 @@ Identification and reporting of *patterns* known to be *problematic*
 * Improves *performance*
 * Reduces *complexity*
 * Reduces *maintenance cost*
-
-In *Java*:
-[PMD](https://pmd.github.io/),
-[SpotBugs](https://spotbugs.github.io/)
-
-In *Kotlin*:
-[Detekt](https://detekt.github.io/detekt/)
-[IDEA Inspection](https://github.com/JetBrains/inspection-plugin)
-
-In *Scala*:
-[Scalafix](htthttps://scalacenter.github.io/scalafix/),
-[Wartremover](http://www.wartremover.org/)
 
 ---
 
@@ -251,84 +322,6 @@ General advice: **never copy/paste** your code
 * If you need to copy something, you probably need to *refactor* something
 
 Multi-language tool: [Copy/Paste Detector (CPD)](https://pmd.github.io/latest/pmd_userdocs_cpd.html) (part of PMD)
-
----
-
-## Quality Assurance: testing and coverage
-
-**Automated** software verification
-* Unit level
-* Integration testing
-* End-to-end testing
-
-Extension of testing can be evaluated via **coverage**.
-* Coverage tells you *how much code is **untested**, not how much is tested*
-
-Several frameworks, recommended ones:
-
-* Testing for *all JVM languages*: [Junit/Jupiter (JUnit 5)](https://junit.org/junit5/docs/current/user-guide/)
-* Testing for *Kotlin*: [Kotest](https://kotest.io/)
-* Testing for *Scala*: [Scalatest](https://www.scalatest.org/)
-* Coverage for all JVM languages: [JaCoCo](https://www.eclemma.org/jacoco/)
-* Coverage for Scala: [Scoverage](http://scoverage.org/)
-
----
-
-## Quality Assurance: JUnit + Gradle
-
-`src/main/scala/it/unibo/test/Test.scala`
-
-{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="04-junit/src/main/scala/it/unibo/test/Test.scala">}}
-
----
-
-## Quality Assurance: JUnit + Gradle
-
-`src/test/scala/MyTest.scala`
-
-{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="04-junit/src/test/scala/MyTest.scala">}}
-
----
-
-## Quality Assurance: JUnit + Gradle
-
-`build.gradle.kts`
-
-{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="04-junit/build.gradle.kts">}}
-
----
-
-## Quality Assurance: Scalatest + Scoverage
-
-Let's switch *testing framework* and enable *coverage*
-
-`src/main/scala/it/unibo/test/Test.scala`
-
-{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="03-scalatest/src/main/scala/it/unibo/test/Test.scala">}}
-
----
-
-## Quality Assurance: Scalatest + Scoverage
-
-`src/test/scala/Test.scala`
-
-{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="03-scalatest/src/test/scala/Test.scala">}}
-
----
-
-## Quality Assurance: Scalatest + Scoverage
-
-`build.gradle.kts`
-
-{{< github owner="APICe-at-DISI" repo="PPS-ci-examples" path="03-scalatest/build.gradle.kts">}}
-
----
-
-## Gradle: QA execution
-
-* The `java` plugin (applied by the `scala` plugin under the hood) also introduces:
-  * `test`: a task that runs all tests
-  * `check`: a task that runs the whole quality assurance suite
 
 ---
 
@@ -371,4 +364,3 @@ Try the following:
 **Notes**:
 * A complex number can be modelled as a couple of real numbers, one for the real part, one for the imaginary part.
 * Try to emulate the behavior of a number [operator overloading](https://docs.python.org/3/reference/datamodel.html#emulating-numeric-types)!
-
