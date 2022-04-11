@@ -175,10 +175,108 @@ and so on are prepared well before the car prototype is ready!</p>
 <li><em>Fix</em> the issue, and make sure that the test now <em>passes</em></li>
 </ol>
 <p>Writing the test <em>after</em> the fix is much less effective.</p>
+<p>See this <a href="https://github.com/AlchemistSimulator/Alchemist/issues/1002">example interaction</a> of a reasonable way to tackle bugs.</p>
 </section><section>
-<h2 id="coverage">Coverage</h2>
+<h2 id="testing-software-before-it-is-ready-boundaries">Testing software before it is ready: boundaries</h2>
+<p>Problem: how is it possible to test code that <em>does not exist</em>?</p>
+<p>More in general: how to design a testbed for an engineering product that is not prototypied yet?</p>
+<p><strong>clean boundaries</strong>: the component must have a well-defined interface with the rest of the world.
+In software, it means that the component has a <em>well-defined Application Programming Interface</em> (API).
+Our artifact must be <strong>modularized</strong> correctly
+(this also helps with development, simplicity and maintenance)</p>
+<p><strong>clear scope</strong>: well engineered (software) components usually <em>do one thing well</em>.
+Test plans are conceived to test that the one thing is performed correctly.</p>
 </section><section>
-<h2 id="stubbing-mocking-spying">Stubbing, mocking, spying</h2>
+<h2 id="testing-software-before-it-is-ready-missing-components">Testing software before it is ready: missing components</h2>
+<p>We can now <em>design our tests</em>,
+but how to <strong>run</strong> them if <em>the components surrounding the tested one are not ready</em>?</p>
+<p>How to test a new suspension system if the &ldquo;surrounding&rdquo; car is not ready (not even fully designed) yet?</p>
+<p>How to test that our new rocket engine works as expected with no rocket?</p>
+<p>How to test that our multi-engine rocket works as expected without payload?</p>
+</section><section>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/QMcj58TbsyU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+</section><section>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/kchq9AGXsyA" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+</section><section>
+<h2 id="testing-software-before-it-is-ready-test-doubles">Testing software before it is ready: test doubles</h2>
+<p>The trick: <em>simulate components that are not ready yet</em>!</p>
+<p>When writing software, components required for the execution that are not ready yet can be simulated
+<strong>if their API has been clearly defined</strong></p>
+<p>The simulated component are called <em>test doubles</em></p>
+<ul>
+<li><em>dummy</em>: a (usually unimplemented) placeholder (e.g., unused mandatory argument)
+<ul>
+<li>a weight put on the suspension</li>
+</ul>
+</li>
+<li><em>stub</em>: partly implemented dummy
+<ul>
+<li>a system applying variable weight to the suspension</li>
+</ul>
+</li>
+<li><em>spy</em>: a stub that tracks information of the way it is being used
+<ul>
+<li>a dynamometer recording the suspension behavior under different conditions</li>
+</ul>
+</li>
+<li><em>mock</em>: a spy that expects to be used in a certain way, and fails if the expectation is unmet
+<ul>
+<li>a smart dynamometer that interrupts testing if the suspension behavior is not nominal</li>
+</ul>
+</li>
+<li><em>fake</em>: a fully implemented version of the component unsuitable for production
+<ul>
+<li>a car prototype</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="test-doubles-and-development-cost">Test doubles and development cost</h2>
+<blockquote>
+<p>Why should the team &ldquo;waste&rdquo; time creating doubles instead of just writing the thing?</p>
+</blockquote>
+<p>doubles are <strong>cheaper</strong>: dedicated libraries make doubles <em>implementation extremely quick</em></p>
+<ul>
+<li>In Python, <a href="https://docs.python.org/3/library/unittest.mock.html"><code>unittest.mock</code></a> is included in the distribution, and <a href="https://doubles.readthedocs.io/en/latest/">Doubles</a> is a valid alternative.</li>
+</ul>
+<p>doubles are <strong>simpler</strong>: only encode the behavior required to check some part of the behaviour. The probability of them being bugged is lower. <em>Debugging is easier</em>.</p>
+</section><section>
+<h2 id="checking-untested-components-coverage">Checking (<strong>un</strong>)tested components: coverage</h2>
+<p><em>Code coverage</em> is a set of <strong>metrics</strong> that measure how much of the source code of a program has been executed when testing.</p>
+<p>Common metrics:</p>
+<ul>
+<li><em>function coverage</em>: did the flow control get through this function?</li>
+<li><em>branch coverage</em>: did the flow control tried both branches of this condition?</li>
+<li><em>line-of-code coverage</em>: did the flow control get through this line during tests?
+<ul>
+<li><em>most common</em>, usually combined with <em>branch coverage</em></li>
+</ul>
+</li>
+</ul>
+<p><a href="https://app.codecov.io/gh/AlchemistSimulator/Alchemist">Example coverage report</a></p>
+
+
+<span class='fragment ' ><p><strong>WARNING</strong></p>
+<ul>
+<li>the actual information coverage provides is which code is <strong>partly tested</strong> or <strong>untested</strong>!</li>
+<li>we <em>know nothing of the testing quality</em> on the covered part, but that control flow goes through.</li>
+<li><em>Useful</em> metric, but it cannot be the <em>only</em> metric to evaluate testing
+<ul>
+<li>Dramatically high coverage requirements may induce <em>metric-chasing</em>!</li>
+</ul>
+</li>
+</ul>
+</span>
+
+
 </section><section>
 <h2 id="quality-assurance-1">Quality Assurance</h2>
 <p><em>&ldquo;It works&rdquo;</em> <strong>is <em>not</em> good enough</strong></p>
@@ -198,17 +296,13 @@ and so on are prepared well before the car prototype is ready!</p>
 <li><em>Style</em> and <em>coherence</em></li>
 <li><em>Flawed programming</em> patterns</li>
 <li>Violations of the <em>DRY</em> principle</li>
-<li><strong>Testing</strong>
-<ul>
-<li>Multifaceted issue</li>
-<li>To be executed along the whole software lifecycle</li>
-<li>$\Rightarrow$ Plenty of detail in upcoming lectures</li>
-</ul>
-</li>
+<li><strong>Runtime Testing</strong></li>
 </ul>
 </section><section>
-<h2 id="quality-assurance-style-and-coherence">Quality Assurance: style and coherence</h2>
-<p>Automated checkers are also called <em>linters</em>, often provide an auto-formatting tool</p>
+<h2 id="quality-assurance-static-analysis">Quality Assurance: static analysis</h2>
+<p>Code analysis without execution is called <em>static analysis</em>.</p>
+<p>Static analysis tools are often referred to as <em>linters</em>
+(especially those providing auto-formatting tools)</p>
 <p><strong>Idiomatic</strong> and <strong>standardized</strong> code:</p>
 <ul>
 <li>reduces <em>complexity</em></li>
@@ -216,16 +310,16 @@ and so on are prepared well before the car prototype is ready!</p>
 <li>prevents <em>style-changing commits</em> with <em>unintelligible diffs</em></li>
 <li>lowers the <em>maintenance</em> burden and related <em>costs</em></li>
 <li>simplifies <em>code reviews</em></li>
+<li>improves <em>security</em></li>
 </ul>
-<p>In <em>Java</em>:
-<a href="https://checkstyle.sourceforge.io/">Checkstyle</a>,
-<a href="https://pmd.github.io/">PMD</a></p>
-<p>In <em>Kotlin</em>:
-<a href="https://github.com/JetBrains/inspection-plugin">IDEA Inspection</a>,
-<a href="https://ktlint.github.io/">Ktlint</a></p>
-<p>In <em>Scala</em>:
-<a href="https://scalameta.org/scalafmt/">Scalafmt</a>,
-<a href="http://www.scalastyle.org/rules-1.0.0.html">Scalastyle</a></p>
+<p>In <em>Python</em>:</p>
+<ul>
+<li><a href="http://mypy-lang.org/">Mypy</a>: static analysis for bug detection (requires <a href="https://www.python.org/dev/peps/pep-0484/">annotations</a>)</li>
+<li><a href="https://github.com/PyCQA/pyflakes">Pyflakes</a>: effective programming, excluding style</li>
+<li><a href="https://pylint.org/">Pylint</a>: reverse engineering via <a href="https://www.logilab.org/blogentry/6883">Pyreverse</a>, style (enforces <a href="https://www.python.org/dev/peps/pep-0008/">PEP8</a>), and effective programming</li>
+<li><a href="https://github.com/PyCQA/bandit">Bandit</a>: security scanner</li>
+<li><a href="https://prospector.landscape.io/en/master">Prospector</a>: tool collection. Includes Pylint and Pyflakes, adds <a href="https://www.python.org/dev/peps/pep-0257/">PEP27</a>-compliance checks for comments, complexity, packaging (via <a href="https://github.com/regebro/pyroma">pyroma</a>), secrets leaking (via <a href="https://github.com/landscapeio/dodgy">dodgy</a>), and unused code (via <a href="https://github.com/jendrikseipp/vulture">vulture</a>) checks.</li>
+</ul>
 </section><section>
 <h2 id="quality-assurance-flawed-programming-patterns">Quality Assurance: flawed programming patterns</h2>
 <p>Identification and reporting of <em>patterns</em> known to be <em>problematic</em></p>
@@ -236,15 +330,6 @@ and so on are prepared well before the car prototype is ready!</p>
 <li>Reduces <em>complexity</em></li>
 <li>Reduces <em>maintenance cost</em></li>
 </ul>
-<p>In <em>Java</em>:
-<a href="https://pmd.github.io/">PMD</a>,
-<a href="https://spotbugs.github.io/">SpotBugs</a></p>
-<p>In <em>Kotlin</em>:
-<a href="https://detekt.github.io/detekt/">Detekt</a>
-<a href="https://github.com/JetBrains/inspection-plugin">IDEA Inspection</a></p>
-<p>In <em>Scala</em>:
-<a href="htthttps://scalacenter.github.io/scalafix/">Scalafix</a>,
-<a href="http://www.wartremover.org/">Wartremover</a></p>
 </section><section>
 <h2 id="quality-assurance-violations-of-the-dry-principle">Quality Assurance: violations of the DRY principle</h2>
 <p>Code <em>replicated</em> rather than <em>reused</em></p>
@@ -258,161 +343,6 @@ and so on are prepared well before the car prototype is ready!</p>
 <li>If you need to copy something, you probably need to <em>refactor</em> something</li>
 </ul>
 <p>Multi-language tool: <a href="https://pmd.github.io/latest/pmd_userdocs_cpd.html">Copy/Paste Detector (CPD)</a> (part of PMD)</p>
-</section><section>
-<h2 id="quality-assurance-testing-and-coverage">Quality Assurance: testing and coverage</h2>
-<p><strong>Automated</strong> software verification</p>
-<ul>
-<li>Unit level</li>
-<li>Integration testing</li>
-<li>End-to-end testing</li>
-</ul>
-<p>Extension of testing can be evaluated via <strong>coverage</strong>.</p>
-<ul>
-<li>Coverage tells you <em>how much code is <strong>untested</strong>, not how much is tested</em></li>
-</ul>
-<p>Several frameworks, recommended ones:</p>
-<ul>
-<li>Testing for <em>all JVM languages</em>: <a href="https://junit.org/junit5/docs/current/user-guide/">Junit/Jupiter (JUnit 5)</a></li>
-<li>Testing for <em>Kotlin</em>: <a href="https://kotest.io/">Kotest</a></li>
-<li>Testing for <em>Scala</em>: <a href="https://www.scalatest.org/">Scalatest</a></li>
-<li>Coverage for all JVM languages: <a href="https://www.eclemma.org/jacoco/">JaCoCo</a></li>
-<li>Coverage for Scala: <a href="http://scoverage.org/">Scoverage</a></li>
-</ul>
-</section><section>
-<h2 id="quality-assurance-junit--gradle">Quality Assurance: JUnit + Gradle</h2>
-<p><code>src/main/scala/it/unibo/test/Test.scala</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">package</span> <span style="color:#000">it.unibo.test</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">trait</span> <span style="color:#000">Sometrait</span> <span style="color:#ce5c00;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">f</span><span style="color:#204a87;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">Int</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">g</span><span style="color:#204a87;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">Int</span>
-</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">object</span> <span style="color:#000">Someobject</span> <span style="color:#ce5c00;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">f</span> <span style="color:#204a87;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">10</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">g</span> <span style="color:#204a87;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">77</span>
-</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">}</span>
-</span></span></code></pre></div>
-</section><section>
-<h2 id="quality-assurance-junit--gradle-1">Quality Assurance: JUnit + Gradle</h2>
-<p><code>src/test/scala/MyTest.scala</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">it.unibo.test.</span><span style="color:#ce5c00;font-weight:bold">{</span><span style="color:#000">Someobject</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">Sometrait</span><span style="color:#ce5c00;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">org.junit.jupiter.api.Assertions._</span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">org.junit.jupiter.api.Test</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">class</span> <span style="color:#000">MyTest</span> <span style="color:#ce5c00;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#5c35cc;font-weight:bold">@Test</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">emptySetShouldHaveSizeZero</span><span style="color:#ce5c00;font-weight:bold">()</span><span style="color:#204a87;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">Unit</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">assertEquals</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">Set</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">empty</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">size</span><span style="color:#ce5c00;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#5c35cc;font-weight:bold">@Test</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">thisTestIsActuallyUseless</span><span style="color:#ce5c00;font-weight:bold">()</span><span style="color:#204a87;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">Unit</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">val</span> <span style="color:#000">someStub</span> <span style="color:#204a87;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">new</span> <span style="color:#000">Sometrait</span> <span style="color:#ce5c00;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#204a87;font-weight:bold">override</span> <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">f</span><span style="color:#204a87;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">Int</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">42</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#204a87;font-weight:bold">override</span> <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">g</span><span style="color:#204a87;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">Int</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">???</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">assertEquals</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">42</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">someStub</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">f</span><span style="color:#ce5c00;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">assertNotEquals</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">Someobject</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">f</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">someStub</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">f</span><span style="color:#ce5c00;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">}</span>
-</span></span></code></pre></div>
-</section><section>
-<h2 id="quality-assurance-junit--gradle-2">Quality Assurance: JUnit + Gradle</h2>
-<p><code>build.gradle.kts</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#000">plugins</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">java</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">scala</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">jacoco</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000">repositories</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">mavenCentral</span><span style="color:#000;font-weight:bold">()</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000">dependencies</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">implementation</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.scala-lang:scala-library:+&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">testImplementation</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.junit.jupiter:junit-jupiter-api:+&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">testRuntimeOnly</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.junit.jupiter:junit-jupiter-engine:+&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// Enables JUnit Platform (needed for JUnit 5)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">tasks</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">named</span><span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000">Test</span><span style="color:#000;font-weight:bold">&gt;(</span><span style="color:#4e9a06">&#34;test&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">useJUnitPlatform</span><span style="color:#000;font-weight:bold">()</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div>
-</section><section>
-<h2 id="quality-assurance-scalatest--scoverage">Quality Assurance: Scalatest + Scoverage</h2>
-<p>Let&rsquo;s switch <em>testing framework</em> and enable <em>coverage</em></p>
-<p><code>src/main/scala/it/unibo/test/Test.scala</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">package</span> <span style="color:#000">it.unibo.test</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">trait</span> <span style="color:#000">Sometrait</span> <span style="color:#ce5c00;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">f</span><span style="color:#204a87;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">Int</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">g</span><span style="color:#204a87;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">Int</span>
-</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">object</span> <span style="color:#000">Someobject</span> <span style="color:#ce5c00;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">f</span> <span style="color:#204a87;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">10</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">g</span> <span style="color:#204a87;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">77</span>
-</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">}</span>
-</span></span></code></pre></div>
-</section><section>
-<h2 id="quality-assurance-scalatest--scoverage-1">Quality Assurance: Scalatest + Scoverage</h2>
-<p><code>src/test/scala/Test.scala</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">it.unibo.test.Sometrait</span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">org.scalamock.scalatest.MockFactory</span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">org.scalatest.funsuite.AnyFunSuite</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">class</span> <span style="color:#000">MyTests</span> <span style="color:#204a87;font-weight:bold">extends</span> <span style="color:#000">AnyFunSuite</span> <span style="color:#204a87;font-weight:bold">with</span> <span style="color:#000">MockFactory</span> <span style="color:#ce5c00;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#000">test</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;An empty Set should have size 0&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">println</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Test1&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">assert</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">Set</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">empty</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">size</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#ce5c00;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#000">test</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Some useless test&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">println</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Test2&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">val</span> <span style="color:#000">someStub</span> <span style="color:#204a87;font-weight:bold">=</span> <span style="color:#000">stub</span><span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#204a87;font-weight:bold">Sometrait</span><span style="color:#ce5c00;font-weight:bold">]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">someStub</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">f</span> <span style="color:#204a87;font-weight:bold">_</span><span style="color:#ce5c00;font-weight:bold">).</span><span style="color:#000">when</span><span style="color:#ce5c00;font-weight:bold">().</span><span style="color:#000">returns</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">42</span><span style="color:#ce5c00;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">assert</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">someStub</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">f</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">42</span><span style="color:#ce5c00;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">}</span>
-</span></span></code></pre></div>
-</section><section>
-<h2 id="quality-assurance-scalatest--scoverage-2">Quality Assurance: Scalatest + Scoverage</h2>
-<p><code>build.gradle.kts</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#000">plugins</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">java</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">scala</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">id</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.scoverage&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000">version</span> <span style="color:#4e9a06">&#34;5.0.0&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">id</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;com.github.maiflai.scalatest&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000">version</span> <span style="color:#4e9a06">&#34;0.31&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000">repositories</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">mavenCentral</span><span style="color:#000;font-weight:bold">()</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000">dependencies</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">implementation</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.scala-lang:scala-library:+&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">testImplementation</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.scalatest:scalatest_2.13:+&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">testImplementation</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.scalamock:scalamock_2.13:+&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">testRuntimeOnly</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;com.vladsch.flexmark:flexmark-profile-pegdown:0.36.8&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">scoverage</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.scoverage:scalac-scoverage-plugin_2.13:+&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">scoverage</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.scoverage:scalac-scoverage-runtime_2.13:+&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// gradle clean reportScoverage
-</span></span></span></code></pre></div>
-</section><section>
-<h2 id="gradle-qa-execution">Gradle: QA execution</h2>
-<ul>
-<li>The <code>java</code> plugin (applied by the <code>scala</code> plugin under the hood) also introduces:
-<ul>
-<li><code>test</code>: a task that runs all tests</li>
-<li><code>check</code>: a task that runs the whole quality assurance suite</li>
-</ul>
-</li>
-</ul>
 </section><section>
 <h2 id="additional-checks-and-reportings">Additional checks and reportings</h2>
 <p>There exist a number of recommended services that provide additional QA and reports.</p>
