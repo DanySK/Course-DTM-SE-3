@@ -3175,3 +3175,110 @@ They *enrich* the base git model with services built around the tool:
 * *Observe* that you can open a pull request
   * Do not open it, or at least not towards the original repository
   * (I won't pull anyway ;) )
+
+---
+
+# DVCS: Workflows
+
+> with great power comes great responsibility
+
+and also
+
+> power is nothing without control
+
+Elements to consider:
+* How *large* is the team?
+* How *complex* is the project?
+* Do team members work *together* (in spacetime)?
+* Do team members *trust* each other?
+
+---
+
+## Trunk-based development(-like)
+
+Single branch, shared truth repository, frequent merges
+<br>
+{{< image src="2021-04-14-dvcs-sink.svg" max-h="55">}}
+
+* *Small* teams, *low-complexity* projects, *colocated* teams, *high* trust
+* Typical of small company projects
+
+---
+
+## Git flow (classic)
+
+Multiple branches, shared truth repository
+<br>
+{{< image src="2021-04-14-dvcs-flow-sink.svg" max-h="55">}}
+
+* *Large* teams, *high-complexity* projects, *preferably colocated* teams, *high* trust
+* Typical of large company projects
+
+---
+
+## Git flow structure
+
+{{< image src="2021-04-13-gitflow.svg" max-h="55">}}
+
+---
+
+## Forks versus branches
+
+* In Git, separate *development lines* are separate *branches*
+* However, everyone has a *copy* of the *same repository*
+* Git *hosting services* can *identify copies* of the same project belonging to different users
+
+These copies are called **forks**
+
+* Branches on one fork can be requested to be merged on another fork
+  * With **merge request** (also called **pull request**, depending on the host)
+* Pull requests enable easier code review
+  * Necessary when the developer *does not trust* the contributor
+  * But very useful anyway
+* Working with pull requests is **not part of git** and *requires host support*
+  * GitHub, GitLab, and Bitbucket all support pull requests
+
+---
+
+## Single branch, multiple forks
+
+* Single branch, multiple independent repository copies
+
+<p>
+{{< image src="2021-04-14-dvcs-fork.svg" max-h="55">}}
+</p>
+
+* *Unknown* team size, *low-complexity* projects, *sparse* teams, *low* trust
+* Typical of small open-source projects
+
+---
+
+## Git flow over multiple forks
+
+* Single branch, multiple independent repository copies
+
+<p>
+{{< image src="2021-04-14-dvcs-flow-fork.svg" max-h="55">}}
+</p>
+
+* *Unknown* team size, *high-complexity* projects, *sparse* teams, *low* trust
+* Typical of complex open-source projects
+
+---
+
+# Documenting projects using GitHub
+
+Documentation of a project is **part of the project**
+
+* **Documentation** must stay in the same repository of the project
+* However, it should be *accessible to non-developers*
+
+Meet GitHub Pages
+
+* GitHub provides an *automated* way to publish *webpages from **Markdown*** text
+* Markdown is a *human readable markup language*, [easy to learn](https://learnxinyminutes.com/docs/markdown/)
+  * These slides are written in Markdown
+  * (generation is a bit richer, but just to make the point)
+* Supports *Jekyll* (a Ruby framework for static website generation) out of the box
+  * We will not discuss it today
+  * But maybe in LSS...
