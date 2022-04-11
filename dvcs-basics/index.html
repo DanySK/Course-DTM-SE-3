@@ -1974,6 +1974,151 @@ They <em>enrich</em> the base git model with services built around the tool:</p>
 </ul>
 </li>
 </ul>
+</section><section>
+<h1 id="dvcs-workflows">DVCS: Workflows</h1>
+<blockquote>
+<p>with great power comes great responsibility</p>
+</blockquote>
+<p>and also</p>
+<blockquote>
+<p>power is nothing without control</p>
+</blockquote>
+<p>Elements to consider:</p>
+<ul>
+<li>How <em>large</em> is the team?</li>
+<li>How <em>complex</em> is the project?</li>
+<li>Do team members work <em>together</em> (in spacetime)?</li>
+<li>Do team members <em>trust</em> each other?</li>
+</ul>
+</section><section>
+<h2 id="trunk-based-development-like">Trunk-based development(-like)</h2>
+<p>Single branch, shared truth repository, frequent merges
+<br>
+<img src="2021-04-14-dvcs-sink.svg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 55vh;
+    object-fit: contain;
+'>
+</p>
+<ul>
+<li><em>Small</em> teams, <em>low-complexity</em> projects, <em>colocated</em> teams, <em>high</em> trust</li>
+<li>Typical of small company projects</li>
+</ul>
+</section><section>
+<h2 id="git-flow-classic">Git flow (classic)</h2>
+<p>Multiple branches, shared truth repository
+<br>
+<img src="2021-04-14-dvcs-flow-sink.svg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 55vh;
+    object-fit: contain;
+'>
+</p>
+<ul>
+<li><em>Large</em> teams, <em>high-complexity</em> projects, <em>preferably colocated</em> teams, <em>high</em> trust</li>
+<li>Typical of large company projects</li>
+</ul>
+</section><section>
+<h2 id="git-flow-structure">Git flow structure</h2>
+<img src="2021-04-13-gitflow.svg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 55vh;
+    object-fit: contain;
+'>
+
+</section><section>
+<h2 id="forks-versus-branches">Forks versus branches</h2>
+<ul>
+<li>In Git, separate <em>development lines</em> are separate <em>branches</em></li>
+<li>However, everyone has a <em>copy</em> of the <em>same repository</em></li>
+<li>Git <em>hosting services</em> can <em>identify copies</em> of the same project belonging to different users</li>
+</ul>
+<p>These copies are called <strong>forks</strong></p>
+<ul>
+<li>Branches on one fork can be requested to be merged on another fork
+<ul>
+<li>With <strong>merge request</strong> (also called <strong>pull request</strong>, depending on the host)</li>
+</ul>
+</li>
+<li>Pull requests enable easier code review
+<ul>
+<li>Necessary when the developer <em>does not trust</em> the contributor</li>
+<li>But very useful anyway</li>
+</ul>
+</li>
+<li>Working with pull requests is <strong>not part of git</strong> and <em>requires host support</em>
+<ul>
+<li>GitHub, GitLab, and Bitbucket all support pull requests</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="single-branch-multiple-forks">Single branch, multiple forks</h2>
+<ul>
+<li>Single branch, multiple independent repository copies</li>
+</ul>
+<p>
+<img src="2021-04-14-dvcs-fork.svg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 55vh;
+    object-fit: contain;
+'>
+
+</p>
+<ul>
+<li><em>Unknown</em> team size, <em>low-complexity</em> projects, <em>sparse</em> teams, <em>low</em> trust</li>
+<li>Typical of small open-source projects</li>
+</ul>
+</section><section>
+<h2 id="git-flow-over-multiple-forks">Git flow over multiple forks</h2>
+<ul>
+<li>Single branch, multiple independent repository copies</li>
+</ul>
+<p>
+<img src="2021-04-14-dvcs-flow-fork.svg" style='
+    
+    
+    max-width: 95vw;
+    max-height: 55vh;
+    object-fit: contain;
+'>
+
+</p>
+<ul>
+<li><em>Unknown</em> team size, <em>high-complexity</em> projects, <em>sparse</em> teams, <em>low</em> trust</li>
+<li>Typical of complex open-source projects</li>
+</ul>
+</section><section>
+<h1 id="documenting-projects-using-github">Documenting projects using GitHub</h1>
+<p>Documentation of a project is <strong>part of the project</strong></p>
+<ul>
+<li><strong>Documentation</strong> must stay in the same repository of the project</li>
+<li>However, it should be <em>accessible to non-developers</em></li>
+</ul>
+<p>Meet GitHub Pages</p>
+<ul>
+<li>GitHub provides an <em>automated</em> way to publish <em>webpages from <strong>Markdown</strong></em> text</li>
+<li>Markdown is a <em>human readable markup language</em>, <a href="https://learnxinyminutes.com/docs/markdown/">easy to learn</a>
+<ul>
+<li>These slides are written in Markdown</li>
+<li>(generation is a bit richer, but just to make the point)</li>
+</ul>
+</li>
+<li>Supports <em>Jekyll</em> (a Ruby framework for static website generation) out of the box
+<ul>
+<li>We will not discuss it today</li>
+<li>But maybe in LSS&hellip;</li>
+</ul>
+</li>
+</ul>
 </section>
 
   
