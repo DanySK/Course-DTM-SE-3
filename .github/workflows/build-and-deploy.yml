@@ -17,6 +17,7 @@ on:
 jobs:
   Build-Slides:
     runs-on: ubuntu-latest
+    concurrency: slides
     steps:
       # Checkout the repository
       - name: Checkout
