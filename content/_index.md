@@ -45,7 +45,7 @@ aliases = [
 * **3h+3h** [decentralized version control (with git) and team organization](dvcs-basics)
 * **2h** [QA, testing, TDD, reproducibility and replicability (examples in Python)](qa-tdd)
 * **3h** [software dependencies, build automation (examples with virtualenv / pyenv / pip)](build)
-* **3h** Continuous integration (examples with GitHub Actions)
+* **3h** [Continuous integration (examples with GitHub Actions)](ci)
 * **2h** versioning, semantic release, licenses (if we got time)
 
 ---

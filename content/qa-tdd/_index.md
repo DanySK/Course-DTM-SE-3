@@ -1,7 +1,7 @@
  +++
 
-title = "Software Engineering Module 3: Introduction to agile and DevOps"
-description = "Distributed version control systems, basics of Git"
+title = "Software Engineering Module 3: QA, reproducibility, TDD"
+description = "QA, reproducibility, TDD"
 outputs = ["Reveal"]
 
 +++
