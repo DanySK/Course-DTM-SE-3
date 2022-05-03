@@ -27,7 +27,7 @@ As any engineered product, software should be *subject to quality assurance cont
 
 ---
 
-## Testing: critieria
+## Testing: criteria
 
 Verify that the software meets quality criteria.
 
@@ -102,10 +102,10 @@ and so on are prepared well before the car prototype is ready!
 ## Test-Driven Development (TDD)
 
 The practice of:
-* converting requirements to (executable) test cases
-* preparing tests before development
-* define the expected behavior via test cases
-* track all development by always testing all cases
+* converting *requirements to (executable) test* cases
+* preparing tests *before* development
+* define the *expected behavior* via test cases
+* track all development by *always testing all cases*
 
 ---
 
@@ -329,7 +329,7 @@ Multi-language tool: [Copy/Paste Detector (CPD)](https://pmd.github.io/latest/pm
 
 There exist a number of recommended services that provide additional QA and reports.
 
-Non exhaustive list:
+Non-exhaustive list:
 * [Codecov.io](https://codecov.io/)
     * Code coverage
     * Supports Jacoco XML reports
