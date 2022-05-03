@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Software Engineering Module 3: Continuous Integration</title>
+<meta name="description" content="Make things work, keep them working, move fast">
+<meta name="author" content="Danilo Pianini">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/css/reset.css">
+<link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/css/reveal.css">
+  <link rel="stylesheet" href="/Course-DTM-SE-3/css/custom-theme.min.a33630144b0d974bea851532cdb87a94ad3f7724f77dad6ea5c6e267a7a211ec.css" id="theme"><link rel="stylesheet" href="/Course-DTM-SE-3/highlight-js/github.min.css">
+    
+<link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
+<link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Oxygen Mono' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Ubuntu Mono' rel='stylesheet'>
+
+  </head>
+  <body>
+    
+    <div class="reveal">
+      <div class="slides">
+  
+
+    <section><h1 id="hahahugoshortcode-s0-hbhb">Software Engineering</h1>
+<h2 id="continuous-integration-and-containerization">Continuous Integration and Containerization</h2>
+<h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
+2022-05-03
+</section><section>
+<h1 id="continuous-integration">Continuous Integration</h1>
+<p>The practice of integrating code with a main development line <strong>continuously</strong>
+<br>
+<em>Verifying</em> that the build remains intact</p>
+<ul>
+<li>Requires <em>build automation</em> to be in place</li>
+<li>Requires <em>testing</em> to be in place</li>
+<li>Pivot point of the <em>DevOps</em> practices</li>
+<li>Historically introduced by the extreme programming (XP) community</li>
+<li>Now widespread in the larger DevOps community</li>
+</ul>
+</section><section>
+<h1 id="the-integration-hell">The Integration Hell</h1>
+<ul>
+<li>Traditional software development takes several months for <em>“integrating”</em> a couple of years of development</li>
+<li>The longer there is no integrated project, the higher the <strong>risk</strong></li>
+</ul>
+<img src="integration-traditional.png" onerror="this.onerror=null; this.src='../../assets/integration-traditional.png'" width=40% />
+$\Rightarrow$
+<img src="integration-continuous.png" onerror="this.onerror=null; this.src='../../assets/integration-continuous.png'" width=40% />
+</section><section>
+<h2 id="microreleases-and-protoduction">Microreleases and protoduction</h2>
+<ul>
+<li>High frequency integration may lead to high frequency releases
+<ul>
+<li>Possibly, <em>one per commit</em></li>
+<li>Of course, <em>versioning</em> must be appropriate&hellip;</li>
+</ul>
+</li>
+</ul>
+<p>Traditionally, <strong>protoduction</strong> is jargon for a <em>prototype that ends up in production</em></p>
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <img src="protoduction.jpg" onerror="this.onerror=null; this.src='../../assets/protoduction.jpg'" width=90% />
+      <td/>
+      <td>
+<ul>
+<li>Traditionally used with a <em>negative</em> meaning
+<ul>
+<li>It implied software
+<ul>
+<li><em>unfinished</em>,</li>
+<li><em>unpolished</em>,</li>
+<li><em>badly designed</em></li>
+</ul>
+</li>
+<li>Very common, unfortunately</li>
+</ul>
+</li>
+<li>This si different in a continuously integrated environment
+<ul>
+<li>
+<p><em>Incrementality</em> is fostered</p>
+</li>
+<li>
+<p>Partial features are <em>up to date</em> with the mainline</p>
+<td/>
+</li>
+</ul>
+  </tr>
+</tbody>
+</li>
+</ul>
+</table>
+</section><section>
+<h2 id="intensive-operations-should-be-elsewhere">Intensive operations should be elsewhere</h2>
+<ul>
+<li>The build process should be <em>rich</em> and <em>fast</em></li>
+<li>Operations requiring a long time should be <em>automated</em>
+<ul>
+<li>And run somewhere else than devs&rsquo; PCs</li>
+</ul>
+</li>
+</ul>
+<p>
+<img src="compiling.png" onerror="this.onerror=null; this.src='../../assets/compiling.png'" height=100% />
+</p>
+</section><section>
+<h2 id="continuous-integration-software">Continuous integration software</h2>
+<p>Software that promotes CI practices should:</p>
+<ul>
+<li>Provide <em>clean environments</em> for compilation/testing</li>
+<li>Provide a <em>wide range</em> of environments
+<ul>
+<li>Matching the relevant specifications of the actual targets</li>
+</ul>
+</li>
+<li>High degree of <em>configurability</em></li>
+<li>Possibly, <em>declarative configuration</em></li>
+<li>A <em>notification system</em> to alert about failures or issues</li>
+<li>Support for <em>authentication</em> and deployment to external services</li>
+</ul>
+<p><strong>Plenty</strong> of integrators on the market</p>
+<p>Circle CI, Travis CI, Werker, done.io, Codefresh, Codeship, Bitbucket Pipelines, GitHub Actions, GitLab CI/CD Pipelines, JetBrains TeamCity&hellip;</p>
+<p>We will use GitHub actions: GitHub integration, free for FOSS, multi-os OSs supported</p>
+</section><section>
+<h1 id="core-concepts">Core concepts</h1>
+<p>Naming and organization is variable across platforms, but <em>in general</em>:</p>
+<ul>
+<li>One or more <strong>pipelines</strong> can be associated to <strong>events</strong>
+<ul>
+<li>For instance, a <em>new commit</em>, an update to a <em>pull request</em>, or a <em>timeout</em></li>
+</ul>
+</li>
+<li>Every pipeline is composed of a <strong>sequence</strong> of <strong>operations</strong></li>
+<li>Every <strong>operation</strong> could be composed of sequential or parallel <strong>sub-operations</strong></li>
+<li>How many hierarchical levels are available depends on the specific platform
+<ul>
+<li>GitHub Actions: <em>workflow</em> $\Rightarrow$ <em>job</em> $\Rightarrow$ <em>step</em></li>
+<li>Travis CI: <em>build</em> $\Rightarrow$ <em>stage</em> $\Rightarrow$ <em>job</em>  $\Rightarrow$ <em>phase</em></li>
+</ul>
+</li>
+<li>Execution happens in a <strong>fresh system</strong> (virtual machine or container)
+<ul>
+<li>Often containers inside virtual machines</li>
+<li>The specific point of the hierarchy at which the VM/container is spawned depends on the CI platform</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="pipeline-design">Pipeline design</h2>
+<p>In essence, designing a CI system is designing a software construction, verification, and delivery <em>pipeline</em>
+with the abstractions provided by the selected provider.</p>
+<ol>
+<li><strong>Think</strong> of all the operations required starting from one or more <em>blank</em> VMs
+<ul>
+<li>OS configuration</li>
+<li>Software installation</li>
+<li>Project checkout</li>
+<li>Compilation</li>
+<li>Testing</li>
+<li>Secrets configuration</li>
+<li>Delivery</li>
+<li>&hellip;</li>
+</ul>
+</li>
+<li><strong>Organize</strong> them in a dependency graph</li>
+<li><strong>Model</strong> the graph with the provided CI tooling</li>
+</ol>
+<p>Configuration can grow complex, and is usually stored in a YAML file
+<br>
+(but there are exceptions, JetBrains TeamCity uses a Kotlin DSL).</p>
+</section><section>
+<h2 id="github-actions-structure">GitHub Actions: Structure</h2>
+<ul>
+<li><strong>Workflows</strong> react to events, launching <em>jobs</em>
+<ul>
+<li>Multiple workflows run in parallel, unless explicitly restricted</li>
+</ul>
+</li>
+<li><strong>Jobs</strong> of the same workflow run a sequence of <em>steps</em>
+<ul>
+<li>Multiple jobs run in parallel, unless a dependency among them is explicitly declared</li>
+<li>Concurrency limits can be imposed across workflows</li>
+<li>They can communicate via outputs</li>
+</ul>
+</li>
+<li><strong>Steps</strong> of the same job run <em>sequentially</em>
+<ul>
+<li>They can communicate via outputs</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="github-actions-configuration">GitHub Actions: Configuration</h2>
+<p>Workflows are configured in YAML files located in the default branch of the repository in the <code>.github/workflows</code> folder.</p>
+<p>One configuration file $\Rightarrow$ one workflow</p>
+<p>For security reasons, workflows may need to be manually activated in the <em>Actions</em> tab of the GitHub web interface.</p>
+</section><section>
+<h2 id="github-actions-runners">GitHub Actions: Runners</h2>
+<p>Executors of GitHub actions are called <em>runners</em>: virtual machines
+(hosted by GitHub)
+with the GitHub Actions runner application installed.</p>
+<p><strong>Note</strong>: the GitHub Actions application is open source and can be installed locally,
+creating &ldquo;<em>self-hosted runners</em>&rdquo;. Self-hosted and GitHub-hosted runners can work together.</p>
+<p>Upon their creation, runners have a default environment, which depends on their <em>operating system</em></p>
+<ul>
+<li>Documentation available at <a href="https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#preinstalled-software">https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#preinstalled-software</a></li>
+</ul>
+</section><section>
+<h2 id="convention-over-configuration">Convention over configuration</h2>
+<p>Several CI systems inherit the &ldquo;<em>convention over configuration</em> principle.</p>
+<p>For instance, by default (with an empty configuration file) Travis CI builds a Ruby project using <code>rake</code>.</p>
+<p>GitHub actions <strong>does not</strong> adhere to the principle:
+if left unconfigured, the runner does nothing
+(it does not even clone the repository locally).</p>
+<p>Probable reason: Actions is an <em>all-round</em> repository automation system for GitHub,
+not just a &ldquo;plain&rdquo; CI/CD pipeline</p>
+<p>$\Rightarrow$ It can react to many different events, not just changes to the git repository history</p>
+</section><section>
+<h2 id="gha-basic-workflow-structure">GHA: basic workflow structure</h2>
+<p>Minimal, simplified workflow structure:</p>
+<pre><code class="language-yaml"># Mandatory workflow name
+name: Workflow Name
+on: # Events that trigger the workflow
+jobs: # Jobs composing the workflow, each one will run on a different runner
+    Job-Name: # Every job must be named
+        # The type of runner executing the job, usually the OS
+        runs-on: runner-name
+        steps: # A list of commands, or &quot;actions&quot;
+            - # first step
+            - # second step
+    Another-Job: # This one runs in parallel with Job-Name
+        runs-on: '...'
+        steps: [ ... ]
+</code></pre>
+</section><section>
+<h3 id="dry-with-yaml">DRY with YAML</h3>
+<p>We discussed that automation / integration pipelines <strong>are</strong> part of the software</p>
+<ul>
+<li>They are subject to the same (or even higher) quality standards</li>
+<li>All the good engineering principles apply!</li>
+</ul>
+<p>YAML is often used by CI integrators as preferred configuration language as it enables some form of DRY:</p>
+<ol>
+<li>Anchors (<code>&amp;</code> / <code>*</code>)</li>
+<li>Merge keys (<code>&lt;&lt;:</code>)</li>
+</ol>
+<pre><code class="language-yaml">hey: &amp;ref
+  look: at
+  me: [ &quot;I'm&quot;, 'dancing' ]
+merged:
+  foo: *ref
+  &lt;&lt;: *ref
+  look: to
+</code></pre>
+<p>Same as:</p>
+<pre><code class="language-yaml">hey: { look: at, me: [ &quot;I'm&quot;, 'dancing' ] }
+merged: { foo: { look: at, me: [ &quot;I'm&quot;, 'dancing' ] }, look: to, me: [ &quot;I'm&quot;, 'dancing' ] }
+</code></pre>
+</section><section>
+<h2 id="github-actions-actions">GitHub Actions&rsquo; actions</h2>
+<p>GHA&rsquo;s YAML parser <em>does not support standard YAML anchors and merge keys</em></p>
+<p>(it is a well-known limit with <a href="https://github.com/actions/runner/issues/1182">an issue report open since ages</a>)</p>
+<p>GHA achieves reuse via:</p>
+<ul>
+<li>&ldquo;<strong>actions</strong>&rdquo;: <em>reusable parameterizable <strong>steps</strong></em>
+<ul>
+<li><em>JavaScript</em> (working on any OS)</li>
+<li><em>Docker container</em>-based (linux only)</li>
+<li><em>Composite</em> (assemblage of other actions)</li>
+</ul>
+</li>
+<li>&ldquo;<strong>reusable workflows</strong>&rdquo;: <em>reusable and parameterizable <strong>jobs</strong></em></li>
+</ul>
+<p>Many actions are provided by GitHub directly,
+and many are developed by the community.</p>
+</section><section>
+<h2 id="workflow-minimal-example">Workflow minimal example</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># This is a basic workflow to help you get started with Actions</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">Example workflow</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic"># Controls when the workflow will run</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">on</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">push</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">tags</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;*&#39;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">branches-ignore</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic"># Pushes on these branches won&#39;t start a build</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#4e9a06">&#39;autodelivery**&#39;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#4e9a06">&#39;bump-**&#39;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#4e9a06">&#39;renovate/**&#39;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">paths-ignore</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic"># Pushes that change only these file won&#39;t start the workflow</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#4e9a06">&#39;README.md&#39;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#4e9a06">&#39;CHANGELOG.md&#39;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#4e9a06">&#39;LICENSE&#39;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">pull_request</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">branches</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic"># Only pull requests based on these branches will start the workflow</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#000">master</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#8f5902;font-style:italic"># Allows you to run this workflow manually from the Actions tab</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#000">workflow_dispatch:</span></span></span></code></pre></div>
+</section><section>
+<h2 id="workflow-minimal-example-1">Workflow minimal example</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># A workflow run is made up of one or more jobs that can run sequentially or in parallel</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">jobs</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#8f5902;font-style:italic"># This workflow contains a single job called &#34;build&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">Default-Example</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#8f5902;font-style:italic"># The type of runner that the job will run on</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">runs-on</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">macos-latest</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#8f5902;font-style:italic"># Steps represent a sequence of tasks that will be executed as part of the job</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">steps</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#8f5902;font-style:italic"># Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">uses</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">actions/checkout@v3</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#8f5902;font-style:italic"># Runs a single command using the runners shell</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">Run a one-line script</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">run</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">echo Hello from a ${{ runner.os }} machine!</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#8f5902;font-style:italic"># Runs a set of commands using the runners shell</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">Run a multi-line script</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">run</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">|</span><span style="color:#8f5902;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">          echo Add other actions to build,
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">          echo test, and deploy your project.</span><span style="color:#f8f8f8;text-decoration:underline">          </span></span></span></code></pre></div>
+</section><section>
+<h2 id="workflow-minimal-example-2">Workflow minimal example</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">Explore-GitHub-Actions</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">runs-on</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">ubuntu-latest</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">steps</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">run</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">echo &#34;🎉 The job was automatically triggered by a ${{ github.event_name }} event.&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">run</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">echo &#34;🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">run</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">echo &#34;🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}.&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">Check out repository code</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">uses</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">actions/checkout@v3</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">run</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">echo &#34;💡 The ${{ github.repository }} repository has been cloned to the runner.&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">run</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">echo &#34;🖥️ The workflow is now ready to test your code on the runner.&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">List files in the repository</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">run</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">ls ${{ github.workspace }}</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">run</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">echo &#34;🍏 This job&#39;s status is ${{ job.status }}.&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#8f5902;font-style:italic"># Steps can be executed conditionally</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">Skipped conditional step</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">runner.os == &#39;Windows&#39;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">run</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">echo this step won&#39;t run, it has been excluded!</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">run</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">|</span><span style="color:#8f5902;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">          echo This is
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">          echo a multi-line
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">          echo script.</span><span style="color:#f8f8f8;text-decoration:underline">          </span></span></span></code></pre></div>
+</section><section>
+<h2 id="workflow-minimal-example-3">Workflow minimal example</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">Conclusion</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">runs-on</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">windows-latest</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#8f5902;font-style:italic"># Jobs may require other jobs</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">needs</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">Default-Example, Explore-GitHub-Actions ]</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#8f5902;font-style:italic"># Typically, steps that follow failed steps won&#39;t execute.</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#8f5902;font-style:italic"># However, this behavior can be changed by using the built-in function &#34;always()&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">always()</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">steps</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">Run something on powershell</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">run</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">echo By default, ${{ runner.os }} runners execute with powershell</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">Run something on bash</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">shell</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">bash</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">run</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">echo However, it is allowed to force the shell type and there is a bash available for ${{ runner.os }} too.</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      
+</span></span></span></code></pre></div>
+</section><section>
+<h2 id="checking-out-the-repository">Checking out the repository</h2>
+<p>By default, GitHub actions&rsquo; <em>runners do <strong>not</strong> check out the repository</em></p>
+<ul>
+<li>Actions may not need to access the code
+<ul>
+<li>e.g., Actions automating issues, projects</li>
+</ul>
+</li>
+</ul>
+<p>It is a <em>common</em> and <em>non-trivial</em> operation (the checked out version must be the version originating the workflow), thus GitHub provides an action:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">Check out repository code</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">uses</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">actions/checkout@v3</span></span></span></code></pre></div>
+<p>Since actions typically do not need the entire history of the project, by default the action checks out <em>only the commit that originated the workflow</em> (<code>--depth=1</code> when cloning)</p>
+<ul>
+<li><em>Shallow cloning</em> has better <em>performance</em></li>
+<li>$\Rightarrow$ It may break operations that rely on the entire history!
+<ul>
+<li>e.g., the git-sensitive semantic versioning system</li>
+</ul>
+</li>
+</ul>
+<p>Also, <em><strong>tags</strong> don&rsquo;t get checked out</em></p>
+</section><section>
+<h2 id="writing-outputs">Writing outputs</h2>
+<p>Communication with the runner happens via <em><a href="docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions">workflow commands</a></em>
+<br>
+The simplest way to send commands is to print on standard output a message in the form:
+<br>
+<code>::workflow-command parameter1={data},parameter2={data}::{command value}</code></p>
+<p>In particular, actions can set outputs by printing:
+<br>
+<code>::set-output name={name}::{value}</code></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">jobs</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">Build</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">runs-on</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">ubuntu-latest</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">steps</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">Checkout</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">uses</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">danysk/action-checkout@0.2.1</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">id</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">branch-name</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic"># Custom id</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">uses</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">tj-actions/branch-names@v5</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">id</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">output-from-shell</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">run</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">ruby -e &#39;puts &#34;::set-output name=dice::#{rand(1..6)}&#34;&#39;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">run</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">|</span><span style="color:#8f5902;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">          echo &#34;The dice roll resulted in number ${{ steps.output-from-shell.outputs.dice }}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">          if ${{ steps.branch-name.outputs.is_tag }} ; then
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">            echo &#34;This is tag ${{ steps.branch-name.outputs.tag }}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">          else
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">            echo &#34;This is branch ${{ steps.branch-name.outputs.current_branch }}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">            echo &#34;Is this branch the default one? ${{ steps.branch-name.outputs.is_default }}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">          fi</span><span style="color:#f8f8f8;text-decoration:underline">          
+</span></span></span></code></pre></div>
+</section><section>
+<h2 id="build-matrix">Build matrix</h2>
+<p>Most software products are meant to be <em>portable</em></p>
+<ul>
+<li>Across operating systems</li>
+<li>Across different frameworks and languages</li>
+<li>Across runtime configuration</li>
+</ul>
+<p>A good continuous integration pipeline should test <em>all the supported combinations</em>*</p>
+<ul>
+<li>or a sample, if the performance is otherwise unbearable</li>
+</ul>
+<p>The solution is the adoption of a <strong>build matrix</strong></p>
+<ul>
+<li>Build variables and their allowed values are specified</li>
+<li>The CI integrator generates the <em>cartesian product</em> of the variable values, and launches a build for each!</li>
+<li>Note: there is no built-in feature to exclude some combination
+<ul>
+<li>It must be done manually using <code>if</code> conditionals</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="build-matrix-in-gha">Build matrix in GHA</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">jobs</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">Build</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">strategy</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#204a87;font-weight:bold">matrix</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">os</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">windows, macos, ubuntu]</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">jvm_version</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">8</span><span style="color:#000;font-weight:bold">,</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">11</span><span style="color:#000;font-weight:bold">,</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">15</span><span style="color:#000;font-weight:bold">,</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">16</span><span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic"># Arbitrarily-made and arbitrarily-valued variables</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">ruby_version</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">2.7</span><span style="color:#000;font-weight:bold">,</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">3.0</span><span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">python_version</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">3.7</span><span style="color:#000;font-weight:bold">,</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">3.9.7</span><span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">runs-on</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">${{ matrix.os }}-latest</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic">## The string is computed interpolating a variable value</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">steps</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">uses</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">actions/setup-java@v3</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">with</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">          </span><span style="color:#204a87;font-weight:bold">distribution</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;adopt&#39;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">          </span><span style="color:#204a87;font-weight:bold">java-version</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">${{ matrix.jvm_version }}</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic"># &#34;${{ }}&#34; contents are interpreted by the github actions runner</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">uses</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">actions/setup-python@v3</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">with</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">          </span><span style="color:#204a87;font-weight:bold">python-version</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">${{ matrix.python_version }} </span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">uses</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">ruby/setup-ruby@v1</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">with</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">          </span><span style="color:#204a87;font-weight:bold">ruby-version</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">${{ matrix.ruby_version }}</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">shell</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">bash</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">run</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">java -version</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">shell</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">bash</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">run</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">ruby --version</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">shell</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">bash</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">run</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">python --version</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span></code></pre></div>
+</section><section>
+<h2 id="private-data-and-continuous-integration">Private data and continuous integration</h2>
+<p>We would like the CI to be able to</p>
+<ul>
+<li>Sign our artifacts</li>
+<li>Delivery/Deploy our artifacts on remote targets</li>
+</ul>
+<p>Both operations <strong>require private information to be shared</strong></p>
+<p>Of course, private data <em>can&rsquo;t be shared</em></p>
+<ul>
+<li>Attackers may steal the identity</li>
+<li>Attackers may compromise deployments</li>
+<li>In case of open projects, attackers may exploit <em>pull requests</em>!
+<ul>
+<li>Fork your project (which has e.g. a secret environment variable)</li>
+<li>Print the value of the secret (e.g. with <code>printenv</code>)</li>
+</ul>
+</li>
+</ul>
+<p>How to <em>share a secret</em> with the build environment?</p>
+</section><section>
+<h2 id="secrets">Secrets</h2>
+<p>Secrets can be stored in GitHub at the repository or organization level.</p>
+<p>GitHub Actions can access these secrets from the context:</p>
+<ul>
+<li>Using the <code>secrets.&lt;secret name&gt;</code> context object</li>
+<li>Access is allowed only for workflows generated by local events
+<ul>
+<li>Namely, no secrets for pull requests</li>
+</ul>
+</li>
+</ul>
+<p>Secrets can be added from the web interface (for mice lovers), or via the GitHub API.</p>
+<pre><code class="language-ruby">#!/usr/bin/env ruby
+require 'rubygems'
+require 'bundler/setup'
+require 'octokit'
+require 'rbnacl'
+repo_slug, name, value = ARGV
+client = Octokit::Client.new(:access_token =&gt; 'access_token_from_github')
+pubkey = client.get_public_key(repo_slug)
+key = Base64.decode64(pubkey.key)
+sodium_box = RbNaCl::Boxes::Sealed.from_public_key(key)
+encrypted_value = Base64.strict_encode64(sodium_box.encrypt(value))
+payload = { 'key_id' =&gt; pubkey.key_id, 'encrypted_value' =&gt; encrypted_value }
+client.create_or_update_secret(repo_slug, name, payload)
+</code></pre>
+</section><section>
+<h1 id="stale-builds">Stale builds</h1>
+<ol>
+<li>Stuff <em>works</em></li>
+<li><em>Nobody touches it</em> for months</li>
+<li>Untouched stuff is now <em>borked</em>!</li>
+</ol>
+<ul>
+<li>Connected to the issue of <strong>build reproducibility</strong>
+<ul>
+<li>The higher the build <em>reproducibility</em>, the higher its <em>robustness</em></li>
+</ul>
+</li>
+<li>The default runner configuration may change</li>
+<li>Some tools may become unavailable</li>
+<li>Some dependencies may get unavailable</li>
+</ul>
+<p><strong>The sooner the issue is known, the better</strong></p>
+<p>$\Rightarrow$ <em>Automatically run the build every some time</em> even if nobody touches the project</p>
+<ul>
+<li>How often? Depends on the project&hellip;</li>
+<li><strong>Warning</strong>: GitHub Actions disables <code>cron</code> CI jobs if there is no action on the repository, which makes the mechanism less useful</li>
+</ul>
+</section><section>
+<h2 id="additional-checks-and-reportings">Additional checks and reportings</h2>
+<p>There exist a number of recommended services that provide additional QA and reports.</p>
+<p>Non exhaustive list:</p>
+<ul>
+<li><a href="https://codecov.io/">Codecov.io</a>
+<ul>
+<li>Code coverage</li>
+<li>Supports Jacoco XML reports</li>
+<li>Nice data reporting system</li>
+</ul>
+</li>
+<li><a href="https://sonarcloud.io/">Sonarcloud</a>
+<ul>
+<li>Multiple measures, covering reliability, security, maintainability, duplication, complexity&hellip;</li>
+</ul>
+</li>
+<li><a href="https://www.codacy.com/">Codacy</a>
+<ul>
+<li>Automated software QA for several languages</li>
+</ul>
+</li>
+<li><a href="https://www.codefactor.io/">Code Factor</a>
+<ul>
+<li>Automated software QA</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="high-quality-floss-checklist">High quality FLOSS checklist</h2>
+<p>The <a href="https://www.linuxfoundation.org/">Linux Foundation</a> <a href="https://www.coreinfrastructure.org/">Core Infrastructure Initiative</a> created a checklist for high quality FLOSS.</p>
+<p><strong><a href="https://bestpractices.coreinfrastructure.org/en">CII Best Practices Badge Program https://bestpractices.coreinfrastructure.org/en</a></strong></p>
+<ul>
+<li><em>Self-certification</em>: no need for bureaucracy</li>
+<li>Provides a nice <em>TODO list</em> for a high quality product</li>
+<li>Releases a <em>badge</em> that can be added e.g. to the project homepage</li>
+</ul>
+</section><section>
+<h2 id="automated-evolution">Automated evolution</h2>
+<p>A full-fledged CI system allows reasonably safe <em>automated evolution of software</em>
+<br>
+At least, in terms of <em>dependency updates</em></p>
+<p>Assuming that you can <em>effectively intercept issues</em>,
+here is a possible workflow for <strong>automatic</strong> dependency updates:</p>
+<ol>
+<li><em>Check</em> if there are new updates</li>
+<li><em>Apply</em> the update in a new branch</li>
+<li><em>Open</em> a pull request</li>
+<li><em>Verify</em> if changes break anything
+<ul>
+<li>If they do, manual intervention is required</li>
+</ul>
+</li>
+<li><em>Merge</em></li>
+</ol>
+</section><section>
+<h2 id="automated-evolution-1">Automated evolution</h2>
+<p><strong>Bots</strong> performing the aforementioned process for a variety of build systems exist.</p>
+<p>They are usually integrated with the repository hosting provider</p>
+<ul>
+<li>Whitesource Renovate (Multiple)
+<ul>
+<li>Also updates github actions and Gradle Catalogs</li>
+</ul>
+</li>
+<li>Dependabot (Multiple)</li>
+<li>Gemnasium (Ruby)</li>
+<li>Greenkeeper (NPM)</li>
+</ul>
+</section>
+
+  
+
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src=/Course-DTM-SE-3/reveal-hugo/object-assign.js></script>
+
+<a href="/Course-DTM-SE-3/reveal-js/css/print/" id="print-location" style="display: none;"></a>
+<script type="text/javascript">
+  var printLocationElement = document.getElementById('print-location');
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = printLocationElement.href + (window.location.search.match(/print-pdf/gi) ? 'pdf.css' : 'paper.css');
+  document.getElementsByTagName('head')[0].appendChild(link);
+</script>
+
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"height":"1080","highlight_theme":"github","history":true,"slide_number":true,"theme":"league","transition":"slide","transition_speed":"fast","width":"1920"}</script>
+<script type="application/json" id="reveal-hugo-page-params">null</script>
+
+<script src="/Course-DTM-SE-3/reveal-js/js/reveal.js"></script>
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+  
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams));
+  Reveal.initialize(options);
+</script>
+
+
+  
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/markdown/marked.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/zoom-js/zoom.js"></script>
+  
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+</script>
+
+<script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+    
+  </body>
+</html>
