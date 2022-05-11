@@ -722,3 +722,7 @@ More in general, there is *no inherent limit to nesting containers*
   2. Runs the tests
     (if you do not recall the command, it is in [the slides about build systems](../build/))
 3. Improve further: before running tests, install Python 3.10.2 using [this action](https://github.com/actions/setup-python)
+
+<br/>
+
+* You may start from [this base example](https://github.com/DanySK/Tutorial-GitHub-Actions-Minimal/blob/master/.github/workflows/workflow-example.yml)
