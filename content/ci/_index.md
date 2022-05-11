@@ -704,4 +704,21 @@ Several integrators use containers as build environments: it is possible to *bui
 
 More in general, there is *no inherent limit to nesting containers*
 
+---
 
+# Exercise
+
+* Pick the python testing repository that we used in the previous lab:
+  * [https://github.com/DanySK/python-testing-101/](https://github.com/DanySK/python-testing-101/)
+* **fork** it (if you have not already)
+* Clone your fork locally
+* Make sure that you enabled actions by looking at the "Actions" tab on your GitHub repository fork
+
+### Then:
+
+1. Configure a minimal test CI: at each `push`, it must print `Hello, World`
+2. Improve: create a two-lines script that
+  1. Changes directory to `example-py-unittest`
+  2. Runs the tests
+    (if you do not recall the command, it is in [the slides about build systems](../build/))
+3. Improve further: before running tests, install Python 3.10.2 using [this action](https://github.com/actions/setup-python)
