@@ -164,7 +164,8 @@ Workflows are configured in YAML files located in the default branch of the repo
 
 One configuration file $\Rightarrow$ one workflow
 
-For security reasons, workflows may need to be manually activated in the *Actions* tab of the GitHub web interface.
+For security reasons,
+workflows may need to get manually activated in the *Actions* tab of the GitHub web interface.
 
 ---
 
