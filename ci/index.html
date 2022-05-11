@@ -312,7 +312,7 @@ and many are developed by the community.</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#8f5902;font-style:italic"># Steps represent a sequence of tasks that will be executed as part of the job</span><span style="color:#f8f8f8;text-decoration:underline">
 </span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">steps</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
 </span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#8f5902;font-style:italic"># Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it</span><span style="color:#f8f8f8;text-decoration:underline">
-</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">uses</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">actions/checkout@v3</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">uses</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b</span><span style="color:#f8f8f8;text-decoration:underline">
 </span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#8f5902;font-style:italic"># Runs a single command using the runners shell</span><span style="color:#f8f8f8;text-decoration:underline">
 </span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">      </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">Run a one-line script</span><span style="color:#f8f8f8;text-decoration:underline">
 </span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">run</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">echo Hello from a ${{ runner.os }} machine!</span><span style="color:#f8f8f8;text-decoration:underline">
@@ -789,6 +789,27 @@ CMD bash
 <p>Of course, as any other software, <em>custom docker images should get built in CI</em></p>
 <p>Several integrators use containers as build environments: it is possible to <em>build a container using a container</em></p>
 <p>More in general, there is <em>no inherent limit to nesting containers</em></p>
+</section><section>
+<h1 id="exercise">Exercise</h1>
+<ul>
+<li>Pick the python testing repository that we used in the previous lab:
+<ul>
+<li><a href="https://github.com/DanySK/python-testing-101/">https://github.com/DanySK/python-testing-101/</a></li>
+</ul>
+</li>
+<li><strong>fork</strong> it (if you have not already)</li>
+<li>Clone your fork locally</li>
+<li>Make sure that you enabled actions by looking at the &ldquo;Actions&rdquo; tab on your GitHub repository fork</li>
+</ul>
+<h3 id="then">Then:</h3>
+<ol>
+<li>Configure a minimal test CI: at each <code>push</code>, it must print <code>Hello, World</code></li>
+<li>Improve: create a two-lines script that</li>
+<li>Changes directory to <code>example-py-unittest</code></li>
+<li>Runs the tests
+(if you do not recall the command, it is in <a href="../build/">the slides about build systems</a>)</li>
+<li>Improve further: before running tests, install Python 3.10.2 using <a href="https://github.com/actions/setup-python">this action</a></li>
+</ol>
 </section>
 
   
