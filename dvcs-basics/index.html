@@ -98,17 +98,17 @@
 </ul>
 <p><strong>Git</strong> is now the dominant DVCS (although Mercurial is still in use, e.g., for Python, Java, Facebook).</p>
 </section><section>
-<h2 id="google-trends-to-hahahugoshortcode-s0-hbhb">Google trends to 2022-05-11</h2>
+<h2 id="google-trends-to-hahahugoshortcode-s0-hbhb">Google trends to 2022-05-15</h2>
 <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/2884_RC01/embed_loader.js"></script>
 <script type="text/javascript">
 trends.embed.renderExploreWidget(
   "TIMESERIES",
   {"comparisonItem":
     [
-      {"keyword":"/m/05vqwg","geo":"","time":"2004-01-01 2022-05-11"},
-      {"keyword":"/m/012ct9","geo":"","time":"2004-01-01 2022-05-11"},
-      {"keyword":"/m/08441_","geo":"","time":"2004-01-01 2022-05-11"},
-      {"keyword":"/m/09d6g","geo":"","time":"2004-01-01 2022-05-11" }
+      {"keyword":"/m/05vqwg","geo":"","time":"2004-01-01 2022-05-15"},
+      {"keyword":"/m/012ct9","geo":"","time":"2004-01-01 2022-05-15"},
+      {"keyword":"/m/08441_","geo":"","time":"2004-01-01 2022-05-15"},
+      {"keyword":"/m/09d6g","geo":"","time":"2004-01-01 2022-05-15" }
     ],
     "category":0,
     "property":""
@@ -2187,6 +2187,32 @@ They <em>enrich</em> the base git model with services built around the tool:</p>
   <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/notes/notes.js"></script>
 
 
+
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({startOnLoad: false});
+    let render = (event) => {
+      let mermaidElems = event.currentSlide.querySelectorAll('.mermaid');
+      if (!mermaidElems.length){
+          return
+      }
+      mermaidElems.forEach(mermaidElem => {
+          let processed = mermaidElem.getAttribute('data-processed');
+          if (!processed){
+              
+              mermaid.init(undefined, mermaidElem);
+          }
+      });
+    };
+    Reveal.addEventListener('slidechanged', render);
+    Reveal.addEventListener('ready', render);
+  </script>
 
     <script>
     MathJax = {

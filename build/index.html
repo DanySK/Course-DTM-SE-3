@@ -369,7 +369,7 @@ yfinance==0.1.70
 <h4 id="example-requirementstxt">Example <code>requirements.txt</code></h4>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>matplotlib ==3.5.2
 </span></span><span style="display:flex;"><span>pandas_ta ==0.3.14.b
-</span></span><span style="display:flex;"><span>pip ==22.0.4
+</span></span><span style="display:flex;"><span>pip ==22.1
 </span></span><span style="display:flex;"><span>pyqt5 ==5.15.6
 </span></span><span style="display:flex;"><span>yfinance ==0.1.70
 </span></span></code></pre></div>
@@ -719,6 +719,32 @@ multiple tools <em>proliferated</em></p>
   <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/notes/notes.js"></script>
 
 
+
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({startOnLoad: false});
+    let render = (event) => {
+      let mermaidElems = event.currentSlide.querySelectorAll('.mermaid');
+      if (!mermaidElems.length){
+          return
+      }
+      mermaidElems.forEach(mermaidElem => {
+          let processed = mermaidElem.getAttribute('data-processed');
+          if (!processed){
+              
+              mermaid.init(undefined, mermaidElem);
+          }
+      });
+    };
+    Reveal.addEventListener('slidechanged', render);
+    Reveal.addEventListener('ready', render);
+  </script>
 
     <script>
     MathJax = {
