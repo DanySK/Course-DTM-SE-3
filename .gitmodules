@@ -2,5 +2,5 @@
 	path = themes/reveal-hugo
 	url = git@github.com:dzello/reveal-hugo.git
 [submodule "static/shared-slides"]
-	path = static/shared-slides
+	path = shared-slides
 	url = https://github.com/DanySK/shared-slides.git
