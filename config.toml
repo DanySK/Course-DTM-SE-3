@@ -19,8 +19,8 @@ unsafe = true
 # choose between Hugo compile-time or Highlight.js
 # syntax highlighting for code inside of code fences
 [markup.highlight]
-codeFences = false  # use highlight.js 
-# codeFences = true  # use hugo highlighting at compile time
+# codeFences = false  # use highlight.js 
+codeFences = true  # use hugo highlighting at compile time
 style = "tango"  # set a style for hugo highlighting
 
 [outputFormats.Reveal]
@@ -43,6 +43,33 @@ height = '1080'
 # height = '2160'
 # width = '100%'
 # height = '100%'
+[[params.reveal_hugo.mermaid]]
+startOnLoad = false
+theme = "default"
+fontFamily = "Inconsolata"
+useMaxWidth = false
+# actorFontSize = 40
+# noteFontSize = 40
+# fontSize = 40
+
+[params.reveal_hugo.mermaid.gitGraph]
+mainBranchName = 'master'
+rotateCommitLabel = true
+#fontSize = "3em"
+#commitLabelFontSize = '160px'
+
+# [params.reveal_hugo.mermaid.gitGraph.nodeLabel]
+# width = 750
+# height = 100
+# x = -250
+# y = 0
+
+[params.reveal_hugo.mermaid.themeVariables]
+commitLabelColor = '#ff0000'
+# commitLabelBackground = '#00ff00'
+# commitLabelFontSize = '1.2em'
+# tagLabelFontSize = '1.2em'
+# labelFontSize = '1.2em'
 
 [params.reveal_hugo.custom_theme_options]
 targetPath = "css/custom-theme.css"
