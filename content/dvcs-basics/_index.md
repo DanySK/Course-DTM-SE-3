@@ -61,10 +61,15 @@ Tools meant to support the development of projects by:
   * Authors, dates, notes...
 * *Merging* information produced at different stages
 * (in some cases) *facilitate parallel workflows*
-* **Distributed** vs. *Centralized*
-  * **Every developer has a whole copy of the entire history**
-  * *There exist a central point of synchronization*
 * Also called Source Content Management (SCM)
+
+**Distributed**: *Every copy* of the repository contains
+(i.e., every developer locally have)
+*the entire history*.
+
+**Centralized**: A *reference copy* of the repository contains the whole history;
+developers work on a subset of such history
+
 
 ---
 
@@ -100,63 +105,390 @@ trends.embed.renderExploreWidget(
 
 ---
 
-## Distributed version control: concepts
+## Intuition: the history of a project
 
-* **Repository**: project *meta-data*.
-  Includes the information about the project history, how to roll changes back,
-  authors, dates, differences between "saves", and so on.
-* **Working Tree** (or worktree, or working directory): the collection of *files* (usually, inside a folder) that constitute the project.
-  The version control system tracks changes to the working tree.
-* **Commit**: a *saved status* of the project.
-  Depending on the operation, it can be seen as the collection of *changes* required to transform the previous (*parent*) save into the current (differential tracking),
-  or as a *snapshot* of the status of the worktree (snapshotting).
-  It includes metadata about the author, the date, and a *message* summarizing the changes, and a unique *identifier*.
-  A commit with no parent is an *initial commit*.
-  A commit with multiple parents is a *merge commit*.
-* **Branch**: a *sequence of commits* (more precisely, a directed acyclic graph)
-* **Head**: a pointer to the *current commit*: when a new commit is performed,
-  the head becomes the parent commit of the newly created commit,
-  and then moves to point to the new commit.
-* **Checkout**: *moves the head* to a commit, possibly updating the some or all the files in the working tree.
-* **Merge**: *fusion of divergent branches*, generates a *merge commit*
+1. Create a new project
+```mermaid
+%%{init: { width: '20' 'gitGraph': {'showBranches': false, 'showCommitLabel': false}} }%%
+gitGraph
+  commit id: "Initialize project"
+```
 
 ---
 
-## Visual representation
+2. Make some changes
 
-A *single branch*, linear development.
-
-* every oval is a *commit*
-* black arrows point to the *parent commit*
-* orange boxes are *labels* (symbolic names of commits)
+```mermaid
+gitGraph
+  commit id: "Initialize project"
+  commit id: "Make some changes"
+```
 
 ---
+
+3. Then more and more, until the project is ready
+
+```mermaid
+gitGraph
+  commit id: "Initialize project"
+  commit id: "Make some changes"
+  commit id: "Make more changes"
+  commit id: "It's finished!" type: HIGHLIGHT
+```
+
+At a first glance, the history of a project *looks like* a **line**.
+
+---
+
+## Except that, in the real world...
+
+> Anything that can go wrong will go wrong
+> <br><cite>$1^{st}$ Murphy's law</cite>
+
+> If anything simply cannot go wrong, it will anyway
+> <cite>$5^{th}$ Murphy's law</cite>
+
+---
+
+# ...things go wrong
+
+```mermaid
+gitGraph
+  commit id: "Initialize project"
+  commit id: "Make some changes"
+  commit id: "Make more changes"
+  commit id: "It's *not* finished! :(" type: REVERSE tag: "fail"
+```
+
+---
+
+## Rolling back changes
+
+Go *back in time* to a previous state where things work
+
+```mermaid
+gitGraph
+  commit id: "init"
+  commit id: "okay" type: HIGHLIGHT
+  commit id: "error" type: REVERSE
+  commit id: "reject" type: REVERSE
+```
+
+---
+
+## Get the previous version and fix
+
+Then fix the mistake
+
+```mermaid
+gitGraph
+  commit id: "init"
+  commit id: "okay"
+  branch fix-issue
+  checkout master
+  commit id: "error" type: REVERSE
+  commit id: "reject" type: REVERSE
+  checkout fix-issue
+  commit id: "improve"
+  commit id: "finished" type: HIGHLIGHT
+```
+
+If you consider rollbacks, history is a **tree**!
+
+---
+
+# Collaboration: diverging
+
+Alice and Bob work together for some time, then they go home and work separately, in parallel
+
+They have a *diverging history*!
+
+```mermaid
+%%{init: { 'gitGraph': { 'mainBranchName': 'alice'}} }%%
+gitGraph
+  commit id: "together-1"
+  commit id: "together-2"
+  commit id: "together-3"
+  branch bob
+  commit id: "bob-4"
+  checkout alice
+  commit id: "alice-4"
+  checkout bob
+  commit id: "bob-5"
+  checkout alice
+  commit id: "alice-5"
+  checkout bob
+  commit id: "bob-6"
+  checkout alice
+  commit id: "alice-6"
+```
+
+---
+
+# Collaboration: reconciling
+
+```mermaid
+%%{init: { 'gitGraph': { 'mainBranchName': 'alice'}} }%%
+gitGraph
+  commit id: "together-1"
+  commit id: "together-2"
+  commit id: "together-3"
+  branch bob
+  commit id: "bob-4"
+  checkout alice
+  commit id: "alice-4"
+  checkout bob
+  commit id: "bob-5"
+  checkout alice
+  commit id: "alice-5"
+  checkout bob
+  commit id: "bob-6"
+  checkout alice
+  commit id: "alice-6"
+  merge bob tag: "reconciled!"
+  commit id: "together-7"
+```
+
+If you have the possibility to *reconcile diverging developments*, the history becomes a **graph**!
+
+Reconciling diverging developments is usually referred to as **merge**
+
+---
+
+## DVCS concepts and terminology: *Repository*
+
+Project **meta-data**. Includes the whole project history
+* information on how to *roll back* changes 
+* *authors* of changes
+* *dates*
+* *differences* between different points in time
+* and so on
+
+Usually, stored in a hidden folder in the *root folder* of the project
+
+---
+
+## DVCS concepts and terminology: *Working Tree*
+
+(or *worktree*, or *working directory*)
+
+the collection of **files** (usually, inside a *root folder*) that constitute the project,
+excluding the *meta-data*.
+
+---
+
+## DVCS concepts and terminology: *Commit*
+
+A **saved status** of the project.
+* Collects the *changes* required to transform the previous (*parent*) commit into the current (*differential tracking*)
+* Creates a *snapshot* of the status of the worktree (snapshotting).
+* Records metadata: *parent commit*, *author*, *date*, a *message* summarizing the changes, and a *unique identifier*.
+* A commit with no parent is an *initial commit*.
+* A commit with multiple parents is a *merge commit*.
+
+```mermaid
+%%{init: { 'gitGraph': { 'mainBranchName': 'alice'}} }%%
+gitGraph
+  commit tag: "initial"
+  commit
+  commit
+  branch bob
+  commit
+  checkout alice
+  commit
+  checkout bob
+  commit
+  checkout alice
+  commit
+  checkout bob
+  commit
+  checkout alice
+  commit
+  merge bob tag: "merge"
+  commit
+```
+
+---
+
+## DVCS concepts and terminology: *Branch*
+
+A **named sequence of commits**
+
+```mermaid
+%%{init: { 'gitGraph': { 'mainBranchName': 'default-branch'}} }%%
+gitGraph
+  commit
+  commit
+  commit
+  branch branch2
+  commit
+  checkout default-branch
+  commit
+  checkout branch2
+  branch branch3
+  commit
+  checkout default-branch
+  branch branch4
+  commit
+  commit
+  commit
+  commit
+  checkout branch3
+  merge branch4
+  commit
+  commit
+  commit
+  checkout default-branch
+  merge branch3
+  checkout branch2
+  commit
+  commit
+  merge default-branch
+```
+
+If no branch has been created at the first commit, a default name is used.
+
+---
+
+## DVCS concepts and terminology: *Commit references*
+
+To be able to go *back in time* or *change branch*, we need to **refer to commits**
+
+* Every commit has a **unique identifier**, which is a valid reference
+* A **branch name** is a valid commit reference (points to the *last commit of that branch*)
+* A special commit name is  **HEAD**, which refers to the *current commit*
+  * When committing, the **HEAD** moves forward to the new commit
+
+Commit references are also referred to as `tree-ish`es
+
+### Absolute and relative references
+
+Appending `~` and a number `i` to a valid tree-ish means "`i-th` parent of this tree-ish"
+
+```mermaid
+%%{init: { 'gitGraph': { 'mainBranchName': 'master', 'showCommitLabel': false}} }%%
+gitGraph
+  commit tag: "HEAD~8"
+  commit tag: "HEAD~7"
+  commit tag: "HEAD~6"
+  commit tag: "HEAD~5"
+  commit tag: "HEAD~4"
+  commit tag: "HEAD~3"
+  commit tag: "HEAD~2"
+  commit tag: "HEAD~1"
+  commit tag: "HEAD"
+  commit
+  commit
+```
+
+```mermaid
+%%{init: { 'gitGraph': { 'mainBranchName': 'b0', 'showCommitLabel': false}} }%%
+gitGraph
+  commit tag: "b0~8"
+  commit tag: "b0~7"
+  commit tag: "b0~6"
+  commit tag: "b0~5"
+  commit tag: "b0~4"
+  commit tag: "b0~3"
+  commit tag: "b0~2"
+  commit tag: "b0~1"
+  commit tag: "b0"
+```
+
+---
+
+## DVCS concepts and terminology: *Checkout*
+
+The operation of **moving to another commit**
+* Moving to *another branch*
+* Moving *back in time*
+
+Moves the `HEAD` to the specified *target tree-ish*
+
+---
+
+## DVCS concepts and terminology: *Head*
+
+A pointer to the **current commit**
+
+```mermaid
+%%{init: { 'gitGraph': { 'mainBranchName': 'default-branch'}} }%%
+gitGraph
+  commit
+  commit
+  commit
+  branch branch2
+  commit
+  checkout default-branch
+  commit
+  checkout branch2
+  branch branch3
+  commit
+  checkout default-branch
+  branch branch4
+  commit
+  commit
+  commit
+  commit
+  checkout branch3
+  merge branch4
+  commit
+  commit
+  commit
+  checkout default-branch
+  merge branch3
+  checkout branch2
+  commit
+  commit
+  merge default-branch
+```
+
+If no branch has been created at the first commit, a default name is used.
+
+---
+
+## Project evolution example
+
+Let us try to see what happens when ve develop some project, step by step.
+
+---
+
 
 1. first commit
-{{< gravizo width="100" >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    "HEAD -> branch_name" [style="filled,solid", shape=box, fillcolor=orange];
-    C1 -> "HEAD -> branch_name" [dir=back, penwidth=4, color=orange];
-  }
-{{< /gravizo >}}
+
+```mermaid
+flowchart RL
+  HEAD{{HEAD}}
+  b1(default-branch)
+
+  C1([1])
+
+  HEAD -.-> C1
+  HEAD --"fas:fa-link"--o b1
+  b1 -.-> C1
+
+  class HEAD head
+  class b1 branch
+  class C1 commit
+```
 
 2. second commit
 
-{{< gravizo width="30" >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    C1 -> C2 [dir=back];
-    "HEAD -> branch_name" [style="filled,solid", shape=box, fillcolor=orange];
-    C2 -> "HEAD -> branch_name" [dir=back, penwidth=4, color=orange];
-  }
-{{< /gravizo >}}
+```mermaid
+flowchart RL
+  HEAD{{HEAD}}
+  b1(default-branch)
+
+  C2([2]) --> C1([1])
+
+  HEAD -.-> C2
+  HEAD --"fas:fa-link"--o b1
+  b1 -.-> C2
+
+  class HEAD head;
+  class b1 branch;
+  class C1,C2 commit;
+```
 
 ---
 
@@ -164,17 +496,22 @@ A *single branch*, linear development.
 
 ---
 
-{{< gravizo >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    "HEAD -> branch_name" [style="filled,solid", shape=box, fillcolor=orange];
-    C6 -> "HEAD -> branch_name" [dir=back, penwidth=4, color=orange];
-  }
-{{< /gravizo >}}
+```mermaid
+flowchart RL
+  HEAD{{HEAD}}
+  b1(default-branch)
+
+  C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+
+  b1 -.-> C6
+
+  HEAD -.-> C6
+  HEAD --"fas:fa-link"--o b1
+
+  class HEAD head;
+  class b1 branch;
+  class C1,C2,C3,C4,C5,C6 commit;
+```
 
 Oh, no, there was a mistake! We need to roll back!
 
@@ -182,64 +519,81 @@ Oh, no, there was a mistake! We need to roll back!
 
 ## *checkout of C4*
 
-{{< gravizo >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    HEAD, branch_name [style="filled,solid", shape=box, fillcolor=orange];
-    C4 -> HEAD [dir=back, penwidth=4, color=orange];
-    C6 -> branch_name [dir=back, penwidth=4, color=orange];
-  }
-{{< /gravizo >}}
+```mermaid
+flowchart RL
+  HEAD{{"HEAD fas:fa-unlink"}}
+  b1(default-branch)
 
-* No information is lost, we can get back to `C6` whenever we want to.
+  C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+
+  b1 -.-> C6
+
+  HEAD -.-> C4
+
+  class HEAD head;
+  class b1 branch;
+  class C1,C2,C3,C4,C5,C6 commit;
+```
+
+* No information is lost, we can get back to `6` whenever we want to.
 * what if we commit now?
 
 ---
 
 ## Branching!
 
-{{< gravizo >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    C4 -> C7 [dir=back]
-    "HEAD -> another_branch", branch_name [style="filled,solid", shape=box, fillcolor=orange];
-    C7 -> "HEAD -> another_branch" [dir=back, penwidth=4, color=orange];
-    C6 -> branch_name [dir=back, penwidth=4, color=orange];
-  }
-{{< /gravizo >}}
 
-* Okay, but there was useful stuff in `C5`, I'd like into `another_branch`
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  b1(default-branch)
+  b2(new-branch)
+
+  C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C7([7]) --> C4([4])
+  
+  b1 -.-> C6
+  b2 -.-> C7
+
+  HEAD -.-> C7
+  HEAD --"fas:fa-link"--o b2
+
+  class HEAD head;
+  class b1,b2 branch;
+  class C1,C2,C3,C4,C5,C6,C7 commit;
+```
+
+* Okay, but there was useful stuff in `5`, I'd like into `another_branch`
 
 ---
 
 ## Merging!
 
-{{< gravizo >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    C4 -> C7 [dir=back]
-    C5 -> C7 [dir=back]
-    "HEAD -> another_branch", branch_name [style="filled,solid", shape=box, fillcolor=orange];
-    C7 -> "HEAD -> another_branch" [dir=back, penwidth=4, color=orange];
-    C6 -> branch_name [dir=back, penwidth=4, color=orange];
-  }
-{{< /gravizo >}}
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  b1(default-branch)
+  b2(new-branch)
+
+  C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C7([7]) --> C4
+  C8([8]) --> C7
+  C8 --> C5
+  
+  b1 -.-> C6
+  b2 -.-> C8
+
+  HEAD -.-> C8
+  HEAD --"fas:fa-link"--o b2
+
+  class HEAD head;
+  class b1,b2 branch;
+  class C1,C2,C3,C4,C5,C6,C7 commit;
+```
 
 **Notice that:**
 * we have two branches
-* merge `C7` is a merge commit: it has two parents `C4` and `C5`
+* `8` is a merge commit, as it has two parents: `7` and `5`
 * the situation is the same regardless that is a *single developer going back on the development* or *multiple developers working in parallel*!
 * this is possible because *every copy of the repository contains the entire history*!
 
@@ -288,6 +642,22 @@ Although graphical interfaces exsist, it makes no sense to learn a GUI:
 
 ---
 
+## Terminal cheat sheet
+
+| Operation | <i class="fab fa-linux"></i> <i class="fab fa-apple"></i> *nix | <i class="fab fa-windows"></i> win |
+| --- | --- | --- |
+| Print the current directory location | `pwd` | `echo %cd%`
+| Remove the file `foo` (does not work with directories) | `rm foo` | `del foo` |
+| Remove directory `bar` | `rm -r bar` | `del bar` |
+| Change disk (e.g., switch to `D:`) | n.a., single root (`/`) | `D:` |
+| Move to the subdirectory `baz` | `cd baz` | `cd baz` |
+| Move to the parent directory | `cd ..` | `cd..` |
+| Move (rename) file `foo` to `baz` | `mv foo baz` | `move foo baz` |
+| Copy file `foo` to `baz` | `cp foo baz` | `copy foo baz` |
+| Create a directory named `bar` | `mkdir bar` | `md bar` |
+
+---
+
 ## Initializing a repository
 
 ### `git init`
@@ -327,7 +697,7 @@ It is extremely important to understand *clearly* what the current state of affa
 
 `git status` prints the current state of the repository, example output:
 
-```lisp
+```git
 ❯ git status
 On branch master
 Your branch is up to date with 'origin/master'.
@@ -403,7 +773,7 @@ This is achieved through a *special `.gitignore` file*.
 
 ## `.gitignore` example
 
-```gitignore
+```ignore-list
 # ignore the bin folder and all its contents
 bin/
 # ignore every pdf file
