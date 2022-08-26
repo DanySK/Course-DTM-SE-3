@@ -8,14 +8,15 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/css/reset.css">
-<link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/css/reveal.css">
-  <link rel="stylesheet" href="/Course-DTM-SE-3/css/custom-theme.min.e49573265c1d31f208b9f54b209eee7ac62b9f850b721913d01129dde7e3c0d8.css" id="theme"><link rel="stylesheet" href="/Course-DTM-SE-3/highlight-js/github.min.css">
+    <link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/dist/reset.css">
+<link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/dist/reveal.css">
+  <link rel="stylesheet" href="/Course-DTM-SE-3/css/custom-theme.min.bb7c72a5ff75c8b0e9ca5bd6185204e51a23c356cd481aa7c0cd9dd6698de3c3.css" id="theme"><link rel="stylesheet" href="/Course-DTM-SE-3/highlight-js/github.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
 <link href='https://fonts.googleapis.com/css?family=Oxygen Mono' rel='stylesheet'>
 <link href='https://fonts.googleapis.com/css?family=Ubuntu Mono' rel='stylesheet'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
 
   </head>
   <body>
@@ -81,14 +82,13 @@
 </li>
 <li><em>Merging</em> information produced at different stages</li>
 <li>(in some cases) <em>facilitate parallel workflows</em></li>
-<li><strong>Distributed</strong> vs. <em>Centralized</em>
-<ul>
-<li><strong>Every developer has a whole copy of the entire history</strong></li>
-<li><em>There exist a central point of synchronization</em></li>
-</ul>
-</li>
 <li>Also called Source Content Management (SCM)</li>
 </ul>
+<p><strong>Distributed</strong>: <em>Every copy</em> of the repository contains
+(i.e., every developer locally have)
+<em>the entire history</em>.</p>
+<p><strong>Centralized</strong>: A <em>reference copy</em> of the repository contains the whole history;
+developers work on a subset of such history</p>
 </section><section>
 <h2 id="short-history">Short history</h2>
 <ul>
@@ -98,17 +98,17 @@
 </ul>
 <p><strong>Git</strong> is now the dominant DVCS (although Mercurial is still in use, e.g., for Python, Java, Facebook).</p>
 </section><section>
-<h2 id="google-trends-to-hahahugoshortcode-s0-hbhb">Google trends to 2022-08-24</h2>
+<h2 id="google-trends-to-hahahugoshortcode-s0-hbhb">Google trends to 2022-08-26</h2>
 <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/2884_RC01/embed_loader.js"></script>
 <script type="text/javascript">
 trends.embed.renderExploreWidget(
   "TIMESERIES",
   {"comparisonItem":
     [
-      {"keyword":"/m/05vqwg","geo":"","time":"2004-01-01 2022-08-24"},
-      {"keyword":"/m/012ct9","geo":"","time":"2004-01-01 2022-08-24"},
-      {"keyword":"/m/08441_","geo":"","time":"2004-01-01 2022-08-24"},
-      {"keyword":"/m/09d6g","geo":"","time":"2004-01-01 2022-08-24" }
+      {"keyword":"/m/05vqwg","geo":"","time":"2004-01-01 2022-08-26"},
+      {"keyword":"/m/012ct9","geo":"","time":"2004-01-01 2022-08-26"},
+      {"keyword":"/m/08441_","geo":"","time":"2004-01-01 2022-08-26"},
+      {"keyword":"/m/09d6g","geo":"","time":"2004-01-01 2022-08-26" }
     ],
     "category":0,
     "property":""
@@ -117,160 +117,429 @@ trends.embed.renderExploreWidget(
 );
 </script>
 </section><section>
-<h2 id="distributed-version-control-concepts">Distributed version control: concepts</h2>
-<ul>
-<li><strong>Repository</strong>: project <em>meta-data</em>.
-Includes the information about the project history, how to roll changes back,
-authors, dates, differences between &ldquo;saves&rdquo;, and so on.</li>
-<li><strong>Working Tree</strong> (or worktree, or working directory): the collection of <em>files</em> (usually, inside a folder) that constitute the project.
-The version control system tracks changes to the working tree.</li>
-<li><strong>Commit</strong>: a <em>saved status</em> of the project.
-Depending on the operation, it can be seen as the collection of <em>changes</em> required to transform the previous (<em>parent</em>) save into the current (differential tracking),
-or as a <em>snapshot</em> of the status of the worktree (snapshotting).
-It includes metadata about the author, the date, and a <em>message</em> summarizing the changes, and a unique <em>identifier</em>.
-A commit with no parent is an <em>initial commit</em>.
-A commit with multiple parents is a <em>merge commit</em>.</li>
-<li><strong>Branch</strong>: a <em>sequence of commits</em> (more precisely, a directed acyclic graph)</li>
-<li><strong>Head</strong>: a pointer to the <em>current commit</em>: when a new commit is performed,
-the head becomes the parent commit of the newly created commit,
-and then moves to point to the new commit.</li>
-<li><strong>Checkout</strong>: <em>moves the head</em> to a commit, possibly updating the some or all the files in the working tree.</li>
-<li><strong>Merge</strong>: <em>fusion of divergent branches</em>, generates a <em>merge commit</em></li>
-</ul>
+<h2 id="intuition-the-history-of-a-project">Intuition: the history of a project</h2>
+<ol>
+<li>Create a new project</li>
+</ol>
+<div class="mermaid">%%{init: { width: '20' 'gitGraph': {'showBranches': false, 'showCommitLabel': false}} }%%
+gitGraph
+  commit id: "Initialize project"
+</div>
+
 </section><section>
-<h2 id="visual-representation">Visual representation</h2>
-<p>A <em>single branch</em>, linear development.</p>
+<ol start="2">
+<li>Make some changes</li>
+</ol>
+<div class="mermaid">gitGraph
+  commit id: "Initialize project"
+  commit id: "Make some changes"
+</div>
+
+</section><section>
+<ol start="3">
+<li>Then more and more, until the project is ready</li>
+</ol>
+<div class="mermaid">gitGraph
+  commit id: "Initialize project"
+  commit id: "Make some changes"
+  commit id: "Make more changes"
+  commit id: "It's finished!" type: HIGHLIGHT
+</div>
+
+<p>At a first glance, the history of a project <em>looks like</em> a <strong>line</strong>.</p>
+</section><section>
+<h2 id="except-that-in-the-real-world">Except that, in the real world&hellip;</h2>
+<blockquote>
+<p>Anything that can go wrong will go wrong
+<br><cite>$1^{st}$ Murphy&rsquo;s law</cite></p>
+</blockquote>
+<blockquote>
+<p>If anything simply cannot go wrong, it will anyway
+<cite>$5^{th}$ Murphy&rsquo;s law</cite></p>
+</blockquote>
+</section><section>
+<h1 id="things-go-wrong">&hellip;things go wrong</h1>
+<div class="mermaid">gitGraph
+  commit id: "Initialize project"
+  commit id: "Make some changes"
+  commit id: "Make more changes"
+  commit id: "It's *not* finished! :(" type: REVERSE tag: "fail"
+</div>
+
+</section><section>
+<h2 id="rolling-back-changes">Rolling back changes</h2>
+<p>Go <em>back in time</em> to a previous state where things work</p>
+<div class="mermaid">gitGraph
+  commit id: "init"
+  commit id: "okay" type: HIGHLIGHT
+  commit id: "error" type: REVERSE
+  commit id: "reject" type: REVERSE
+</div>
+
+</section><section>
+<h2 id="get-the-previous-version-and-fix">Get the previous version and fix</h2>
+<p>Then fix the mistake</p>
+<div class="mermaid">gitGraph
+  commit id: "init"
+  commit id: "okay"
+  branch fix-issue
+  checkout master
+  commit id: "error" type: REVERSE
+  commit id: "reject" type: REVERSE
+  checkout fix-issue
+  commit id: "improve"
+  commit id: "finished" type: HIGHLIGHT
+</div>
+
+<p>If you consider rollbacks, history is a <strong>tree</strong>!</p>
+</section><section>
+<h1 id="collaboration-diverging">Collaboration: diverging</h1>
+<p>Alice and Bob work together for some time, then they go home and work separately, in parallel</p>
+<p>They have a <em>diverging history</em>!</p>
+<div class="mermaid">%%{init: { 'gitGraph': { 'mainBranchName': 'alice'}} }%%
+gitGraph
+  commit id: "together-1"
+  commit id: "together-2"
+  commit id: "together-3"
+  branch bob
+  commit id: "bob-4"
+  checkout alice
+  commit id: "alice-4"
+  checkout bob
+  commit id: "bob-5"
+  checkout alice
+  commit id: "alice-5"
+  checkout bob
+  commit id: "bob-6"
+  checkout alice
+  commit id: "alice-6"
+</div>
+
+</section><section>
+<h1 id="collaboration-reconciling">Collaboration: reconciling</h1>
+<div class="mermaid">%%{init: { 'gitGraph': { 'mainBranchName': 'alice'}} }%%
+gitGraph
+  commit id: "together-1"
+  commit id: "together-2"
+  commit id: "together-3"
+  branch bob
+  commit id: "bob-4"
+  checkout alice
+  commit id: "alice-4"
+  checkout bob
+  commit id: "bob-5"
+  checkout alice
+  commit id: "alice-5"
+  checkout bob
+  commit id: "bob-6"
+  checkout alice
+  commit id: "alice-6"
+  merge bob tag: "reconciled!"
+  commit id: "together-7"
+</div>
+
+<p>If you have the possibility to <em>reconcile diverging developments</em>, the history becomes a <strong>graph</strong>!</p>
+<p>Reconciling diverging developments is usually referred to as <strong>merge</strong></p>
+</section><section>
+<h2 id="dvcs-concepts-and-terminology-repository">DVCS concepts and terminology: <em>Repository</em></h2>
+<p>Project <strong>meta-data</strong>. Includes the whole project history</p>
 <ul>
-<li>every oval is a <em>commit</em></li>
-<li>black arrows point to the <em>parent commit</em></li>
-<li>orange boxes are <em>labels</em> (symbolic names of commits)</li>
+<li>information on how to <em>roll back</em> changes</li>
+<li><em>authors</em> of changes</li>
+<li><em>dates</em></li>
+<li><em>differences</em> between different points in time</li>
+<li>and so on</li>
 </ul>
+<p>Usually, stored in a hidden folder in the <em>root folder</em> of the project</p>
+</section><section>
+<h2 id="dvcs-concepts-and-terminology-working-tree">DVCS concepts and terminology: <em>Working Tree</em></h2>
+<p>(or <em>worktree</em>, or <em>working directory</em>)</p>
+<p>the collection of <strong>files</strong> (usually, inside a <em>root folder</em>) that constitute the project,
+excluding the <em>meta-data</em>.</p>
+</section><section>
+<h2 id="dvcs-concepts-and-terminology-commit">DVCS concepts and terminology: <em>Commit</em></h2>
+<p>A <strong>saved status</strong> of the project.</p>
+<ul>
+<li>Collects the <em>changes</em> required to transform the previous (<em>parent</em>) commit into the current (<em>differential tracking</em>)</li>
+<li>Creates a <em>snapshot</em> of the status of the worktree (snapshotting).</li>
+<li>Records metadata: <em>parent commit</em>, <em>author</em>, <em>date</em>, a <em>message</em> summarizing the changes, and a <em>unique identifier</em>.</li>
+<li>A commit with no parent is an <em>initial commit</em>.</li>
+<li>A commit with multiple parents is a <em>merge commit</em>.</li>
+</ul>
+<div class="mermaid">%%{init: { 'gitGraph': { 'mainBranchName': 'alice'}} }%%
+gitGraph
+  commit tag: "initial"
+  commit
+  commit
+  branch bob
+  commit
+  checkout alice
+  commit
+  checkout bob
+  commit
+  checkout alice
+  commit
+  checkout bob
+  commit
+  checkout alice
+  commit
+  merge bob tag: "merge"
+  commit
+</div>
+
+</section><section>
+<h2 id="dvcs-concepts-and-terminology-branch">DVCS concepts and terminology: <em>Branch</em></h2>
+<p>A <strong>named sequence of commits</strong></p>
+<div class="mermaid">%%{init: { 'gitGraph': { 'mainBranchName': 'default-branch'}} }%%
+gitGraph
+  commit
+  commit
+  commit
+  branch branch2
+  commit
+  checkout default-branch
+  commit
+  checkout branch2
+  branch branch3
+  commit
+  checkout default-branch
+  branch branch4
+  commit
+  commit
+  commit
+  commit
+  checkout branch3
+  merge branch4
+  commit
+  commit
+  commit
+  checkout default-branch
+  merge branch3
+  checkout branch2
+  commit
+  commit
+  merge default-branch
+</div>
+
+<p>If no branch has been created at the first commit, a default name is used.</p>
+</section><section>
+<h2 id="dvcs-concepts-and-terminology-commit-references">DVCS concepts and terminology: <em>Commit references</em></h2>
+<p>To be able to go <em>back in time</em> or <em>change branch</em>, we need to <strong>refer to commits</strong></p>
+<ul>
+<li>Every commit has a <strong>unique identifier</strong>, which is a valid reference</li>
+<li>A <strong>branch name</strong> is a valid commit reference (points to the <em>last commit of that branch</em>)</li>
+<li>A special commit name is  <strong>HEAD</strong>, which refers to the <em>current commit</em>
+<ul>
+<li>When committing, the <strong>HEAD</strong> moves forward to the new commit</li>
+</ul>
+</li>
+</ul>
+<p>Commit references are also referred to as <code>tree-ish</code>es</p>
+<h3 id="absolute-and-relative-references">Absolute and relative references</h3>
+<p>Appending <code>~</code> and a number <code>i</code> to a valid tree-ish means &ldquo;<code>i-th</code> parent of this tree-ish&rdquo;</p>
+<div class="mermaid">%%{init: { 'gitGraph': { 'mainBranchName': 'master', 'showCommitLabel': false}} }%%
+gitGraph
+  commit tag: "HEAD~8"
+  commit tag: "HEAD~7"
+  commit tag: "HEAD~6"
+  commit tag: "HEAD~5"
+  commit tag: "HEAD~4"
+  commit tag: "HEAD~3"
+  commit tag: "HEAD~2"
+  commit tag: "HEAD~1"
+  commit tag: "HEAD"
+  commit
+  commit
+</div>
+
+<div class="mermaid">%%{init: { 'gitGraph': { 'mainBranchName': 'b0', 'showCommitLabel': false}} }%%
+gitGraph
+  commit tag: "b0~8"
+  commit tag: "b0~7"
+  commit tag: "b0~6"
+  commit tag: "b0~5"
+  commit tag: "b0~4"
+  commit tag: "b0~3"
+  commit tag: "b0~2"
+  commit tag: "b0~1"
+  commit tag: "b0"
+</div>
+
+</section><section>
+<h2 id="dvcs-concepts-and-terminology-checkout">DVCS concepts and terminology: <em>Checkout</em></h2>
+<p>The operation of <strong>moving to another commit</strong></p>
+<ul>
+<li>Moving to <em>another branch</em></li>
+<li>Moving <em>back in time</em></li>
+</ul>
+<p>Moves the <code>HEAD</code> to the specified <em>target tree-ish</em></p>
+</section><section>
+<h2 id="dvcs-concepts-and-terminology-head">DVCS concepts and terminology: <em>Head</em></h2>
+<p>A pointer to the <strong>current commit</strong></p>
+<div class="mermaid">%%{init: { 'gitGraph': { 'mainBranchName': 'default-branch'}} }%%
+gitGraph
+  commit
+  commit
+  commit
+  branch branch2
+  commit
+  checkout default-branch
+  commit
+  checkout branch2
+  branch branch3
+  commit
+  checkout default-branch
+  branch branch4
+  commit
+  commit
+  commit
+  commit
+  checkout branch3
+  merge branch4
+  commit
+  commit
+  commit
+  checkout default-branch
+  merge branch3
+  checkout branch2
+  commit
+  commit
+  merge default-branch
+</div>
+
+<p>If no branch has been created at the first commit, a default name is used.</p>
+</section><section>
+<h2 id="project-evolution-example">Project evolution example</h2>
+<p>Let us try to see what happens when ve develop some project, step by step.</p>
 </section><section>
 <ol>
-<li>
-<p>first commit
-
-
-
-  
-  
-    
-  
-
-
-<figure>
-  <img
-    src='https://g.gravizo.com/svg?%0adigraph%20G%20%7b%0afontname%3d%22Helvetica%2cArial%2csans-serif%22%0anode%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0aedge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0arankdir%3dLR%3b%0a%22HEAD%20-%3e%20branch_name%22%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0aC1%20-%3e%20%22HEAD%20-%3e%20branch_name%22%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%7d%0a'
-    alt=''
-    width="100%"
-    />
-    <figcaption></figcaption>
-</figure>
-</p>
-</li>
-<li>
-<p>second commit</p>
-</li>
+<li>first commit</li>
 </ol>
+<div class="mermaid">flowchart RL
+  HEAD{{HEAD}}
+  b1(default-branch)
 
+  C1([1])
 
+  HEAD -.-> C1
+  HEAD --"fas:fa-link"--o b1
+  b1 -.-> C1
 
-  
-  
-    
-  
+  class HEAD head
+  class b1 branch
+  class C1 commit
+</div>
 
+<ol start="2">
+<li>second commit</li>
+</ol>
+<div class="mermaid">flowchart RL
+  HEAD{{HEAD}}
+  b1(default-branch)
 
-<figure>
-  <img
-    src='https://g.gravizo.com/svg?%0adigraph%20G%20%7b%0afontname%3d%22Helvetica%2cArial%2csans-serif%22%0anode%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0aedge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0arankdir%3dLR%3b%0aC1%20-%3e%20C2%20%5bdir%3dback%5d%3b%0a%22HEAD%20-%3e%20branch_name%22%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0aC2%20-%3e%20%22HEAD%20-%3e%20branch_name%22%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%7d%0a'
-    alt=''
-    width="30%"
-    />
-    <figcaption></figcaption>
-</figure>
+  C2([2]) --> C1([1])
+
+  HEAD -.-> C2
+  HEAD --"fas:fa-link"--o b1
+  b1 -.-> C2
+
+  class HEAD head;
+  class b1 branch;
+  class C1,C2 commit;
+</div>
 
 </section><section>
 <p><img src="4commitslater.png" alt="four commits later"></p>
 </section><section>
+<div class="mermaid">flowchart RL
+  HEAD{{HEAD}}
+  b1(default-branch)
 
+  C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
 
+  b1 -.-> C6
 
-  
+  HEAD -.-> C6
+  HEAD --"fas:fa-link"--o b1
 
-
-<figure>
-  <img
-    src='https://g.gravizo.com/svg?%0adigraph%20G%20%7b%0afontname%3d%22Helvetica%2cArial%2csans-serif%22%0anode%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0aedge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0arankdir%3dLR%3b%0aC1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20-%3e%20C5%20-%3e%20C6%20%5bdir%3dback%5d%3b%0a%22HEAD%20-%3e%20branch_name%22%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0aC6%20-%3e%20%22HEAD%20-%3e%20branch_name%22%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%7d%0a'
-    alt=''
-    width="100%"
-    />
-    <figcaption></figcaption>
-</figure>
+  class HEAD head;
+  class b1 branch;
+  class C1,C2,C3,C4,C5,C6 commit;
+</div>
 
 <p>Oh, no, there was a mistake! We need to roll back!</p>
 </section><section>
 <h2 id="checkout-of-c4"><em>checkout of C4</em></h2>
+<div class="mermaid">flowchart RL
+  HEAD{{"HEAD fas:fa-unlink"}}
+  b1(default-branch)
 
+  C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
 
+  b1 -.-> C6
 
-  
+  HEAD -.-> C4
 
-
-<figure>
-  <img
-    src='https://g.gravizo.com/svg?%0adigraph%20G%20%7b%0afontname%3d%22Helvetica%2cArial%2csans-serif%22%0anode%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0aedge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0arankdir%3dLR%3b%0aC1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20-%3e%20C5%20-%3e%20C6%20%5bdir%3dback%5d%3b%0aHEAD%2c%20branch_name%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0aC4%20-%3e%20HEAD%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0aC6%20-%3e%20branch_name%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%7d%0a'
-    alt=''
-    width="100%"
-    />
-    <figcaption></figcaption>
-</figure>
+  class HEAD head;
+  class b1 branch;
+  class C1,C2,C3,C4,C5,C6 commit;
+</div>
 
 <ul>
-<li>No information is lost, we can get back to <code>C6</code> whenever we want to.</li>
+<li>No information is lost, we can get back to <code>6</code> whenever we want to.</li>
 <li>what if we commit now?</li>
 </ul>
 </section><section>
 <h2 id="branching">Branching!</h2>
+<div class="mermaid">flowchart RL
+  HEAD{{"HEAD"}}
+  b1(default-branch)
+  b2(new-branch)
 
-
-
+  C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C7([7]) --> C4([4])
   
+  b1 -.-> C6
+  b2 -.-> C7
 
+  HEAD -.-> C7
+  HEAD --"fas:fa-link"--o b2
 
-<figure>
-  <img
-    src='https://g.gravizo.com/svg?%0adigraph%20G%20%7b%0afontname%3d%22Helvetica%2cArial%2csans-serif%22%0anode%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0aedge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0arankdir%3dLR%3b%0aC1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20-%3e%20C5%20-%3e%20C6%20%5bdir%3dback%5d%3b%0aC4%20-%3e%20C7%20%5bdir%3dback%5d%0a%22HEAD%20-%3e%20another_branch%22%2c%20branch_name%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0aC7%20-%3e%20%22HEAD%20-%3e%20another_branch%22%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0aC6%20-%3e%20branch_name%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%7d%0a'
-    alt=''
-    width="100%"
-    />
-    <figcaption></figcaption>
-</figure>
+  class HEAD head;
+  class b1,b2 branch;
+  class C1,C2,C3,C4,C5,C6,C7 commit;
+</div>
 
 <ul>
-<li>Okay, but there was useful stuff in <code>C5</code>, I&rsquo;d like into <code>another_branch</code></li>
+<li>Okay, but there was useful stuff in <code>5</code>, I&rsquo;d like into <code>another_branch</code></li>
 </ul>
 </section><section>
 <h2 id="merging">Merging!</h2>
+<div class="mermaid">flowchart RL
+  HEAD{{"HEAD"}}
+  b1(default-branch)
+  b2(new-branch)
 
-
-
+  C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C7([7]) --> C4
+  C8([8]) --> C7
+  C8 --> C5
   
+  b1 -.-> C6
+  b2 -.-> C8
 
+  HEAD -.-> C8
+  HEAD --"fas:fa-link"--o b2
 
-<figure>
-  <img
-    src='https://g.gravizo.com/svg?%0adigraph%20G%20%7b%0afontname%3d%22Helvetica%2cArial%2csans-serif%22%0anode%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0aedge%20%5bfontname%3d%22Helvetica%2cArial%2csans-serif%22%5d%0arankdir%3dLR%3b%0aC1%20-%3e%20C2%20-%3e%20C3%20-%3e%20C4%20-%3e%20C5%20-%3e%20C6%20%5bdir%3dback%5d%3b%0aC4%20-%3e%20C7%20%5bdir%3dback%5d%0aC5%20-%3e%20C7%20%5bdir%3dback%5d%0a%22HEAD%20-%3e%20another_branch%22%2c%20branch_name%20%5bstyle%3d%22filled%2csolid%22%2c%20shape%3dbox%2c%20fillcolor%3dorange%5d%3b%0aC7%20-%3e%20%22HEAD%20-%3e%20another_branch%22%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0aC6%20-%3e%20branch_name%20%5bdir%3dback%2c%20penwidth%3d4%2c%20color%3dorange%5d%3b%0a%7d%0a'
-    alt=''
-    width="100%"
-    />
-    <figcaption></figcaption>
-</figure>
+  class HEAD head;
+  class b1,b2 branch;
+  class C1,C2,C3,C4,C5,C6,C7 commit;
+</div>
 
 <p><strong>Notice that:</strong></p>
 <ul>
 <li>we have two branches</li>
-<li>merge <code>C7</code> is a merge commit: it has two parents <code>C4</code> and <code>C5</code></li>
+<li><code>8</code> is a merge commit, as it has two parents: <code>7</code> and <code>5</code></li>
 <li>the situation is the same regardless that is a <em>single developer going back on the development</em> or <em>multiple developers working in parallel</em>!</li>
 <li>this is possible because <em>every copy of the repository contains the entire history</em>!</li>
 </ul>
@@ -327,6 +596,64 @@ and then moves to point to the new commit.</li>
 </ul>
 <p><strong>I am assuming minimal knowledge of the shell, please let me know NOW if you&rsquo;ve never seen it</strong></p>
 </section><section>
+<h2 id="terminal-cheat-sheet">Terminal cheat sheet</h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th><i class="fab fa-linux"></i> <i class="fab fa-apple"></i> *nix</th>
+<th><i class="fab fa-windows"></i> win</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Print the current directory location</td>
+<td><code>pwd</code></td>
+<td><code>echo %cd%</code></td>
+</tr>
+<tr>
+<td>Remove the file <code>foo</code> (does not work with directories)</td>
+<td><code>rm foo</code></td>
+<td><code>del foo</code></td>
+</tr>
+<tr>
+<td>Remove directory <code>bar</code></td>
+<td><code>rm -r bar</code></td>
+<td><code>del bar</code></td>
+</tr>
+<tr>
+<td>Change disk (e.g., switch to <code>D:</code>)</td>
+<td>n.a., single root (<code>/</code>)</td>
+<td><code>D:</code></td>
+</tr>
+<tr>
+<td>Move to the subdirectory <code>baz</code></td>
+<td><code>cd baz</code></td>
+<td><code>cd baz</code></td>
+</tr>
+<tr>
+<td>Move to the parent directory</td>
+<td><code>cd ..</code></td>
+<td><code>cd..</code></td>
+</tr>
+<tr>
+<td>Move (rename) file <code>foo</code> to <code>baz</code></td>
+<td><code>mv foo baz</code></td>
+<td><code>move foo baz</code></td>
+</tr>
+<tr>
+<td>Copy file <code>foo</code> to <code>baz</code></td>
+<td><code>cp foo baz</code></td>
+<td><code>copy foo baz</code></td>
+</tr>
+<tr>
+<td>Create a directory named <code>bar</code></td>
+<td><code>mkdir bar</code></td>
+<td><code>md bar</code></td>
+</tr>
+</tbody>
+</table>
+</section><section>
 <h2 id="initializing-a-repository">Initializing a repository</h2>
 <h3 id="git-init"><code>git init</code></h3>
 <ul>
@@ -381,23 +708,22 @@ and then moves to point to the new commit.</li>
 <li>Which <em>changes</em> are already <em>staged</em>?</li>
 </ul>
 <p><code>git status</code> prints the current state of the repository, example output:</p>
-<pre><code class="language-lisp">❯ git status
+<pre tabindex="0"><code class="nohighlight" data-noescape>❯ git status
 On branch master
-Your branch is up to date with 'origin/master'.
+Your branch is up to date with &#39;origin/master&#39;.
 
 Changes to be committed:
-  (use &quot;git restore --staged &lt;file&gt;...&quot; to unstage)
+  (use &#34;git restore --staged &lt;file&gt;...&#34; to unstage)
         modified:   content/_index.md
         new file:   content/dvcs-basics/_index.md
         new file:   content/dvcs-basics/staging.png
 
 Changes not staged for commit:
-  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
-  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)
+  (use &#34;git add &lt;file&gt;...&#34; to update what will be committed)
+  (use &#34;git restore &lt;file&gt;...&#34; to discard changes in working directory)
         modified:   layouts/shortcodes/gravizo.html
         modified:   layouts/shortcodes/today.html
-</code></pre>
-</section><section>
+</code></pre></section><section>
 <h2 id="committing">Committing</h2>
 <ul>
 <li>Requires an <em>author</em> and an <em>email</em>
@@ -475,14 +801,13 @@ Changes not staged for commit:
 </ul>
 </section><section>
 <h2 id="gitignore-example"><code>.gitignore</code> example</h2>
-<pre><code class="language-gitignore"># ignore the bin folder and all its contents
+<pre tabindex="0"><code class="language-ignore-list" data-lang="ignore-list"># ignore the bin folder and all its contents
 bin/
 # ignore every pdf file
 *.pdf
-# rule exception (beginning with a !): pdf files named 'myImportantFile.pdf' should be tracked
+# rule exception (beginning with a !): pdf files named &#39;myImportantFile.pdf&#39; should be tracked
 !myImportantFile.pdf
-</code></pre>
-</section><section>
+</code></pre></section><section>
 <h2 id="dealing-with-removal-and-renaming-of-files">Dealing with removal and renaming of files</h2>
 <ul>
 <li>The removal of a file is a legit <em>change</em></li>
@@ -518,19 +843,18 @@ Git provides a dedicated sub-command:</p>
 </ul>
 </section><section>
 <h3 id="example-output-of-git-log---oneline---all---graph">example output of <code>git log --oneline --all --graph</code></h3>
-<pre><code class="language-text">* d114802 (HEAD -&gt; master, origin/master, origin/HEAD) moar contribution
-| * edb658b (origin/renovate/gohugoio-hugo-0.94.x) ci(deps): update gohugoio/hugo action to v0.94.2
-|/  
-* 4ce3431 ci(deps): update gohugoio/hugo action to v0.94.1
-* 9efa88a ci(deps): update gohugoio/hugo action to v0.93.3
-* bf32a8b begin with build slides
-* b803a65 lesson 1 looks ready
-* 6a85f8f ci(deps): update gohugoio/hugo action to v0.93.2
-* b474d2a write more on the introductory lesson
-* 8a7105e ci(deps): update gohugoio/hugo action to v0.93.1
-* 6e40642 begin writing the first lesson
-</code></pre>
-</section><section>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>* d114802 (HEAD -&gt; master, origin/master, origin/HEAD) moar contribution
+</span></span><span style="display:flex;"><span>| * edb658b (origin/renovate/gohugoio-hugo-0.94.x) ci(deps): update gohugoio/hugo action to v0.94.2
+</span></span><span style="display:flex;"><span>|/  
+</span></span><span style="display:flex;"><span>* 4ce3431 ci(deps): update gohugoio/hugo action to v0.94.1
+</span></span><span style="display:flex;"><span>* 9efa88a ci(deps): update gohugoio/hugo action to v0.93.3
+</span></span><span style="display:flex;"><span>* bf32a8b begin with build slides
+</span></span><span style="display:flex;"><span>* b803a65 lesson 1 looks ready
+</span></span><span style="display:flex;"><span>* 6a85f8f ci(deps): update gohugoio/hugo action to v0.93.2
+</span></span><span style="display:flex;"><span>* b474d2a write more on the introductory lesson
+</span></span><span style="display:flex;"><span>* 8a7105e ci(deps): update gohugoio/hugo action to v0.93.1
+</span></span><span style="display:flex;"><span>* 6e40642 begin writing the first lesson
+</span></span></code></pre></div></section><section>
 <h2 id="referring-to-commits-tree-ishes">Referring to commits: <code>&lt;tree-ish&gt;</code>es</h2>
 <p>In git, a reference to a commit is called <code>&lt;tree-ish&gt;</code>. Valid <code>&lt;tree-ish&gt;</code>es are:</p>
 <ul>
@@ -585,21 +909,20 @@ by following the commit <code>&lt;tree-ish&gt;</code> with a tilde (<code>~</cod
 </ul>
 </section><section>
 <h3 id="git-diff-example-output"><code>git diff</code> Example output:</h3>
-<pre><code class="language-diff">diff --git a/.github/workflows/build-and-deploy.yml b/.github/workflows/build-and-deploy.yml
-index b492a8c..28302ff 100644
---- a/.github/workflows/build-and-deploy.yml
-+++ b/.github/workflows/build-and-deploy.yml
-@@ -28,7 +28,7 @@ jobs:
-           # Idea: the regex matcher of Renovate keeps this string up to date automatically
-           # The version is extracted and used to access the correct version of the scripts
-           USES=$(cat &lt;&lt;TRICK_RENOVATE
--          - uses: gohugoio/hugo@v0.94.1
-+          - uses: gohugoio/hugo@v0.93.3
-           TRICK_RENOVATE
-           )
-           echo &quot;Scripts update line: \&quot;$USES\&quot;&quot;
-</code></pre>
-<p>The output is compatible with the Unix commands <code>diff</code> and <code>patch</code></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">diff --git a/.github/workflows/build-and-deploy.yml b/.github/workflows/build-and-deploy.yml
+</span></span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">index b492a8c..28302ff 100644
+</span></span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold"></span><span style="color:#a40000">--- a/.github/workflows/build-and-deploy.yml
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#00a000">+++ b/.github/workflows/build-and-deploy.yml
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000"></span><span style="color:#800080;font-weight:bold">@@ -28,7 +28,7 @@ jobs:
+</span></span></span><span style="display:flex;"><span><span style="color:#800080;font-weight:bold"></span>           # Idea: the regex matcher of Renovate keeps this string up to date automatically
+</span></span><span style="display:flex;"><span>           # The version is extracted and used to access the correct version of the scripts
+</span></span><span style="display:flex;"><span>           USES=$(cat &lt;&lt;TRICK_RENOVATE
+</span></span><span style="display:flex;"><span><span style="color:#a40000">-          - uses: gohugoio/hugo@v0.94.1
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#00a000">+          - uses: gohugoio/hugo@v0.93.3
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000"></span>           TRICK_RENOVATE
+</span></span><span style="display:flex;"><span>           )
+</span></span><span style="display:flex;"><span>           echo &#34;Scripts update line: \&#34;$USES\&#34;&#34;
+</span></span></code></pre></div><p>The output is compatible with the Unix commands <code>diff</code> and <code>patch</code></p>
 <p>Still, <em>binary files are an issue</em>! Tracking the right files is paramount.</p>
 </section><section>
 <h2 id="navigating-the-history">Navigating the history</h2>
@@ -869,14 +1192,13 @@ for a commit to be valid, <code>HEAD</code> must be at the &ldquo;end&rdquo; of 
 <li>but things can still require <em>human intervention</em></li>
 </ul>
 <p>In case of conflict on one or more files, Git marks the subject files as <em>conflicted</em>, and modifies them adding <em>merge markers</em>:</p>
-<pre><code class="language-text">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-Changes made on the branch that is being merged into,
-this is the branch currently checked out (HEAD).
-=======
-Changes made on the branch that is being merged in.
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; other-branch-name
-</code></pre>
-<ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+</span></span><span style="display:flex;"><span>Changes made on the branch that is being merged into,
+</span></span><span style="display:flex;"><span>this is the branch currently checked out (HEAD).
+</span></span><span style="display:flex;"><span>=======
+</span></span><span style="display:flex;"><span>Changes made on the branch that is being merged in.
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt;&gt;&gt;&gt;&gt; other-branch-name
+</span></span></code></pre></div><ul>
 <li>The user should <em>change the conflicted files</em> so that they reflect the <em>final desired status</em></li>
 <li>The (now fixed) files should get added to the stage with <code>git add</code></li>
 <li>The merge operation can be concluded through <code>git commit</code>
@@ -952,11 +1274,10 @@ generally leading to finer grained (and easier to solve) conflicts</li>
 </ul>
 </li>
 </ul>
-<pre><code class="language-text">we would get
-            lines
-                 like these
-</code></pre>
-<h4 id="consequence">Consequence:</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>we would get
+</span></span><span style="display:flex;"><span>            lines
+</span></span><span style="display:flex;"><span>                 like these
+</span></span></code></pre></div><h4 id="consequence">Consequence:</h4>
 <ul>
 <li>Windows systems go to a new line with a <code>CR</code> character followed by an <code>LF</code> character: <code>\r\n</code></li>
 <li>Unix-like systems go to a new line with an <code>LF</code> character: <code>\n</code></li>
@@ -992,12 +1313,11 @@ and loads of warnings about <code>LF</code>/<code>CRLF</code> conversions.</p>
 </li>
 <li>Example:</li>
 </ul>
-<pre><code class="language-text">* text=auto eol=lf
-*.[cC][mM][dD] text eol=crlf
-*.[bB][aA][tT] text eol=crlf
-*.[pP][sS]1 text eol=crlf
-</code></pre>
-</section><section>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>* text=auto eol=lf
+</span></span><span style="display:flex;"><span>*.[cC][mM][dD] text eol=crlf
+</span></span><span style="display:flex;"><span>*.[bB][aA][tT] text eol=crlf
+</span></span><span style="display:flex;"><span>*.[pP][sS]1 text eol=crlf
+</span></span></code></pre></div></section><section>
 <h2 id="associating-symbolic-names-to-commits">Associating symbolic names to commits</h2>
 <p>It is often handful to associate some commits with a <em>symbolic name</em>,
 most of the time to assign <em>versions</em>.</p>
@@ -1203,14 +1523,13 @@ Tags come in two fashions:</p>
 <li>The <code>clone</code> subcommand checks out the remote branch where the <code>HEAD</code> is attached (<em>default branch</em>)</li>
 </ul>
 <p>Examples:</p>
-<pre><code class="language-bash"># creates a local folder called `destination` and copies the repository from the local directory
-git clone /some/repository/on/my/file/system destination
-# creates a local folder called `myfolder` and copies the repository located at the specified `URL`
-git clone https://somewebsite.com/someRepository.git myfolder
-# creates a local folder called `SomeRepo` and copies the repository located at the specified `URL`
-git clone user@sshserver.com:SomePath/SomeRepo.git
-</code></pre>
-</section><section>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># creates a local folder called `destination` and copies the repository from the local directory</span>
+</span></span><span style="display:flex;"><span>git clone /some/repository/on/my/file/system destination
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># creates a local folder called `myfolder` and copies the repository located at the specified `URL`</span>
+</span></span><span style="display:flex;"><span>git clone https://somewebsite.com/someRepository.git myfolder
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># creates a local folder called `SomeRepo` and copies the repository located at the specified `URL`</span>
+</span></span><span style="display:flex;"><span>git clone user@sshserver.com:SomePath/SomeRepo.git
+</span></span></code></pre></div></section><section>
 <h2 id="remotes">Remotes</h2>
 <ul>
 <li>Remotes are the <em>known copies</em> of the repository that exist somewhere (usually in the Internet)</li>
@@ -1750,16 +2069,15 @@ still, it is important to understand that <em>it is not a primitive operation</e
 
 <p>⬇️ <code>git push</code> ⬇️</p>
 <p><strong>ERROR</strong></p>
-<pre><code class="language-text">To somesite.com/repo.git
- ! [rejected]        master -&gt; master (fetch first)
-error: failed to push some refs to 'somesite.com/repo.git'
-hint: Updates were rejected because the remote contains work that you do
-hint: not have locally. This is usually caused by another repository pushing
-hint: to the same ref. You may want to first integrate the remote changes
-hint: (e.g., 'git pull ...') before pushing again.
-hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-</code></pre>
-<ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>To somesite.com/repo.git
+</span></span><span style="display:flex;"><span> ! [rejected]        master -&gt; master (fetch first)
+</span></span><span style="display:flex;"><span>error: failed to push some refs to &#39;somesite.com/repo.git&#39;
+</span></span><span style="display:flex;"><span>hint: Updates were rejected because the remote contains work that you do
+</span></span><span style="display:flex;"><span>hint: not have locally. This is usually caused by another repository pushing
+</span></span><span style="display:flex;"><span>hint: to the same ref. You may want to first integrate the remote changes
+</span></span><span style="display:flex;"><span>hint: (e.g., &#39;git pull ...&#39;) before pushing again.
+</span></span><span style="display:flex;"><span>hint: See the &#39;Note about fast-forwards&#39; in &#39;git push --help&#39; for details.
+</span></span></code></pre></div><ul>
 <li><code>master</code> is not a <em>superset</em> of <code>origin/master</code>: commit <code>C5</code> prevents us from pushing</li>
 <li>How to solve?
 <ul>
@@ -2130,20 +2448,29 @@ They <em>enrich</em> the base git model with services built around the tool:</p>
     </div>
 <script type="text/javascript" src=/Course-DTM-SE-3/reveal-hugo/object-assign.js></script>
 
-<a href="/Course-DTM-SE-3/reveal-js/css/print/" id="print-location" style="display: none;"></a>
-<script type="text/javascript">
-  var printLocationElement = document.getElementById('print-location');
-  var link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.type = 'text/css';
-  link.href = printLocationElement.href + (window.location.search.match(/print-pdf/gi) ? 'pdf.css' : 'paper.css');
-  document.getElementsByTagName('head')[0].appendChild(link);
-</script>
+<a href="/Course-DTM-SE-3/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
 
-<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"height":"1080","highlight_theme":"github","history":true,"slide_number":true,"theme":"league","transition":"slide","transition_speed":"fast","width":"1920"}</script>
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"height":"1080","highlight_theme":"github","history":true,"mermaid":[{"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","themeVariables":{"commitLabelColor":"#ff0000"},"useMaxWidth":false}],"slide_number":true,"theme":"league","transition":"slide","transition_speed":"fast","width":"1920"}</script>
 <script type="application/json" id="reveal-hugo-page-params">null</script>
 
-<script src="/Course-DTM-SE-3/reveal-js/js/reveal.js"></script>
+<script src="/Course-DTM-SE-3/reveal-js/dist/reveal.js"></script>
+
+
+  
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/zoom/zoom.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/notes/notes.js"></script>
+  
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/notes/notes.js"></script>
+
+
+
 
 <script type="text/javascript">
   
@@ -2162,41 +2489,32 @@ They <em>enrich</em> the base git model with services built around the tool:</p>
   }
   
   var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+
+  var revealHugoPlugins = { 
+    plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom ]
+   };
   var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
   var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
   
   var options = Object.assign({},
     camelize(revealHugoDefaults),
     camelize(revealHugoSiteParams),
-    camelize(revealHugoPageParams));
+    camelize(revealHugoPageParams),
+    camelize(revealHugoPlugins));
   Reveal.initialize(options);
 </script>
 
 
-  
-  
-  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/markdown/marked.js"></script>
-  
-  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/markdown/markdown.js"></script>
-  
-  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/highlight/highlight.js"></script>
-  
-  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/zoom-js/zoom.js"></script>
-  
-  
-  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/notes/notes.js"></script>
 
 
 
 
 
 
-
-
-
-  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@9.1.6/dist/mermaid.min.js"></script>
   <script>
-    mermaid.initialize({startOnLoad: false});
+    mermaid.initialize({"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","themeVariables":{"commitLabelColor":"#ff0000"},"useMaxWidth":false});
+
     let render = (event) => {
       let mermaidElems = event.currentSlide.querySelectorAll('.mermaid');
       if (!mermaidElems.length){

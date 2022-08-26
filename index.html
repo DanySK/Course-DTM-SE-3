@@ -9,14 +9,15 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/css/reset.css">
-<link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/css/reveal.css">
-  <link rel="stylesheet" href="/Course-DTM-SE-3/css/custom-theme.min.e49573265c1d31f208b9f54b209eee7ac62b9f850b721913d01129dde7e3c0d8.css" id="theme"><link rel="stylesheet" href="/Course-DTM-SE-3/highlight-js/github.min.css">
+    <link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/dist/reset.css">
+<link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/dist/reveal.css">
+  <link rel="stylesheet" href="/Course-DTM-SE-3/css/custom-theme.min.bb7c72a5ff75c8b0e9ca5bd6185204e51a23c356cd481aa7c0cd9dd6698de3c3.css" id="theme"><link rel="stylesheet" href="/Course-DTM-SE-3/highlight-js/github.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
 <link href='https://fonts.googleapis.com/css?family=Oxygen Mono' rel='stylesheet'>
 <link href='https://fonts.googleapis.com/css?family=Ubuntu Mono' rel='stylesheet'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
 
   </head>
   <body>
@@ -247,20 +248,29 @@ and must feature appropriate automation (build) and get published on official di
     </div>
 <script type="text/javascript" src=/Course-DTM-SE-3/reveal-hugo/object-assign.js></script>
 
-<a href="/Course-DTM-SE-3/reveal-js/css/print/" id="print-location" style="display: none;"></a>
-<script type="text/javascript">
-  var printLocationElement = document.getElementById('print-location');
-  var link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.type = 'text/css';
-  link.href = printLocationElement.href + (window.location.search.match(/print-pdf/gi) ? 'pdf.css' : 'paper.css');
-  document.getElementsByTagName('head')[0].appendChild(link);
-</script>
+<a href="/Course-DTM-SE-3/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
 
-<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"height":"1080","highlight_theme":"github","history":true,"slide_number":true,"theme":"league","transition":"slide","transition_speed":"fast","width":"1920"}</script>
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"height":"1080","highlight_theme":"github","history":true,"mermaid":[{"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","themeVariables":{"commitLabelColor":"#ff0000"},"useMaxWidth":false}],"slide_number":true,"theme":"league","transition":"slide","transition_speed":"fast","width":"1920"}</script>
 <script type="application/json" id="reveal-hugo-page-params">null</script>
 
-<script src="/Course-DTM-SE-3/reveal-js/js/reveal.js"></script>
+<script src="/Course-DTM-SE-3/reveal-js/dist/reveal.js"></script>
+
+
+  
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/zoom/zoom.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/notes/notes.js"></script>
+  
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/notes/notes.js"></script>
+
+
+
 
 <script type="text/javascript">
   
@@ -279,41 +289,32 @@ and must feature appropriate automation (build) and get published on official di
   }
   
   var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+
+  var revealHugoPlugins = { 
+    plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom ]
+   };
   var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
   var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
   
   var options = Object.assign({},
     camelize(revealHugoDefaults),
     camelize(revealHugoSiteParams),
-    camelize(revealHugoPageParams));
+    camelize(revealHugoPageParams),
+    camelize(revealHugoPlugins));
   Reveal.initialize(options);
 </script>
 
 
-  
-  
-  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/markdown/marked.js"></script>
-  
-  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/markdown/markdown.js"></script>
-  
-  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/highlight/highlight.js"></script>
-  
-  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/zoom-js/zoom.js"></script>
-  
-  
-  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/notes/notes.js"></script>
 
 
 
 
 
 
-
-
-
-  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@9.1.6/dist/mermaid.min.js"></script>
   <script>
-    mermaid.initialize({startOnLoad: false});
+    mermaid.initialize({"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","themeVariables":{"commitLabelColor":"#ff0000"},"useMaxWidth":false});
+
     let render = (event) => {
       let mermaidElems = event.currentSlide.querySelectorAll('.mermaid');
       if (!mermaidElems.length){

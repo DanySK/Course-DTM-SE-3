@@ -8,14 +8,15 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/css/reset.css">
-<link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/css/reveal.css">
-  <link rel="stylesheet" href="/Course-DTM-SE-3/css/custom-theme.min.e49573265c1d31f208b9f54b209eee7ac62b9f850b721913d01129dde7e3c0d8.css" id="theme"><link rel="stylesheet" href="/Course-DTM-SE-3/highlight-js/github.min.css">
+    <link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/dist/reset.css">
+<link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/dist/reveal.css">
+  <link rel="stylesheet" href="/Course-DTM-SE-3/css/custom-theme.min.bb7c72a5ff75c8b0e9ca5bd6185204e51a23c356cd481aa7c0cd9dd6698de3c3.css" id="theme"><link rel="stylesheet" href="/Course-DTM-SE-3/highlight-js/github.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
 <link href='https://fonts.googleapis.com/css?family=Oxygen Mono' rel='stylesheet'>
 <link href='https://fonts.googleapis.com/css?family=Ubuntu Mono' rel='stylesheet'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
 
   </head>
   <body>
@@ -27,7 +28,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Software Engineering</h1>
 <h2 id="continuous-integration-and-containerization">Continuous Integration and Containerization</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2022-08-24
+2022-08-26
 </section><section>
 <h1 id="continuous-integration">Continuous Integration</h1>
 <p>The practice of integrating code with a main development line <strong>continuously</strong>
@@ -224,21 +225,20 @@ not just a &ldquo;plain&rdquo; CI/CD pipeline</p>
 </section><section>
 <h2 id="gha-basic-workflow-structure">GHA: basic workflow structure</h2>
 <p>Minimal, simplified workflow structure:</p>
-<pre><code class="language-yaml"># Mandatory workflow name
-name: Workflow Name
-on: # Events that trigger the workflow
-jobs: # Jobs composing the workflow, each one will run on a different runner
-    Job-Name: # Every job must be named
-        # The type of runner executing the job, usually the OS
-        runs-on: runner-name
-        steps: # A list of commands, or &quot;actions&quot;
-            - # first step
-            - # second step
-    Another-Job: # This one runs in parallel with Job-Name
-        runs-on: '...'
-        steps: [ ... ]
-</code></pre>
-</section><section>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Mandatory workflow name</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">Workflow Name</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">on</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic"># Events that trigger the workflow</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">jobs</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic"># Jobs composing the workflow, each one will run on a different runner</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">Job-Name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic"># Every job must be named</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#8f5902;font-style:italic"># The type of runner executing the job, usually the OS</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">runs-on</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">runner-name</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">steps</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic"># A list of commands, or &#34;actions&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">            </span>- <span style="color:#8f5902;font-style:italic"># first step</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">            </span>- <span style="color:#8f5902;font-style:italic"># second step</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">Another-Job</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic"># This one runs in parallel with Job-Name</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">runs-on</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;...&#39;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">        </span><span style="color:#204a87;font-weight:bold">steps</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">... ]</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span></code></pre></div></section><section>
 <h3 id="dry-with-yaml">DRY with YAML</h3>
 <p>We discussed that automation / integration pipelines <strong>are</strong> part of the software</p>
 <ul>
@@ -250,19 +250,17 @@ jobs: # Jobs composing the workflow, each one will run on a different runner
 <li>Anchors (<code>&amp;</code> / <code>*</code>)</li>
 <li>Merge keys (<code>&lt;&lt;:</code>)</li>
 </ol>
-<pre><code class="language-yaml">hey: &amp;ref
-  look: at
-  me: [ &quot;I'm&quot;, 'dancing' ]
-merged:
-  foo: *ref
-  &lt;&lt;: *ref
-  look: to
-</code></pre>
-<p>Same as:</p>
-<pre><code class="language-yaml">hey: { look: at, me: [ &quot;I'm&quot;, 'dancing' ] }
-merged: { foo: { look: at, me: [ &quot;I'm&quot;, 'dancing' ] }, look: to, me: [ &quot;I'm&quot;, 'dancing' ] }
-</code></pre>
-</section><section>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">hey</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic">&amp;ref</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">look</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">at</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">me</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;I&#39;m&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;dancing&#39;</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">merged</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">foo</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic">*ref</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">&lt;&lt;</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic">*ref</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">look</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">to</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span></code></pre></div><p>Same as:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">hey</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>{<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">look: at, me</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;I&#39;m&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;dancing&#39;</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8;text-decoration:underline"> </span>}<span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">merged</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>{<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">foo</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>{<span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">look: at, me</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;I&#39;m&#34;</span><span style="color:#204a87;font-weight:bold">, &#39;dancing&#39; ] }, look: to, me</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">[</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;I&#39;m&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;dancing&#39;</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8;text-decoration:underline"> </span>}<span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span></code></pre></div></section><section>
 <h2 id="github-actions-actions">GitHub Actions&rsquo; actions</h2>
 <p>GHA&rsquo;s YAML parser <em>does not support standard YAML anchors and merge keys</em></p>
 <p>(it is a well-known limit with <a href="https://github.com/actions/runner/issues/1182">an issue report open since ages</a>)</p>
@@ -497,21 +495,20 @@ The simplest way to send commands is to print on standard output a message in th
 </li>
 </ul>
 <p>Secrets can be added from the web interface (for mice lovers), or via the GitHub API.</p>
-<pre><code class="language-ruby">#!/usr/bin/env ruby
-require 'rubygems'
-require 'bundler/setup'
-require 'octokit'
-require 'rbnacl'
-repo_slug, name, value = ARGV
-client = Octokit::Client.new(:access_token =&gt; 'access_token_from_github')
-pubkey = client.get_public_key(repo_slug)
-key = Base64.decode64(pubkey.key)
-sodium_box = RbNaCl::Boxes::Sealed.from_public_key(key)
-encrypted_value = Base64.strict_encode64(sodium_box.encrypt(value))
-payload = { 'key_id' =&gt; pubkey.key_id, 'encrypted_value' =&gt; encrypted_value }
-client.create_or_update_secret(repo_slug, name, payload)
-</code></pre>
-</section><section>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!/usr/bin/env ruby</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">require</span> <span style="color:#4e9a06">&#39;rubygems&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">require</span> <span style="color:#4e9a06">&#39;bundler/setup&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">require</span> <span style="color:#4e9a06">&#39;octokit&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">require</span> <span style="color:#4e9a06">&#39;rbnacl&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">repo_slug</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87">name</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">value</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ARGV</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">client</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">Octokit</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">Client</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">new</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">:access_token</span> <span style="color:#ce5c00;font-weight:bold">=&gt;</span> <span style="color:#4e9a06">&#39;access_token_from_github&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">pubkey</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">client</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">get_public_key</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">repo_slug</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">key</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">Base64</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">decode64</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">pubkey</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">key</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">sodium_box</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">RbNaCl</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">Boxes</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">Sealed</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">from_public_key</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">key</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">encrypted_value</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">Base64</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">strict_encode64</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">sodium_box</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">encrypt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">value</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">payload</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#4e9a06">&#39;key_id&#39;</span> <span style="color:#ce5c00;font-weight:bold">=&gt;</span> <span style="color:#000">pubkey</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">key_id</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;encrypted_value&#39;</span> <span style="color:#ce5c00;font-weight:bold">=&gt;</span> <span style="color:#000">encrypted_value</span> <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">client</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">create_or_update_secret</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">repo_slug</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87">name</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">payload</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div></section><section>
 <h1 id="stale-builds">Stale builds</h1>
 <ol>
 <li>Stuff <em>works</em></li>
@@ -752,25 +749,23 @@ here is a possible workflow for <strong>automatic</strong> dependency updates:</
 <p>Changes to a layer do not invalidate previous layers</p>
 </section><section>
 <h1 id="dockerfile-syntax">Dockerfile syntax</h1>
-<pre><code class="language-dockerfile"># Pulls an image from docker hub with this name. Alternatively, &quot;scratch&quot; can be used for an empty container
-FROM manjarolinux/base 
-# Runs a command
-RUN pacman -Sy --noconfirm gnupg archlinux-keyring manjaro-keyring
-# Copies a file from the local folder into the image
-COPY makepkg.conf /etc/makepkg.conf
-# Adds a new environment variable
-ENV GEM_HOME=/rubygems/bin
-# Configures the default command to execute
-CMD bash
-</code></pre>
-</section><section>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Pulls an image from docker hub with this name. Alternatively, &#34;scratch&#34; can be used for an empty container</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">FROM</span><span style="color:#4e9a06"> manjarolinux/base </span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Runs a command</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">RUN</span> pacman -Sy --noconfirm gnupg archlinux-keyring manjaro-keyring<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Copies a file from the local folder into the image</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">COPY</span> makepkg.conf /etc/makepkg.conf<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Adds a new environment variable</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">GEM_HOME</span><span style="color:#ce5c00;font-weight:bold">=</span>/rubygems/bin<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Configures the default command to execute</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">CMD</span> bash<span style="color:#a40000">
+</span></span></span></code></pre></div></section><section>
 <h1 id="naming-images">Naming images</h1>
 <p>Image naming is done via <em>tags</em></p>
 <p>The easiest way to do so is assigning tags at <em>build time</em> with the <code>-t</code> options of <code>docker build</code></p>
 <p>The option can be repeated multiple times to make multiple tags</p>
-<pre><code class="language-bash">docker build -t &quot;myImage:latest&quot; -t &quot;myImage:0.1.0&quot;
-</code></pre>
-<p><code>latest</code> is usually used to identify the most recent version of some image</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>docker build -t <span style="color:#4e9a06">&#34;myImage:latest&#34;</span> -t <span style="color:#4e9a06">&#34;myImage:0.1.0&#34;</span>
+</span></span></code></pre></div><p><code>latest</code> is usually used to identify the most recent version of some image</p>
 </section><section>
 <h1 id="publishing-docker-images">Publishing docker images</h1>
 <p>Images get published in <em>registries</em></p>
@@ -825,20 +820,29 @@ CMD bash
     </div>
 <script type="text/javascript" src=/Course-DTM-SE-3/reveal-hugo/object-assign.js></script>
 
-<a href="/Course-DTM-SE-3/reveal-js/css/print/" id="print-location" style="display: none;"></a>
-<script type="text/javascript">
-  var printLocationElement = document.getElementById('print-location');
-  var link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.type = 'text/css';
-  link.href = printLocationElement.href + (window.location.search.match(/print-pdf/gi) ? 'pdf.css' : 'paper.css');
-  document.getElementsByTagName('head')[0].appendChild(link);
-</script>
+<a href="/Course-DTM-SE-3/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
 
-<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"height":"1080","highlight_theme":"github","history":true,"slide_number":true,"theme":"league","transition":"slide","transition_speed":"fast","width":"1920"}</script>
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"height":"1080","highlight_theme":"github","history":true,"mermaid":[{"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","themeVariables":{"commitLabelColor":"#ff0000"},"useMaxWidth":false}],"slide_number":true,"theme":"league","transition":"slide","transition_speed":"fast","width":"1920"}</script>
 <script type="application/json" id="reveal-hugo-page-params">null</script>
 
-<script src="/Course-DTM-SE-3/reveal-js/js/reveal.js"></script>
+<script src="/Course-DTM-SE-3/reveal-js/dist/reveal.js"></script>
+
+
+  
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/zoom/zoom.js"></script>
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/notes/notes.js"></script>
+  
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/notes/notes.js"></script>
+
+
+
 
 <script type="text/javascript">
   
@@ -857,41 +861,32 @@ CMD bash
   }
   
   var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+
+  var revealHugoPlugins = { 
+    plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom ]
+   };
   var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
   var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
   
   var options = Object.assign({},
     camelize(revealHugoDefaults),
     camelize(revealHugoSiteParams),
-    camelize(revealHugoPageParams));
+    camelize(revealHugoPageParams),
+    camelize(revealHugoPlugins));
   Reveal.initialize(options);
 </script>
 
 
-  
-  
-  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/markdown/marked.js"></script>
-  
-  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/markdown/markdown.js"></script>
-  
-  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/highlight/highlight.js"></script>
-  
-  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/zoom-js/zoom.js"></script>
-  
-  
-  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/notes/notes.js"></script>
 
 
 
 
 
 
-
-
-
-  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@9.1.6/dist/mermaid.min.js"></script>
   <script>
-    mermaid.initialize({startOnLoad: false});
+    mermaid.initialize({"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","themeVariables":{"commitLabelColor":"#ff0000"},"useMaxWidth":false});
+
     let render = (event) => {
       let mermaidElems = event.currentSlide.querySelectorAll('.mermaid');
       if (!mermaidElems.length){
