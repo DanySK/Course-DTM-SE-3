@@ -45,8 +45,8 @@ height = '1080'
 # height = '100%'
 [[params.reveal_hugo.mermaid]]
 startOnLoad = false
-theme = "default"
-fontFamily = "Inconsolata"
+#theme = "default"
+# fontFamily = "Inconsolata"
 useMaxWidth = false
 # actorFontSize = 40
 # noteFontSize = 40
@@ -64,8 +64,8 @@ rotateCommitLabel = true
 # x = -250
 # y = 0
 
-[params.reveal_hugo.mermaid.themeVariables]
-commitLabelColor = '#ff0000'
+#[params.reveal_hugo.mermaid.themeVariables]
+#commitLabelColor = '#ff0000'
 # commitLabelBackground = '#00ff00'
 # commitLabelFontSize = '1.2em'
 # tagLabelFontSize = '1.2em'
