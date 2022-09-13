@@ -1,6 +1,4 @@
-<!doctype html>
-<html lang="en">
-  <head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="utf-8">
 <title>Software Engineering Module 3: QA, reproducibility, TDD</title>
 <meta name="description" content="QA, reproducibility, TDD">
@@ -13,9 +11,9 @@
   <link rel="stylesheet" href="/Course-DTM-SE-3/css/custom-theme.min.bb7c72a5ff75c8b0e9ca5bd6185204e51a23c356cd481aa7c0cd9dd6698de3c3.css" id="theme"><link rel="stylesheet" href="/Course-DTM-SE-3/highlight-js/github.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
-<link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
-<link href='https://fonts.googleapis.com/css?family=Oxygen Mono' rel='stylesheet'>
-<link href='https://fonts.googleapis.com/css?family=Ubuntu Mono' rel='stylesheet'>
+<link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu Mono" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 
   </head>
@@ -142,7 +140,7 @@ and so on are prepared well before the car prototype is ready!</p>
 <li>Run the test suite, the <em>new test should <strong>fail</strong></em></li>
 <li>Fix the code so that the new test passes</li>
 <li>Re-run the whole test suite, all tests should pass</li>
-<li>Improve the quality as needed (refactor, style, duplication&hellip;)</li>
+<li>Improve the quality as needed (refactor, style, duplication…)</li>
 </ol>
 </section><section>
 <h2 id="injecting-tests-into-projects-started-without-tests">Injecting tests into projects started without tests</h2>
@@ -160,14 +158,14 @@ and so on are prepared well before the car prototype is ready!</p>
 <blockquote>
 <p>we never have the money to do it <em>right</em> but somehow we always have the fucking money to do it <em>twice</em></p>
 </blockquote>
-<p>$&mdash;$ UserInputSucks (@UserInputSucks) <a href="https://twitter.com/UserInputSucks/status/1132904286415929345">May 27, 2019</a></p>
+<p>$—$ UserInputSucks (@UserInputSucks) <a href="https://twitter.com/UserInputSucks/status/1132904286415929345">May 27, 2019</a></p>
 </section><section>
 <h2 id="tackling-bugs-and-regressions">Tackling bugs and regressions</h2>
 <p>When a new <strong>bug</strong> (or a <strong>regression</strong>, namely, a feature that was working and it is now compromised) is discovered,
-<em>resist the temptation to &ldquo;fix&rdquo; the issue right away</em></p>
+<em>resist the temptation to “fix” the issue right away</em></p>
 <ul>
 <li>A fix without a test could be <em>insufficient</em></li>
-<li>The &ldquo;fix&rdquo; could break another feature (create a <em>regression</em>)</li>
+<li>The “fix” could break another feature (create a <em>regression</em>)</li>
 </ul>
 <p>A more <strong>robust approach</strong>:</p>
 <ol>
@@ -191,19 +189,19 @@ Test plans are conceived to test that the one thing is performed correctly.</p>
 <h2 id="testing-software-before-it-is-ready-missing-components">Testing software before it is ready: missing components</h2>
 <p>We can now <em>design our tests</em>,
 but how to <strong>run</strong> them if <em>the components surrounding the tested one are not ready</em>?</p>
-<p>How to test a new suspension system if the &ldquo;surrounding&rdquo; car is not ready (not even fully designed) yet?</p>
+<p>How to test a new suspension system if the “surrounding” car is not ready (not even fully designed) yet?</p>
 <p>How to test that our new rocket engine works as expected with no rocket?</p>
 <p>How to test that our multi-engine rocket works as expected without payload?</p>
 </section><section>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/QMcj58TbsyU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="https://www.youtube.com/embed/QMcj58TbsyU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen="" title="YouTube Video"></iframe>
 </div>
 
 </section><section>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/kchq9AGXsyA" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="https://www.youtube.com/embed/kchq9AGXsyA" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen="" title="YouTube Video"></iframe>
 </div>
 
 </section><section>
@@ -242,7 +240,7 @@ but how to <strong>run</strong> them if <em>the components surrounding the teste
 </section><section>
 <h2 id="test-doubles-and-development-cost">Test doubles and development cost</h2>
 <blockquote>
-<p>Why should the team &ldquo;waste&rdquo; time creating doubles instead of just writing the thing?</p>
+<p>Why should the team “waste” time creating doubles instead of just writing the thing?</p>
 </blockquote>
 <p>doubles are <strong>cheaper</strong>: dedicated libraries make doubles <em>implementation extremely quick</em></p>
 <ul>
@@ -265,7 +263,7 @@ but how to <strong>run</strong> them if <em>the components surrounding the teste
 <p><a href="https://app.codecov.io/gh/AlchemistSimulator/Alchemist">Example coverage report</a></p>
 
 
-<span class='fragment ' >
+<span class="fragment ">
   <p><strong>WARNING</strong></p>
 <ul>
 <li>the actual information coverage provides is which code is <strong>partly tested</strong> or <strong>untested</strong>!</li>
@@ -281,8 +279,8 @@ but how to <strong>run</strong> them if <em>the components surrounding the teste
 
 </section><section>
 <h2 id="quality-assurance-1">Quality Assurance</h2>
-<p><em>&ldquo;It works&rdquo;</em> <strong>is <em>not</em> good enough</strong></p>
-<p>(besides, the very notion of &ldquo;it works&rdquo; is debatable)</p>
+<p><em>“It works”</em> <strong>is <em>not</em> good enough</strong></p>
+<p>(besides, the very notion of “it works” is debatable)</p>
 <ul>
 <li>Software quality should be <em>continuously assessed</em></li>
 <li>The assessment should <em>automatic</em> whenever possible</li>
@@ -359,7 +357,7 @@ but how to <strong>run</strong> them if <em>the components surrounding the teste
 </li>
 <li><a href="https://sonarcloud.io/">Sonarcloud</a>
 <ul>
-<li>Multiple measures, covering reliability, security, maintainability, duplication, complexity&hellip;</li>
+<li>Multiple measures, covering reliability, security, maintainability, duplication, complexity…</li>
 </ul>
 </li>
 <li><a href="https://www.codacy.com/">Codacy</a>
@@ -405,7 +403,7 @@ but how to <strong>run</strong> them if <em>the components surrounding the teste
       
 
     </div>
-<script type="text/javascript" src=/Course-DTM-SE-3/reveal-hugo/object-assign.js></script>
+<script type="text/javascript" src="/Course-DTM-SE-3/reveal-hugo/object-assign.js"></script>
 
 <a href="/Course-DTM-SE-3/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
 
@@ -502,10 +500,10 @@ but how to <strong>run</strong> them if <em>the components surrounding the teste
     };
 </script>
 
-<script type="text/javascript" id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+<script type="text/javascript" id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
 </script>
 
     
-  </body>
-</html>
+  
+
+</body></html>
