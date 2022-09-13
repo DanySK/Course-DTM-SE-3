@@ -923,46 +923,41 @@ Git does **not** allow *multiple heads per branch*
 (other DVCS do, in particular Mercurial):
 for a commit to be valid, `HEAD` must be at the "end" of a branch (on its last commit), as follows:
 
-{{< gravizo >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    # Commits
-    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange];
-    C6 -> HEAD;
-    C6 -> master;
-    # Head
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
-    HEAD -> master [label="attached"];
-  }
-{{< /gravizo >}}
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  b1(master)
 
-When an old commit is checked out this condition doesn't hold, if we run `git checkout HEAD~4`:
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  b1 -.-> C10
 
-{{< gravizo >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    # Commits
-    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange];
-    C2 -> HEAD;
-    C6 -> master;
-    # Head
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
-    nowhere [style=invis,shape=point]
-    HEAD -> nowhere [label="detached"];
-  }
-{{< /gravizo >}}
+  HEAD -.-> C10
+  HEAD --"fas:fa-link"--o b1
+
+  class HEAD head;
+  class b1,b2 branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
+```
+
+When an old commit is checked out this condition doesn't hold!
+
+If we run `git checkout HEAD~4`:
+
+```mermaid
+flowchart RL
+  HEAD{{"HEAD fas:fa-unlink"}}
+  b1(master)
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+
+  b1 -.-> C10
+
+  HEAD -.-> C6
+
+  class HEAD head;
+  class b1 branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
+```
 
 The system enters a special workmode called *detached head*.
 
@@ -978,71 +973,83 @@ To store our commits, we need to *create* a **branch**, then attach the `HEAD` b
 
 In Git, new branches are created with `git branch branch_name`
 
-{{< gravizo width=60 >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    # Commits
-    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange];
-    C2 -> HEAD;
-    C6 -> master;
-    # Head
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
-    nowhere [style=invis,shape=point]
-    HEAD -> nowhere [label="detached"];
-  }
-{{< /gravizo >}}
+```mermaid
+flowchart RL
+  HEAD{{"HEAD fas:fa-unlink"}}
+  b1(master)
 
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+
+  b1 -.-> C10
+
+  HEAD -.-> C6
+
+  class HEAD head;
+  class b1 branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
+```
 
 ⬇️ `git branch new-experiment` ⬇️
 
-{{< gravizo width=60 >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    # Commits
-    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange];
-    C2 -> HEAD;
-    C6 -> master;
-    C2 -> "new-experiment";
-    # Head
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
-    nowhere [style=invis,shape=point]
-    HEAD -> nowhere [label="detached"];
-  }
-{{< /gravizo >}}
+```mermaid
+flowchart RL
+  HEAD{{"HEAD fas:fa-unlink"}}
+  b1(master)
+  b2("new-experiment")
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+
+  b1 -.-> C10
+
+  HEAD -.-> C6
+  b2 -.-> C6
+
+  class HEAD head;
+  class b1 branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
+```
+
+---
+
+```mermaid
+flowchart RL
+  HEAD{{"HEAD fas:fa-unlink"}}
+  b1(master)
+  b2("new-experiment")
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+
+  b1 -.-> C10
+
+  HEAD -.-> C6
+  b2 -.-> C6
+
+  class HEAD head;
+  class b1 branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
+```
 
 ⬇️ `git checkout new-experiment` ⬇️
 
-{{< gravizo width=60 >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    # Commits
-    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange];
-    C2 -> HEAD;
-    C6 -> master;
-    C2 -> "new-experiment";
-    # Head
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
-    HEAD -> "new-experiment" [label="attached"];
-  }
-{{< /gravizo >}}
+
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  b1(master)
+  b2("new-experiment")
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+
+  b1 -.-> C10
+
+  HEAD -.-> C6
+  HEAD --"fas:fa-link"--o b2
+  b2 -.-> C6
+
+  class HEAD head;
+  class b1 branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
+```
 
 ---
 
@@ -1055,48 +1062,42 @@ When an operation is very common, usually a short-hand is provided:
 * Creates `new-branch-name` from the current position of `HEAD`
 * Attaches `HEAD` to `new-branch-name`
 
-{{< gravizo width=60 >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    # Commits
-    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange];
-    C2 -> HEAD;
-    C6 -> master;
-    # Head
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
-    nowhere [style=invis,shape=point]
-    HEAD -> nowhere [label="detached"];
-  }
-{{< /gravizo >}}
+```mermaid
+flowchart RL
+  HEAD{{"HEAD fas:fa-unlink"}}
+  b1(master)
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+
+  b1 -.-> C10
+
+  HEAD -.-> C6
+
+  class HEAD head;
+  class b1 branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
+```
 
 ⬇️ `git checkout -b new-experiment` ⬇️
 
-{{< gravizo width=60 >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    # Commits
-    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange];
-    C2 -> HEAD;
-    C6 -> master;
-    C2 -> "new-experiment";
-    # Head
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
-    HEAD -> "new-experiment" [label="attached"];
-  }
-{{< /gravizo >}}
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  b1(master)
+  b2("new-experiment")
 
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+
+  b1 -.-> C10
+
+  HEAD -.-> C6
+  HEAD --"fas:fa-link"--o b2
+  b2 -.-> C6
+
+  class HEAD head;
+  class b1 branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
+```
 
 ---
 
