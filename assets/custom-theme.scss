@@ -188,15 +188,17 @@ $heading4Size: 1.0em;
 .mermaid .head > polygon {
 	fill:#ff7274 !important;
 	stroke:#aa1d1f !important;
-	stroke-width: 0.1em !important;
+	stroke-width: 0.2em !important;
 }
 
 .mermaid .branch > rect {
-	stroke-width: 0.1em !important;
+	stroke-width: 0.2em !important;
+	fill: greenyellow !important;
+	stroke: green !important;
 }
 
 .mermaid .commit > rect {
-	fill:#ceffef !important;
+	fill: white !important;
 	stroke:#333 !important;
-	stroke-width: 0.05em !important;
+	stroke-width: 0.2em !important;
 }

@@ -486,7 +486,7 @@ flowchart RL
   b1 -.-> C2
 
   class HEAD head;
-  class b1 branch;
+  class b1,b2 branch;
   class C1,C2 commit;
 ```
 
@@ -509,7 +509,7 @@ flowchart RL
   HEAD --"fas:fa-link"--o b1
 
   class HEAD head;
-  class b1 branch;
+  class b1,b2 branch;
   class C1,C2,C3,C4,C5,C6 commit;
 ```
 
@@ -521,7 +521,7 @@ Oh, no, there was a mistake! We need to roll back!
 
 ```mermaid
 flowchart RL
-  HEAD{{"HEAD fas:fa-unlink"}}
+  HEAD{{HEAD fas:fa-unlink}}
   b1(default-branch)
 
   C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
@@ -531,7 +531,7 @@ flowchart RL
   HEAD -.-> C4
 
   class HEAD head;
-  class b1 branch;
+  class b1,b2 branch;
   class C1,C2,C3,C4,C5,C6 commit;
 ```
 
@@ -560,10 +560,10 @@ flowchart RL
 
   class HEAD head;
   class b1,b2 branch;
-  class C1,C2,C3,C4,C5,C6,C7 commit;
+  class C1,C2,C3,C4,C5,C6,C7,C8 commit;
 ```
 
-* Okay, but there was useful stuff in `5`, I'd like into `another_branch`
+* Okay, but there was useful stuff in `5`, I'd like to have it into `new-branch`
 
 ---
 
@@ -588,7 +588,7 @@ flowchart RL
 
   class HEAD head;
   class b1,b2 branch;
-  class C1,C2,C3,C4,C5,C6,C7 commit;
+  class C1,C2,C3,C4,C5,C6,C7,C8 commit;
 ```
 
 **Notice that:**
@@ -719,17 +719,17 @@ Changes not staged for commit:
 
 ## Committing
 
-* Requires an *author* and an *email*
-  * They can be configured globally (at the computer level):
+* Requires an **author** and an **email**
+  * They can be configured *globally* (at the *computer level*):
     * `git config --global user.name 'Your Real Name'`
     * `git config --global user.email 'your@email.com'`
-  * The global settings can be overridden at the repository level
+  * The global settings can be *overridden* at the *repository level*
     * e.g., you want to commit with a different email between work and personal projects
     * `git config user.name 'Your Real Name'`
     * `git config user.email 'your@email.com'`
 * Requires a **message**, using appropriate messages is **extremely important**
   * If unspecified, the commit does not get performed
-  * it can be specified inline with `-m`, otherwise Git will pop up the default editor
+  * it can be specified inline with `-m`, otherwise Git will pop up the *default editor*
     * `git commit -m 'my very clear and explanatory message'`
 * The *date* is recorded automatically
 * The *commit identifier* (a cryptographic hash) is generated automatically
@@ -955,7 +955,7 @@ flowchart RL
   HEAD -.-> C6
 
   class HEAD head;
-  class b1 branch;
+  class b1,b2 branch;
   class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
 ```
 
@@ -985,7 +985,7 @@ flowchart RL
   HEAD -.-> C6
 
   class HEAD head;
-  class b1 branch;
+  class b1,b2 branch;
   class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
 ```
 
@@ -1005,7 +1005,7 @@ flowchart RL
   b2 -.-> C6
 
   class HEAD head;
-  class b1 branch;
+  class b1,b2 branch;
   class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
 ```
 
@@ -1025,7 +1025,7 @@ flowchart RL
   b2 -.-> C6
 
   class HEAD head;
-  class b1 branch;
+  class b1,b2 branch;
   class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
 ```
 
@@ -1047,7 +1047,7 @@ flowchart RL
   b2 -.-> C6
 
   class HEAD head;
-  class b1 branch;
+  class b1,b2 branch;
   class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
 ```
 
@@ -1074,7 +1074,7 @@ flowchart RL
   HEAD -.-> C6
 
   class HEAD head;
-  class b1 branch;
+  class b1,b2 branch;
   class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
 ```
 
@@ -1095,7 +1095,7 @@ flowchart RL
   b2 -.-> C6
 
   class HEAD head;
-  class b1 branch;
+  class b1,b2 branch;
   class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
 ```
 
@@ -1118,49 +1118,48 @@ In Git, `git merge target` merges the branch named `target` into the current bra
 
 ## Merge visual example
 
-{{< gravizo >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    # Commits
-    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    C4 -> C7 -> C8 [dir=back];
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange];
-    C8 -> HEAD;
-    C6 -> master;
-    C8 -> "new-experiment";
-    # Head
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
-    HEAD -> "new-experiment" [label="attached"];
-  }
-{{< /gravizo >}}
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  b1(master)
+  b2("new-experiment")
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C12([12]) --> C11([11]) --> C6 
+
+  b1 -.-> C10
+
+  HEAD -.-> C12
+  HEAD --"fas:fa-link"--o b2
+  b2 -.-> C12
+
+  class HEAD head;
+  class b1,b2 branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12 commit;
+```
 
 ⬇️ `git merge master` ⬇️
 
-{{< gravizo >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    # Commits
-    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 -> C9 [dir=back];
-    C4 -> C7 -> C8 -> C9 [dir=back];
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange];
-    C9 -> HEAD;
-    C6 -> master;
-    C9 -> "new-experiment";
-    # Head
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
-    HEAD -> "new-experiment" [label="attached"];
-  }
-{{< /gravizo >}}
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  b1(master)
+  b2("new-experiment")
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C13([13]) --> C12([12]) --> C11([11]) --> C6 
+  C13 --> C10
+
+  b1 -.-> C10
+
+  HEAD -.-> C13
+  HEAD --"fas:fa-link"--o b2
+  b2 -.-> C13
+
+  class HEAD head;
+  class b1,b2 branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13 commit;
+```
 
 
 ---
@@ -1169,25 +1168,24 @@ In Git, `git merge target` merges the branch named `target` into the current bra
 
 Consider this situation:
 
-{{< gravizo >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    # Commits
-    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange];
-    C4 -> HEAD;
-    C6 -> master;
-    C4 -> "new-experiment";
-    # Head
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
-    HEAD -> "new-experiment" [label="attached"];
-  }
-{{< /gravizo >}}
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  b1(master)
+  b2("new-experiment")
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+
+  b1 -.-> C10
+
+  HEAD -.-> C6
+  HEAD --"fas:fa-link"--o b2
+  b2 -.-> C6
+
+  class HEAD head;
+  class b1,b2 branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13 commit;
+```
 
 * We want `new-experiment` to also have the changes in `C5` and `C6` (to be up to date with `master`)
 * `master` contains all the commits of `new-experiment`
@@ -1195,25 +1193,25 @@ Consider this situation:
 * $\Rightarrow$ This is called a **fast-forward**
   * It is the *default behavior* in Git when merging branches where the target is the head plus something
 
-{{< gravizo >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    # Commits
-    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange];
-    C6 -> master;
-    C6 -> HEAD;
-    C6 -> "new-experiment";
-    # Head
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
-    HEAD -> "new-experiment" [label="attached"];
-  }
-{{< /gravizo >}}
+
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  b1(master)
+  b2("new-experiment")
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+
+  b1 -.-> C10
+
+  HEAD -.-> C10
+  HEAD --"fas:fa-link"--o b2
+  b2 -.-> C10
+
+  class HEAD head;
+  class b1,b2 branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13 commit;
+```
 
 ---
 
