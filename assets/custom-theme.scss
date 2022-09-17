@@ -202,3 +202,9 @@ $heading4Size: 1.0em;
 	stroke:#333 !important;
 	stroke-width: 0.2em !important;
 }
+
+.mermaid .tag > polygon {
+	fill: cyan !important;
+	stroke: blue !important;
+	stroke-width: 0.2em !important;
+}
