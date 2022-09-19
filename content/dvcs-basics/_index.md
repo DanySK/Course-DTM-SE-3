@@ -1445,8 +1445,7 @@ Our version **moved**, *we never want this to happen*!
 The `tag` subcommand to create *permanent labels* attached to commits.
 Tags come in two fashions:
 * **Lightweight** *tags* are very similar to a "permanent branch": *pointers to commits that never change*
-* **Annotated** *tags* store additional information: a *message*, and, optionally, a *signature*
-  * created by adding the `-a` option (or `-s`/`-u` for signed tags)
+* **Annotated** *tags*  (option `-a`) store additional information: a *message*, and, optionally, a *signature* (option `-s`/`-u`)
 
 ```mermaid
 flowchart RL
@@ -1493,61 +1492,70 @@ flowchart RL
 
 ## Branches as labels: deletion
 
-As we discussed, *branches* in Git work like *special labels* that move forward if `HEAD` is attached to them and commit is performed.
+As we discussed, *branches* work like *special labels* that **move** if a commit is performed when `HEAD` is **attached**.
 
 Also, the *history* tracked by git is a *directed acyclic graph* (each commit has a reference to its parents)
 
 $\Rightarrow$ *Branches can be removed without information loss*, as far as there is at least *another branch* from which *all the commits* of the deleted branch are *reachable*
 
-Branch deletion is performed with `git branch -d branch-name`. It is *safe* (fails if there is potential information loss).
+*Safe* branch deletion is performed with `git branch -d branch-name` (fails if there is information loss).
 
-{{< gravizo width=70 >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    # Commits
-    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    C4 -> C7
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange];
-    C6 -> master;
-    C7 -> "feat/serverless";
-    C3 -> "fix/bug22";
-    # Head
-    C6 -> HEAD;
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
-    HEAD -> master [label="attached"];
-  }
-{{< /gravizo >}}
+---
 
+## Branch deletion example
+
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+  bug22(fix/bug22)
+  serverless(feat/serverless)
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C11([11]) --> C7
+
+  master -.-> C10
+  bug22 -.-> C3
+  serverless -.-> C11
+
+  HEAD -.-> C10
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master,bug22,serverless branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13 commit;
+```
+
+{{% fragment %}}
 ⬇️ `git branch -d fix/bug22` ⬇️
+{{% /fragment %}}
 
-{{< gravizo width=70 >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    # Commits
-    C0 -> C1 -> C2 -> C3 -> C4 -> C5 -> C6 [dir=back];
-    C4 -> C7
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange];
-    C6 -> master;
-    C7 -> "feat/serverless";
-    # Head
-    C6 -> HEAD;
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
-    HEAD -> master [label="attached"];
-  }
-{{< /gravizo >}}
+{{% fragment %}}
+```mermaid
+flowchart RL
+  HEAD{{"HEAD"}}
+  master(master)
+  serverless(feat/serverless)
 
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C11([11]) --> C7
+
+  master -.-> C10
+  serverless -.-> C11
+
+  HEAD -.-> C10
+  HEAD --"fas:fa-link"--o master
+
+  class HEAD head;
+  class master,bug22,serverless branch;
+  class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13 commit;
+```
+{{% /fragment %}}
+
+{{% fragment %}}
 No commit is lost, branch `fix/bug22` is removed
 * `git branch -d feat/serverless` would **fail** with an error message, as `C7` would be lost
+{{% /fragment %}}
 
 ---
 
@@ -1607,74 +1615,49 @@ Remote branches can be *associated* with local branches, with the intended meani
 
 ### Actual result of `git clone git@somesite.com/repo.git`
 
-{{< gravizo width=100 >}}
-  digraph G {
-    fontsize="20"
-    fontname="Helvetica,Arial,sans-serif"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    compound=true
+```mermaid
+flowchart RL
 
-    subgraph cluster_remote {
-      color=black
-      label="somesite.com/repo.git"
-      
-      # Commits
-      C0r [label=C0]
-      C1r [label=C1]
-      C2r [label=C2]
-      C3r [label=C3]
-      C4r [label=C4]
-      C5r [label=C5]
-      C6r [label=C6]
-      C7r [label=C7]
-      C0r -> C1r -> C2r -> C3r -> C4r [dir=back];
-      C2r -> C5r -> C6r -> C7r [dir=back];
-      
-      # Branches
-      node [style="filled,solid", shape=box, fillcolor=orange];
-      edge [dir=back, penwidth=4, color=orange];
-      master_r [label=master];
-      feat_r [label="feat/new-client"]
-      C4r -> master_r;
-      C7r -> feat_r;
+subgraph somesite.com/repo.git
+  direction RL
+  HEAD{{"HEAD"}}
+  master(master)
+  serverless(feat/serverless)
 
-      # Head
-      HEAD_r [label=HEAD];
-      C4r -> HEAD_r;
-      edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
-      HEAD_r -> master_r [arrowhead=tee, penwidth=2, color=red, label="attached"];
-    }
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C12([12]) --> C11([11]) --> C7
 
-    subgraph cluster_local {
-      label="Local"
-      color=black
-      
-      # Commits
-      C0 -> C1 -> C2 -> C3 -> C4 [dir=back];
-      
-      # Branches
-      node [style="filled,solid", shape=box, fillcolor=orange];
-      edge [dir=back, penwidth=4, color=orange];
-      C4 -> master;
+  master -.-> C10
+  serverless -.-> C12
 
-      # Head
-      C4 -> HEAD;
-      edge [dir=forward, arrowhead=tee, penwidth=2, color=red, label=""];
-      HEAD -> master [label="attached"];
+  HEAD -.-> C10
+  HEAD --"fas:fa-link"--o master
+end
 
-      # Upstreams
-      edge [arrowhead=dot, dir=forward, penwidth=2, color=blue];
-      master -> master_r [label="upstream"];
-      
-      # Remotes
-      node [style="filled,solid", shape=box, fillcolor=aquamarine3];
-      edge [arrowhead=dot, dir=forward, penwidth=3, color=aquamarine3];
-      origin -> C4r [lhead=cluster_remote]
-    }
-  }
-{{< /gravizo >}}
+subgraph local
+  direction RL
+  origin[(origin)]
+
+  HEADL{{"HEAD"}}
+  masterl(master)
+
+  CL10([10]) --> CL9([9]) --> CL8([8]) --> CL7([7]) --> CL6([6]) --> CL5([5]) --> CL4([4]) --> CL3([3]) --> CL2([2]) --> CL1([1])
+
+  masterl -.-> CL10
+  masterl ==o master
+
+  HEADL -.-> CL10
+  HEADL --"fas:fa-link"--o masterl
+end
+
+origin ==o somesite.com/repo.git
+
+class local,somesite.com/repo.git repo;
+class origin remote;
+class HEAD,HEADL head;
+class master,masterl,bug22,serverless branch;
+class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,CL1,CL2,CL3,CL4,CL5,CL6,CL7,CL8,CL9,CL10,CL11,CL12,CL13 commit;
+```
 
 * `git@somesite.com/repo.git` is saved as `origin`
 * The main branch (the branch where `HEAD` is attached, in our case `master`) on `origin` gets checked out locally with the same name
