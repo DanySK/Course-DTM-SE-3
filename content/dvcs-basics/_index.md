@@ -1028,8 +1028,7 @@ flowchart RL
   class b1,b2 branch;
   class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
 ```
-
-⬇️ `git checkout new-experiment` ⬇️
+⬇️ `git checkout -b imported-feat origin/feat/serverless` ⬇️
 
 
 ```mermaid
@@ -1057,8 +1056,7 @@ flowchart RL
 
 As you can imagine, creating a *new branch* and *attaching `HEAD`* to the freshly created branch is pretty common
 
-When an operation is very common, usually a short-hand is provided:
-* `git checkout -b new-branch-name`
+Very common, a short-hand is provided: `git checkout -b new-branch-name`
 * Creates `new-branch-name` from the current position of `HEAD`
 * Attaches `HEAD` to `new-branch-name`
 
@@ -1670,150 +1668,105 @@ class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,CL1,CL2,CL3,CL4,CL5,CL6,CL7,CL8
 
 `git branch` (or `git checkout -b`) can checkout remote branches locally *once they have been fetched*.
 
-{{< gravizo width=50 >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-    fontsize="20"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    compound=true
+```mermaid
+flowchart RL
 
-    subgraph cluster_remote {
-      color=black
-      label="somesite.com/repo.git"
-      
-      # Commits
-      C0r [label=C0]
-      C1r [label=C1]
-      C2r [label=C2]
-      C3r [label=C3]
-      C4r [label=C4]
-      C5r [label=C5]
-      C6r [label=C6]
-      C7r [label=C7]
-      C0r -> C1r -> C2r -> C3r -> C4r [dir=back];
-      C2r -> C5r -> C6r -> C7r [dir=back];
-      
-      # Branches
-      node [style="filled,solid", shape=box, fillcolor=orange];
-      edge [dir=back, penwidth=4, color=orange];
-      master_r [label=master];
-      feat_r [label="feat/new-client"]
-      C4r -> master_r;
-      C7r -> feat_r;
+subgraph somesite.com/repo.git
+  direction RL
+  HEAD{{"HEAD"}}
+  master(master)
+  serverless(feat/serverless)
 
-      # Head
-      HEAD_r [label=HEAD];
-      C4r -> HEAD_r;
-      edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
-      HEAD_r -> master_r [arrowhead=tee, penwidth=2, color=red, label="attached"];
-    }
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C12([12]) --> C11([11]) --> C7
 
-    subgraph cluster_local {
-      label="Local"
-      color=black
-      
-      # Commits
-      C0 -> C1 -> C2 -> C3 -> C4 [dir=back];
-      
-      # Branches
-      node [style="filled,solid", shape=box, fillcolor=orange];
-      edge [dir=back, penwidth=4, color=orange];
-      C4 -> master;
+  master -.-> C10
+  serverless -.-> C12
 
-      # Head
-      C4 -> HEAD;
-      edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
-      HEAD -> master [label="attached"];
+  HEAD -.-> C10
+  HEAD --"fas:fa-link"--o master
+end
 
-      # Upstreams
-      edge [arrowhead=dot, dir=forward, penwidth=2, color=blue];
-      master -> master_r [label="upstream"];
-      
-      # Remotes
-      node [style="filled,solid", shape=box, fillcolor=aquamarine3];
-      edge [arrowhead=dot, dir=forward, penwidth=3, color=aquamarine3];
-      origin -> C0r [lhead=cluster_remote]
-    }
+subgraph local
+  direction RL
+  origin[(origin)]
 
-  }
-{{< /gravizo >}}
+  masterl(master)
 
-⬇️ `git checkout -b imported-feat origin/feat/new-client` ⬇️
+  HEADL{{"HEAD"}}
 
-{{< gravizo width=50 >}}
-  digraph G {
-    fontname="Helvetica,Arial,sans-serif"
-    fontsize="20"
-   	node [fontname="Helvetica,Arial,sans-serif"]
-  	edge [fontname="Helvetica,Arial,sans-serif"]
-    rankdir=LR;
-    compound=true
+  CL10([10]) --> CL9([9]) --> CL8([8]) --> CL7([7]) --> CL6([6]) --> CL5([5]) --> CL4([4]) --> CL3([3]) --> CL2([2]) --> CL1([1])
 
-    subgraph cluster_remote {
-      color=black
-      label="somesite.com/repo.git"
-      
-      # Commits
-      C0r [label=C0]
-      C1r [label=C1]
-      C2r [label=C2]
-      C3r [label=C3]
-      C4r [label=C4]
-      C5r [label=C5]
-      C6r [label=C6]
-      C7r [label=C7]
-      C0r -> C1r -> C2r -> C3r -> C4r [dir=back];
-      C2r -> C5r -> C6r -> C7r [dir=back];
-      
-      # Branches
-      node [style="filled,solid", shape=box, fillcolor=orange];
-      edge [dir=back, penwidth=4, color=orange];
-      master_r [label=master];
-      feat_r [label="feat/new-client"]
-      C4r -> master_r;
-      C7r -> feat_r;
+  masterl -.-> CL10
+  masterl ==o master
 
-      # Head
-      HEAD_r [label=HEAD];
-      C4r -> HEAD_r;
-      edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
-      HEAD_r -> master_r [arrowhead=tee, penwidth=2, color=red, label="attached"];
-    }
+  HEADL -.-> CL10
+  HEADL --"fas:fa-link"--o masterl
+end
 
-    subgraph cluster_local {
-      label="Local"
-      color=black
-      
-      # Commits
-      C0 -> C1 -> C2 -> C3 -> C4 [dir=back];
-      C2 -> C5 -> C6 -> C7 [dir=back];
-      
-      # Branches
-      node [style="filled,solid", shape=box, fillcolor=orange];
-      edge [dir=back, penwidth=4, color=orange];
-      C4 -> master;
-      C7 -> "imported-feat";
+origin ==o somesite.com/repo.git
 
-      # Head
-      C7 -> HEAD;
-      edge [dir=forward, arrowhead=tee, penwidth=2, color=red];
-      HEAD -> "imported-feat" [label="attached"];
+class local,somesite.com/repo.git repo;
+class origin remote;
+class HEAD,HEADL head;
+class master,masterl,bug22,serverless branch;
+class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,CL1,CL2,CL3,CL4,CL5,CL6,CL7,CL8,CL9,CL10,CL11,CL12,CL13 commit;
+```
 
-      # Upstreams
-      edge [arrowhead=dot, dir=forward, penwidth=2, color=blue];
-      master -> master_r [label="upstream"];
-      "imported-feat" -> feat_r [label="upstream"];
-      
-      # Remotes
-      node [style="filled,solid", shape=box, fillcolor=aquamarine3];
-      edge [arrowhead=dot, dir=forward, penwidth=3, color=aquamarine3];
-      origin -> C0r [lhead=cluster_remote]
-    }
+➡️ `git checkout -b imported-feat origin/feat/serverless` ➡️
 
-  }
-{{< /gravizo >}}
+---
+
+⬇️ `git checkout -b imported-feat origin/feat/serverless` ⬇️
+
+
+```mermaid
+flowchart RL
+
+subgraph somesite.com/repo.git
+  direction RL
+  HEAD{{"HEAD"}}
+  master(master)
+  serverless(feat/serverless)
+
+  C10([10]) --> C9([9]) --> C8([8]) --> C7([7]) --> C6([6]) --> C5([5]) --> C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C12([12]) --> C11([11]) --> C7
+
+  master -.-> C10
+  serverless -.-> C12
+
+  HEAD -.-> C10
+  HEAD --"fas:fa-link"--o master
+end
+
+subgraph local
+  direction RL
+  origin[(origin)]
+
+  masterl(master)
+  imported(imported-feat)
+  HEADL{{"HEAD"}}
+
+  CL12([12]) --> CL11([11]) --> CL7
+  CL10([10]) --> CL9([9]) --> CL8([8]) --> CL7([7]) --> CL6([6]) --> CL5([5]) --> CL4([4]) --> CL3([3]) --> CL2([2]) --> CL1([1])
+
+  masterl -.-> CL10
+  masterl ==o master
+  imported -.-> CL12
+  imported ==o serverless
+
+  HEADL -.-> CL12
+  HEADL --"fas:fa-link"--o imported
+end
+
+origin ==o somesite.com/repo.git
+
+class local,somesite.com/repo.git repo;
+class origin remote;
+class HEAD,HEADL head;
+class master,masterl,bug22,serverless,imported branch;
+class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,CL1,CL2,CL3,CL4,CL5,CL6,CL7,CL8,CL9,CL10,CL11,CL12,CL13 commit;
+```
 
 * A new branch `imported-feat` is created locally, and `origin/feat/new-client` is set as its *upstream*
 * It is customary to reuse the upstream name if there are no conflicts
@@ -1825,676 +1778,331 @@ class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,CL1,CL2,CL3,CL4,CL5,CL6,CL7,CL8
 
 ## Example with multiple remotes
 
-{{< gravizo width=80 >}}
-digraph G {
-  fontname="Helvetica,Arial,sans-serif"
-  fontsize="20"
-  node [fontname="Helvetica,Arial,sans-serif"]
-  edge [fontname="Helvetica,Arial,sans-serif"]
-  rankdir=LR;
-  compound=true
-  subgraph cluster_remote {
-    color=black
-    label="somesite.com/repo.git"
-    # Commits
-    C0r [label=C0]
-    C1r [label=C1]
-    C2r [label=C2]
-    C3r [label=C3]
-    C4r [label=C4]
-    C5r [label=C5]
-    C6r [label=C6]
-    C7r [label=C7]
-    C0r -> C1r -> C2r -> C3r -> C4r [dir=back]
-    C2r -> C5r -> C6r -> C7r [dir=back]
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange]
-    master_r [label=master]
-    feat_r [label="feat/new-client"]
-    C4r -> master_r
-    C7r -> feat_r
-    # Head
-    HEAD_r [label=HEAD]
-    C4r -> HEAD_r
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD_r -> master_r [arrowhead=tee, penwidth=2, color=red, label="attached"]
-  }
-  subgraph cluster_other {
-    color=black
-    label="somewhereelse.org/repo.git"
-    # Commits
-    C0r2 [label=C0]
-    C1r2 [label=C1]
-    C2r2 [label=C2]
-    C3r2 [label=C3]
-    C4r2 [label=C4]
-    C8r2 [label=C8]
-    C9r2 [label=C9]
-    C0r2 -> C1r2 -> C2r2 -> C3r2 -> C4r2 -> C8r2 -> C9r2 [dir=back];
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange]
-    edge [dir=back, penwidth=4, color=orange]
-    master_r2 [label=master]
-    C9r2 -> master_r2
-    # Head
-    HEAD_r2 [label=HEAD]
-    C9r2 -> HEAD_r2
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD_r2 -> master_r2 [label="attached"]
-  }
-}
-{{< /gravizo >}}
+```mermaid
+flowchart RL
+
+subgraph somesite.com/repo.git
+  direction RL
+  HEAD{{"HEAD"}}
+  master(master)
+  serverless(feat/serverless)
+
+  C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C7([7]) --> C6([6]) --> C5([5]) --> C2 
+
+  master -.-> C4
+  serverless -.-> C7
+
+  HEAD -.-> C4
+  HEAD --"fas:fa-link"--o master
+end
+
+subgraph somewherelse.org/repo.git
+  direction RL
+
+  masterl(master)
+  HEADL{{"HEAD"}}
+
+  CL10([10]) --> CL9([9]) --> CL8([8]) --> CL4([4]) --> CL3([3]) --> CL2([2]) --> CL1([1])
+
+  masterl -.-> CL10
+
+  HEADL -.-> CL10
+  HEADL --"fas:fa-link"--o masterl
+end
+
+class local,somesite.com/repo.git,somewherelse.org/repo.git repo;
+class origin remote;
+class HEAD,HEADL head;
+class master,masterl,bug22,serverless,imported branch;
+class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,CL1,CL2,CL3,CL4,CL5,CL6,CL7,CL8,CL9,CL10,CL11,CL12,CL13 commit;
+```
+
+➡️ Next: `git clone git@somesite.com/repo.git` ➡️
+
+---
 
 ⬇️ `git clone git@somesite.com/repo.git` ⬇️
 
-{{< gravizo width=80 >}}
-digraph G {
-  fontname="Helvetica,Arial,sans-serif"
-  fontsize="20"
-  node [fontname="Helvetica,Arial,sans-serif"]
-  edge [fontname="Helvetica,Arial,sans-serif"]
-  rankdir=LR;
-  compound=true
-  subgraph cluster_remote {
-    color=black
-    label="somesite.com/repo.git"
-    # Commits
-    C0r [label=C0]
-    C1r [label=C1]
-    C2r [label=C2]
-    C3r [label=C3]
-    C4r [label=C4]
-    C5r [label=C5]
-    C6r [label=C6]
-    C7r [label=C7]
-    C0r -> C1r -> C2r -> C3r -> C4r [dir=back]
-    C2r -> C5r -> C6r -> C7r [dir=back]
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange]
-    master_r [label=master]
-    feat_r [label="feat/new-client"]
-    C4r -> master_r
-    C7r -> feat_r
-    # Head
-    HEAD_r [label=HEAD]
-    C4r -> HEAD_r
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD_r -> master_r [arrowhead=tee, penwidth=2, color=red, label="attached"]
-  }
-  subgraph cluster_other {
-    color=black
-    label="somewhereelse.org/repo.git"
-    # Commits
-    C0r2 [label=C0]
-    C1r2 [label=C1]
-    C2r2 [label=C2]
-    C3r2 [label=C3]
-    C4r2 [label=C4]
-    C8r2 [label=C8]
-    C9r2 [label=C9]
-    C0r2 -> C1r2 -> C2r2 -> C3r2 -> C4r2 -> C8r2 -> C9r2 [dir=back];
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange]
-    edge [dir=back, penwidth=4, color=orange]
-    master_r2 [label=master]
-    C9r2 -> master_r2
-    # Head
-    HEAD_r2 [label=HEAD]
-    C9r2 -> HEAD_r2
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD_r2 -> master_r2 [label="attached"]
-  }
-  subgraph cluster_local {
-    label="Local"
-    color=black
-    # Commits
-    C0 -> C1 -> C2 -> C3 -> C4 [dir=back]
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange]
-    edge [dir=back, penwidth=4, color=orange]
-    C4 -> master
-    # Head
-    C4 -> HEAD
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD -> "master" [label="attached"]
-    # Upstreams
-    edge [arrowhead=dot, dir=forward, penwidth=2, color=blue]
-    master -> master_r [label="upstream"]
-    # Remotes
-    node [style="filled,solid", shape=box, fillcolor=aquamarine3]
-    edge [arrowhead=dot, dir=forward, penwidth=3, color=aquamarine3]
-    origin -> C0r [lhead=cluster_remote]
-  }
-}
-{{< /gravizo >}}
+```mermaid
+flowchart RL
+
+subgraph somesite.com/repo.git
+  direction RL
+  HEAD{{"HEAD"}}
+  master(master)
+  serverless(feat/serverless)
+
+  C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C7([7]) --> C6([6]) --> C5([5]) --> C2 
+
+  master -.-> C4
+  serverless -.-> C7
+
+  HEAD -.-> C4
+  HEAD --"fas:fa-link"--o master
+end
+
+subgraph somewherelse.org/repo.git
+  direction RL
+
+  masterl(master)
+  HEADL{{"HEAD"}}
+
+  CL10([10]) --> CL9([9]) --> CL8([8]) --> CL4([4]) --> CL3([3]) --> CL2([2]) --> CL1([1])
+
+  masterl -.-> CL10
+
+  HEADL -.-> CL10
+  HEADL --"fas:fa-link"--o masterl
+end
+
+subgraph local
+  direction RL
+
+  origin[(origin)]
+
+  HEADa{{"HEAD"}}
+  mastera(master)
+
+  C4a([4]) --> C3a([3]) --> C2a([2]) --> C1a([1])
+
+  mastera -.-> C4a
+  mastera ==o master
+
+  HEADa -.-> C4a
+  HEADa --"fas:fa-link"--o mastera
+end
+
+origin ==o somesite.com/repo.git
+
+class local,somesite.com/repo.git,somewherelse.org/repo.git repo;
+class origin remote;
+class HEAD,HEADL,HEADa head;
+class master,masterl,mastera,bug22,serverless,imported branch;
+class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C1a,C2a,C3a,C4a,C5a,C6a,C7a,C8a,C9a,C10a,C11a,C12a,C13a,CL1,CL2,CL3,CL4,CL5,CL6,CL7,CL8,CL9,CL10,CL11,CL12,CL13 commit;
+```
+
+➡️ Next: `git checkout -b feat/serverless origin/feat/serverless` ➡️
 
 ---
 
-{{< gravizo width=80 >}}
-digraph G {
-  fontname="Helvetica,Arial,sans-serif"
-  fontsize="20"
-  node [fontname="Helvetica,Arial,sans-serif"]
-  edge [fontname="Helvetica,Arial,sans-serif"]
-  rankdir=LR;
-  compound=true
-  subgraph cluster_remote {
-    color=black
-    label="somesite.com/repo.git"
-    # Commits
-    C0r [label=C0]
-    C1r [label=C1]
-    C2r [label=C2]
-    C3r [label=C3]
-    C4r [label=C4]
-    C5r [label=C5]
-    C6r [label=C6]
-    C7r [label=C7]
-    C0r -> C1r -> C2r -> C3r -> C4r [dir=back]
-    C2r -> C5r -> C6r -> C7r [dir=back]
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange]
-    master_r [label=master]
-    feat_r [label="feat/new-client"]
-    C4r -> master_r
-    C7r -> feat_r
-    # Head
-    HEAD_r [label=HEAD]
-    C4r -> HEAD_r
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD_r -> master_r [arrowhead=tee, penwidth=2, color=red, label="attached"]
-  }
-  subgraph cluster_other {
-    color=black
-    label="somewhereelse.org/repo.git"
-    # Commits
-    C0r2 [label=C0]
-    C1r2 [label=C1]
-    C2r2 [label=C2]
-    C3r2 [label=C3]
-    C4r2 [label=C4]
-    C8r2 [label=C8]
-    C9r2 [label=C9]
-    C0r2 -> C1r2 -> C2r2 -> C3r2 -> C4r2 -> C8r2 -> C9r2 [dir=back];
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange]
-    edge [dir=back, penwidth=4, color=orange]
-    master_r2 [label=master]
-    C9r2 -> master_r2
-    # Head
-    HEAD_r2 [label=HEAD]
-    C9r2 -> HEAD_r2
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD_r2 -> master_r2 [label="attached"]
-  }
-  subgraph cluster_local {
-    label="Local"
-    color=black
-    # Commits
-    C0 -> C1 -> C2 -> C3 -> C4 [dir=back]
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange]
-    edge [dir=back, penwidth=4, color=orange]
-    C4 -> master
-    # Head
-    C4 -> HEAD
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD -> "master" [label="attached"]
-    # Upstreams
-    edge [arrowhead=dot, dir=forward, penwidth=2, color=blue]
-    master -> master_r [label="upstream"]
-    # Remotes
-    node [style="filled,solid", shape=box, fillcolor=aquamarine3]
-    edge [arrowhead=dot, dir=forward, penwidth=3, color=aquamarine3]
-    origin -> C0r [lhead=cluster_remote]
-  }
-}
-{{< /gravizo >}}
+⬇️ `git checkout -b feat/serverless origin/feat/serverless` ⬇️
 
-⬇️ `git checkout -b feat/new-client origin/feat/new-client` ⬇️
+```mermaid
+flowchart RL
 
-{{< gravizo width=80 >}}
-digraph G {
-  fontname="Helvetica,Arial,sans-serif"
-  fontsize="20"
-  node [fontname="Helvetica,Arial,sans-serif"]
-  edge [fontname="Helvetica,Arial,sans-serif"]
-  rankdir=LR;
-  compound=true
-  subgraph cluster_remote {
-    color=black
-    label="somesite.com/repo.git"
-    # Commits
-    C0r [label=C0]
-    C1r [label=C1]
-    C2r [label=C2]
-    C3r [label=C3]
-    C4r [label=C4]
-    C5r [label=C5]
-    C6r [label=C6]
-    C7r [label=C7]
-    C0r -> C1r -> C2r -> C3r -> C4r [dir=back]
-    C2r -> C5r -> C6r -> C7r [dir=back]
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange]
-    master_r [label=master]
-    feat_r [label="feat/new-client"]
-    C4r -> master_r
-    C7r -> feat_r
-    # Head
-    HEAD_r [label=HEAD]
-    C4r -> HEAD_r
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD_r -> master_r [arrowhead=tee, penwidth=2, color=red, label="attached"]
-  }
-  subgraph cluster_other {
-    color=black
-    label="somewhereelse.org/repo.git"
-    # Commits
-    C0r2 [label=C0]
-    C1r2 [label=C1]
-    C2r2 [label=C2]
-    C3r2 [label=C3]
-    C4r2 [label=C4]
-    C8r2 [label=C8]
-    C9r2 [label=C9]
-    C0r2 -> C1r2 -> C2r2 -> C3r2 -> C4r2 -> C8r2 -> C9r2 [dir=back];
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange]
-    edge [dir=back, penwidth=4, color=orange]
-    master_r2 [label=master]
-    C9r2 -> master_r2
-    # Head
-    HEAD_r2 [label=HEAD]
-    C9r2 -> HEAD_r2
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD_r2 -> master_r2 [label="attached"]
-  }
-  subgraph cluster_local {
-    label="Local"
-    color=black
-    # Commits
-    C0 -> C1 -> C2 -> C3 -> C4 [dir=back]
-    C2 -> C5 -> C6 -> C7 [dir=back]
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange]
-    edge [dir=back, penwidth=4, color=orange]
-    C4 -> master
-    C7 -> "feat/new-client"
-    # Head
-    C7 -> HEAD
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD -> "feat/new-client" [label="attached"]
-    # Upstreams
-    edge [arrowhead=dot, dir=forward, penwidth=2, color=blue]
-    master -> master_r [label="upstream"]
-    "feat/new-client" -> feat_r [label="upstream"]
-    # Remotes
-    node [style="filled,solid", shape=box, fillcolor=aquamarine3]
-    edge [arrowhead=dot, dir=forward, penwidth=3, color=aquamarine3]
-    origin -> C0r [lhead=cluster_remote]
-  }
-}
-{{< /gravizo >}}
+subgraph somesite.com/repo.git
+  direction RL
+  HEAD{{"HEAD"}}
+  master(master)
+  serverless(feat/serverless)
+
+  C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C7([7]) --> C6([6]) --> C5([5]) --> C2 
+
+  master -.-> C4
+  serverless -.-> C7
+
+  HEAD -.-> C4
+  HEAD --"fas:fa-link"--o master
+end
+
+subgraph somewherelse.org/repo.git
+  direction RL
+
+  masterl(master)
+  HEADL{{"HEAD"}}
+
+  CL10([10]) --> CL9([9]) --> CL8([8]) --> CL4([4]) --> CL3([3]) --> CL2([2]) --> CL1([1])
+
+  masterl -.-> CL10
+
+  HEADL -.-> CL10
+  HEADL --"fas:fa-link"--o masterl
+end
+
+subgraph local
+  direction RL
+
+  origin[(origin)]
+
+  HEADa{{"HEAD"}}
+  mastera(master)
+  serverlessa(feat/serverless)
+
+  C4a([4]) --> C3a([3]) --> C2a([2]) --> C1a([1])
+  C7a([7]) --> C6a([6]) --> C5a([5]) --> C2a 
+
+  mastera -.-> C4a
+  mastera ==o master
+
+  serverlessa -.-> C7a
+  serverlessa ==o serverless
+
+  HEADa -.-> C7a
+  HEADa --"fas:fa-link"--o serverlessa
+end
+
+origin ==o somesite.com/repo.git
+
+class local,somesite.com/repo.git,somewherelse.org/repo.git repo;
+class origin remote;
+class HEAD,HEADL,HEADa head;
+class master,masterl,mastera,bug22,serverless,serverlessa,imported branch;
+class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C1a,C2a,C3a,C4a,C5a,C6a,C7a,C8a,C9a,C10a,C11a,C12a,C13a,CL1,CL2,CL3,CL4,CL5,CL6,CL7,CL8,CL9,CL10,CL11,CL12,CL13 commit;
+```
+
+➡️ Next: `git remote add other git@somewhereelse.org/repo.git` ➡️
 
 ---
-
-{{< gravizo width=90 >}}
-digraph G {
-  fontname="Helvetica,Arial,sans-serif"
-  fontsize="20"
-  node [fontname="Helvetica,Arial,sans-serif"]
-  edge [fontname="Helvetica,Arial,sans-serif"]
-  rankdir=LR;
-  compound=true
-  subgraph cluster_remote {
-    color=black
-    label="somesite.com/repo.git"
-    # Commits
-    C0r [label=C0]
-    C1r [label=C1]
-    C2r [label=C2]
-    C3r [label=C3]
-    C4r [label=C4]
-    C5r [label=C5]
-    C6r [label=C6]
-    C7r [label=C7]
-    C0r -> C1r -> C2r -> C3r -> C4r [dir=back]
-    C2r -> C5r -> C6r -> C7r [dir=back]
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange]
-    master_r [label=master]
-    feat_r [label="feat/new-client"]
-    C4r -> master_r
-    C7r -> feat_r
-    # Head
-    HEAD_r [label=HEAD]
-    C4r -> HEAD_r
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD_r -> master_r [arrowhead=tee, penwidth=2, color=red, label="attached"]
-  }
-  subgraph cluster_other {
-    color=black
-    label="somewhereelse.org/repo.git"
-    # Commits
-    C0r2 [label=C0]
-    C1r2 [label=C1]
-    C2r2 [label=C2]
-    C3r2 [label=C3]
-    C4r2 [label=C4]
-    C8r2 [label=C8]
-    C9r2 [label=C9]
-    C0r2 -> C1r2 -> C2r2 -> C3r2 -> C4r2 -> C8r2 -> C9r2 [dir=back];
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange]
-    edge [dir=back, penwidth=4, color=orange]
-    master_r2 [label=master]
-    C9r2 -> master_r2
-    # Head
-    HEAD_r2 [label=HEAD]
-    C9r2 -> HEAD_r2
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD_r2 -> master_r2 [label="attached"]
-  }
-  subgraph cluster_local {
-    label="Local"
-    color=black
-    # Commits
-    C0 -> C1 -> C2 -> C3 -> C4 [dir=back]
-    C2 -> C5 -> C6 -> C7 [dir=back]
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange]
-    edge [dir=back, penwidth=4, color=orange]
-    C4 -> master
-    C7 -> "feat/new-client"
-    # Head
-    C7 -> HEAD
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD -> "feat/new-client" [label="attached"]
-    # Upstreams
-    edge [arrowhead=dot, dir=forward, penwidth=2, color=blue]
-    master -> master_r [label="upstream"]
-    "feat/new-client" -> feat_r [label="upstream"]
-    # Remotes
-    node [style="filled,solid", shape=box, fillcolor=aquamarine3]
-    edge [arrowhead=dot, dir=forward, penwidth=3, color=aquamarine3]
-    origin -> C0r [lhead=cluster_remote]
-  }
-}
-{{< /gravizo >}}
 
 ⬇️ `git remote add other git@somewhereelse.org/repo.git` ⬇️
 
-{{< gravizo width=90 >}}
-digraph G {
-  fontname="Helvetica,Arial,sans-serif"
-  fontsize="20"
-  node [fontname="Helvetica,Arial,sans-serif"]
-  edge [fontname="Helvetica,Arial,sans-serif"]
-  rankdir=LR;
-  compound=true
-  subgraph cluster_remote {
-    color=black
-    label="somesite.com/repo.git"
-    # Commits
-    C0r [label=C0]
-    C1r [label=C1]
-    C2r [label=C2]
-    C3r [label=C3]
-    C4r [label=C4]
-    C5r [label=C5]
-    C6r [label=C6]
-    C7r [label=C7]
-    C0r -> C1r -> C2r -> C3r -> C4r [dir=back]
-    C2r -> C5r -> C6r -> C7r [dir=back]
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange]
-    master_r [label=master]
-    feat_r [label="feat/new-client"]
-    C4r -> master_r
-    C7r -> feat_r
-    # Head
-    HEAD_r [label=HEAD]
-    C4r -> HEAD_r
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD_r -> master_r [arrowhead=tee, penwidth=2, color=red, label="attached"]
-  }
-  subgraph cluster_other {
-    color=black
-    label="git@somewhereelse.org/repo.git"
-    # Commits
-    C0r2 [label=C0]
-    C1r2 [label=C1]
-    C2r2 [label=C2]
-    C3r2 [label=C3]
-    C4r2 [label=C4]
-    C8r2 [label=C8]
-    C9r2 [label=C9]
-    C0r2 -> C1r2 -> C2r2 -> C3r2 -> C4r2 -> C8r2 -> C9r2 [dir=back];
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange]
-    edge [dir=back, penwidth=4, color=orange]
-    master_r2 [label=master]
-    C9r2 -> master_r2
-    # Head
-    HEAD_r2 [label=HEAD]
-    C9r2 -> HEAD_r2
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD_r2 -> master_r2 [label="attached"]
-  }
-  subgraph cluster_local {
-    label="Local"
-    color=black
-    # Commits
-    C0 -> C1 -> C2 -> C3 -> C4 [dir=back]
-    C2 -> C5 -> C6 -> C7 [dir=back]
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange]
-    edge [dir=back, penwidth=4, color=orange]
-    C4 -> master
-    C7 -> "feat/new-client"
-    # Head
-    C7 -> HEAD
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD -> "feat/new-client" [label="attached"]
-    # Upstreams
-    edge [arrowhead=dot, dir=forward, penwidth=2, color=blue]
-    master -> master_r [label="upstream"]
-    "feat/new-client" -> feat_r [label="upstream"]
-    # Remotes
-    node [style="filled,solid", shape=box, fillcolor=aquamarine3]
-    edge [arrowhead=dot, dir=forward, penwidth=3, color=aquamarine3]
-    origin -> C0r [lhead=cluster_remote]
-    other -> C0r2 [lhead=cluster_other]
-  }
-}
-{{< /gravizo >}}
+```mermaid
+flowchart RL
 
+subgraph somesite.com/repo.git
+  direction RL
+  HEAD{{"HEAD"}}
+  master(master)
+  serverless(feat/serverless)
+
+  C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C7([7]) --> C6([6]) --> C5([5]) --> C2 
+
+  master -.-> C4
+  serverless -.-> C7
+
+  HEAD -.-> C4
+  HEAD --"fas:fa-link"--o master
+end
+
+subgraph somewherelse.org/repo.git
+  direction RL
+
+  masterl(master)
+  HEADL{{"HEAD"}}
+
+  CL10([10]) --> CL9([9]) --> CL8([8]) --> CL4([4]) --> CL3([3]) --> CL2([2]) --> CL1([1])
+
+  masterl -.-> CL10
+
+  HEADL -.-> CL10
+  HEADL --"fas:fa-link"--o masterl
+end
+
+subgraph local
+  direction RL
+
+  origin[(origin)]
+  other[(other)]
+
+  HEADa{{"HEAD"}}
+  mastera(master)
+  serverlessa(feat/serverless)
+
+  C4a([4]) --> C3a([3]) --> C2a([2]) --> C1a([1])
+  C7a([7]) --> C6a([6]) --> C5a([5]) --> C2a 
+
+  mastera -.-> C4a
+  mastera ==o master
+
+  serverlessa -.-> C7a
+  serverlessa ==o serverless
+
+  HEADa -.-> C7a
+  HEADa --"fas:fa-link"--o serverlessa
+end
+
+origin ==o somesite.com/repo.git
+other ==o somewherelse.org/repo.git
+
+class local,somesite.com/repo.git,somewherelse.org/repo.git repo;
+class origin,other remote;
+class HEAD,HEADL,HEADa head;
+class master,masterl,mastera,bug22,serverless,serverlessa,imported branch;
+class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C1a,C2a,C3a,C4a,C5a,C6a,C7a,C8a,C9a,C10a,C11a,C12a,C13a,CL1,CL2,CL3,CL4,CL5,CL6,CL7,CL8,CL9,CL10,CL11,CL12,CL13 commit;
+```
+
+➡️ Next: `git checkout -b other-master other/master` ➡️
 
 ---
 
-{{< gravizo width=90 >}}
-digraph G {
-  fontname="Helvetica,Arial,sans-serif"
-  fontsize="20"
-  node [fontname="Helvetica,Arial,sans-serif"]
-  edge [fontname="Helvetica,Arial,sans-serif"]
-  rankdir=LR;
-  compound=true
-  subgraph cluster_remote {
-    color=black
-    label="somesite.com/repo.git"
-    # Commits
-    C0r [label=C0]
-    C1r [label=C1]
-    C2r [label=C2]
-    C3r [label=C3]
-    C4r [label=C4]
-    C5r [label=C5]
-    C6r [label=C6]
-    C7r [label=C7]
-    C0r -> C1r -> C2r -> C3r -> C4r [dir=back]
-    C2r -> C5r -> C6r -> C7r [dir=back]
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange]
-    master_r [label=master]
-    feat_r [label="feat/new-client"]
-    C4r -> master_r
-    C7r -> feat_r
-    # Head
-    HEAD_r [label=HEAD]
-    C4r -> HEAD_r
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD_r -> master_r [arrowhead=tee, penwidth=2, color=red, label="attached"]
-  }
-  subgraph cluster_other {
-    color=black
-    label="git@somewhereelse.org/repo.git"
-    # Commits
-    C0r2 [label=C0]
-    C1r2 [label=C1]
-    C2r2 [label=C2]
-    C3r2 [label=C3]
-    C4r2 [label=C4]
-    C8r2 [label=C8]
-    C9r2 [label=C9]
-    C0r2 -> C1r2 -> C2r2 -> C3r2 -> C4r2 -> C8r2 -> C9r2 [dir=back];
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange]
-    edge [dir=back, penwidth=4, color=orange]
-    master_r2 [label=master]
-    C9r2 -> master_r2
-    # Head
-    HEAD_r2 [label=HEAD]
-    C9r2 -> HEAD_r2
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD_r2 -> master_r2 [label="attached"]
-  }
-  subgraph cluster_local {
-    label="Local"
-    color=black
-    # Commits
-    C0 -> C1 -> C2 -> C3 -> C4 [dir=back]
-    C2 -> C5 -> C6 -> C7 [dir=back]
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange]
-    edge [dir=back, penwidth=4, color=orange]
-    C4 -> master
-    C7 -> "feat/new-client"
-    # Head
-    C7 -> HEAD
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD -> "feat/new-client" [label="attached"]
-    # Upstreams
-    edge [arrowhead=dot, dir=forward, penwidth=2, color=blue]
-    master -> master_r [label="upstream"]
-    "feat/new-client" -> feat_r [label="upstream"]
-    # Remotes
-    node [style="filled,solid", shape=box, fillcolor=aquamarine3]
-    edge [arrowhead=dot, dir=forward, penwidth=3, color=aquamarine3]
-    origin -> C0r [lhead=cluster_remote]
-    other -> C0r2 [lhead=cluster_other]
-  }
-}
-{{< /gravizo >}}
-
 ⬇️ `git checkout -b other-master other/master` ⬇️
 
-{{< gravizo width=90 >}}
-digraph G {
-  fontname="Helvetica,Arial,sans-serif"
-  fontsize="20"
-  node [fontname="Helvetica,Arial,sans-serif"]
-  edge [fontname="Helvetica,Arial,sans-serif"]
-  rankdir=LR;
-  compound=true
-  subgraph cluster_remote {
-    color=black
-    label="somesite.com/repo.git"
-    # Commits
-    C0r [label=C0]
-    C1r [label=C1]
-    C2r [label=C2]
-    C3r [label=C3]
-    C4r [label=C4]
-    C5r [label=C5]
-    C6r [label=C6]
-    C7r [label=C7]
-    C0r -> C1r -> C2r -> C3r -> C4r [dir=back]
-    C2r -> C5r -> C6r -> C7r [dir=back]
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange];
-    edge [dir=back, penwidth=4, color=orange]
-    master_r [label=master]
-    feat_r [label="feat/new-client"]
-    C4r -> master_r
-    C7r -> feat_r
-    # Head
-    HEAD_r [label=HEAD]
-    C4r -> HEAD_r
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD_r -> master_r [arrowhead=tee, penwidth=2, color=red, label="attached"]
-  }
-  subgraph cluster_other {
-    color=black
-    label="git@somewhereelse.org/repo.git"
-    # Commits
-    C0r2 [label=C0]
-    C1r2 [label=C1]
-    C2r2 [label=C2]
-    C3r2 [label=C3]
-    C4r2 [label=C4]
-    C8r2 [label=C8]
-    C9r2 [label=C9]
-    C0r2 -> C1r2 -> C2r2 -> C3r2 -> C4r2 -> C8r2 -> C9r2 [dir=back];
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange]
-    edge [dir=back, penwidth=4, color=orange]
-    master_r2 [label=master]
-    C9r2 -> master_r2
-    # Head
-    HEAD_r2 [label=HEAD]
-    C9r2 -> HEAD_r2
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD_r2 -> master_r2 [label="attached"]
-  }
-  subgraph cluster_local {
-    label="Local"
-    color=black
-    # Commits
-    C0 -> C1 -> C2 -> C3 -> C4 [dir=back]
-    C2 -> C5 -> C6 -> C7 [dir=back]
-    C4 -> C8 -> C9 [dir=back]
-    # Branches
-    node [style="filled,solid", shape=box, fillcolor=orange]
-    edge [dir=back, penwidth=4, color=orange]
-    C4 -> master
-    C7 -> "feat/new-client"
-    C9 -> "other-master"
-    # Head
-    C9 -> HEAD
-    edge [dir=forward, arrowhead=tee, penwidth=2, color=red]
-    HEAD -> "other-master" [label="attached"]
-    # Upstreams
-    edge [arrowhead=dot, dir=forward, penwidth=2, color=blue]
-    master -> master_r [label="upstream"]
-    "feat/new-client" -> feat_r [label="upstream"]
-    "other-master" -> master_r2 [label="upstream"]
-    # Remotes
-    node [style="filled,solid", shape=box, fillcolor=aquamarine3]
-    edge [arrowhead=dot, dir=forward, penwidth=3, color=aquamarine3]
-    origin -> C0r [lhead=cluster_remote]
-    other -> C0r2 [lhead=cluster_other]
-  }
-}
-{{< /gravizo >}}
+```mermaid
+flowchart RL
+
+subgraph somesite.com/repo.git
+  direction RL
+  HEAD{{"HEAD"}}
+  master(master)
+  serverless(feat/serverless)
+
+  C4([4]) --> C3([3]) --> C2([2]) --> C1([1])
+  C7([7]) --> C6([6]) --> C5([5]) --> C2 
+
+  master -.-> C4
+  serverless -.-> C7
+
+  HEAD -.-> C4
+  HEAD --"fas:fa-link"--o master
+end
+
+subgraph somewherelse.org/repo.git
+  direction RL
+
+  masterl(master)
+  HEADL{{"HEAD"}}
+
+  CL10([10]) --> CL9([9]) --> CL8([8]) --> CL4([4]) --> CL3([3]) --> CL2([2]) --> CL1([1])
+
+  masterl -.-> CL10
+
+  HEADL -.-> CL10
+  HEADL --"fas:fa-link"--o masterl
+end
+
+subgraph local
+  direction RL
+
+  HEADa{{"HEAD"}}
+  mastera(master)
+  serverlessa(feat/serverless)
+  othermaster(other-master)
+
+  C10a([10]) --> C9a([9]) --> C8a([8]) --> C4a([4]) --> C3a([3]) --> C2a([2]) --> C1a([1])
+  C7a([7]) --> C6a([6]) --> C5a([5]) --> C2a 
+
+  mastera -.-> C4a
+  mastera ==o master
+
+  serverlessa -.-> C7a
+  serverlessa ==o serverless
+
+  othermaster -.-> C10a
+  othermaster ==o masterl
+
+  HEADa -.-> C10a
+  HEADa --"fas:fa-link"--o othermaster
+
+  origin[(origin)]
+  other[(other)]
+end
+
+origin ==o somesite.com/repo.git
+other ==o somewherelse.org/repo.git
+
+class local,somesite.com/repo.git,somewherelse.org/repo.git repo;
+class origin,other remote;
+class HEAD,HEADL,HEADa head;
+class master,masterl,mastera,bug22,serverless,serverlessa,imported,othermaster branch;
+class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C1a,C2a,C3a,C4a,C5a,C6a,C7a,C8a,C9a,C10a,C11a,C12a,C13a,CL1,CL2,CL3,CL4,CL5,CL6,CL7,CL8,CL9,CL10,CL11,CL12,CL13 commit;
+```
+
+You can operate with *multiple remotes*! Just remember: *branch names* must be *unique* for every repository
+  * If you want to track `origin/master` and `anotherRemote/master`, you need to branches with diverse names
 
 ---
 
