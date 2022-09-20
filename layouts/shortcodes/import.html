@@ -1,3 +1,6 @@
 {{- $path := .Get "path" -}}
-{{- $content := readFile $path | htmlUnescape -}}
+{{- $content := readFile $path
+    | htmlUnescape
+    | replaceRE "{{%\\s+fragment\\s+%}}((.*|\n|\r)+?){{%\\s+/fragment\\s+%}}" "${1}"
+-}}
 {{- $content -}}
