@@ -1769,10 +1769,19 @@ class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,CL1,CL2,CL3,CL4,CL5,CL6,CL7,CL8
 ```
 
 * A new branch `imported-feat` is created locally, and `origin/feat/new-client` is set as its *upstream*
+
+---
+
+## Importing remote branches
+
 * It is customary to reuse the upstream name if there are no conflicts
   * `git checkout -b feat/new-client origin/feat/new-client`
 * Modern versions of Git automatically checkout remote branches if there are no ambiguities:
   * `git checkout feat/new-client`
+  * creates a new branch `feat/new-client` with the upstream branch set to `origin/feat/new-client` if:
+    * there is **no** *local branch* named `feat/new-client`
+    * there is **no** *ambiguity* with remotes
+  * Quicker if you are working with a single remote (pretty common)
 
 ---
 
