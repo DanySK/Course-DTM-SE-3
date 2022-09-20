@@ -2707,19 +2707,19 @@ The push suceeds now!
 
 ## Centralized Version Control Systems
 
-{{< image src="2021-04-14-centralized-vcs.svg" max-h="65">}}
+![Centralized VCS](https://raw.githubusercontent.com/DanySK/shared-slides/e375d394b0eb319d6c5b9b6a7a2c707dc347b7ac/git/centralized-vcs.svg)
 
 ---
 
 ## Decentralized VCS
 
-{{< image src="2021-04-14-decentralized-vcs.svg" max-h="65">}}
+![Decentralized VCS](https://raw.githubusercontent.com/DanySK/shared-slides/e375d394b0eb319d6c5b9b6a7a2c707dc347b7ac/git/decentralized-vcs.svg)
 
 ---
 
 ## Real-world DVCS
 
-{{< image src="2021-04-14-dvcs-sink.svg" max-h="65">}}
+![Real-world Decentralized VCS](https://raw.githubusercontent.com/DanySK/shared-slides/e375d394b0eb319d6c5b9b6a7a2c707dc347b7ac/git/dvcs-sink.svg)
 
 ---
 
@@ -2797,11 +2797,16 @@ Elements to consider:
 
 ---
 
-## Trunk-based development(-like)
+## Trunk-based(-like) development
+
+![Trunk-based development (like)](https://raw.githubusercontent.com/DanySK/shared-slides/e375d394b0eb319d6c5b9b6a7a2c707dc347b7ac/git/dvcs-sink.svg)
+
+---
+
+## Trunk-based(-like) development
+
 
 Single branch, shared truth repository, frequent merges
-<br>
-{{< image src="2021-04-14-dvcs-sink.svg" max-h="55">}}
 
 * *Small* teams, *low-complexity* projects, *colocated* teams, *high* trust
 * Typical of small company projects
@@ -2810,18 +2815,20 @@ Single branch, shared truth repository, frequent merges
 
 ## Git flow (classic)
 
+![Git flow](https://raw.githubusercontent.com/DanySK/shared-slides/e375d394b0eb319d6c5b9b6a7a2c707dc347b7ac/git/dvcs-flow-sink.svg)
+
+---
+
+## Git flow (classic)
+
 Multiple branches, shared truth repository
-<br>
-{{< image src="2021-04-14-dvcs-flow-sink.svg" max-h="55">}}
 
 * *Large* teams, *high-complexity* projects, *preferably colocated* teams, *high* trust
 * Typical of large company projects
 
 ---
 
-## Git flow structure
-
-{{< image src="2021-04-13-gitflow.svg" max-h="55">}}
+{{% import path="shared-slides/git/git-flow.md" %}}
 
 ---
 
@@ -2845,27 +2852,29 @@ These copies are called **forks**
 
 ## Single branch, multiple forks
 
+![Trunk-based development (like)](https://raw.githubusercontent.com/DanySK/shared-slides/e375d394b0eb319d6c5b9b6a7a2c707dc347b7ac/git/dvcs-fork.svg)
+
+---
+
+## Single branch, multiple forks
+
 * Single branch, multiple independent repository copies
-
-<p>
-{{< image src="2021-04-14-dvcs-fork.svg" max-h="55">}}
-</p>
-
 * *Unknown* team size, *low-complexity* projects, *sparse* teams, *low* trust
-* Typical of small open-source projects
+* Typical of **small open-source projects**
 
 ---
 
 ## Git flow over multiple forks
 
-* Single branch, multiple independent repository copies
+![Trunk-based development (like)](https://raw.githubusercontent.com/DanySK/shared-slides/e375d394b0eb319d6c5b9b6a7a2c707dc347b7ac/git/dvcs-flow-fork.svg)
 
-<p>
-{{< image src="2021-04-14-dvcs-flow-fork.svg" max-h="55">}}
-</p>
+---
 
+## Git flow over multiple forks
+
+* Multiple branches, multiple independent repository copies
 * *Unknown* team size, *high-complexity* projects, *sparse* teams, *low* trust
-* Typical of complex open-source projects
+* Typical of **complex open-source projects**
 
 ---
 
