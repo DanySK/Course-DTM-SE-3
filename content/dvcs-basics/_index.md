@@ -1028,8 +1028,8 @@ flowchart RL
   class b1,b2 branch;
   class C1,C2,C3,C4,C5,C6,C7,C8,C9,C10 commit;
 ```
-⬇️ `git checkout -b imported-feat origin/feat/serverless` ⬇️
 
+⬇️ `git checkout -b new-experiment` ⬇️
 
 ```mermaid
 flowchart RL
