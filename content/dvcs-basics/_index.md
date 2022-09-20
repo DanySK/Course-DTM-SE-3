@@ -103,7 +103,11 @@ Git has the concept of *stage* (or *index*).
 * `git reset <files>` removes currently staged *changes* of the files from stage
 * `git commit` creates a new *changeset* with the contents of the stage
 
-{{< image src="staging.png" >}}
+```mermaid
+flowchart LR
+workdir("working directory") --add--> stage("stage (or index)") --commit--> repository(repository)
+stage --reset-->workdir
+```
 
 ---
 
