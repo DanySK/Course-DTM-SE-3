@@ -386,7 +386,7 @@ When **in detached head**, Git allows to make **commits**, but they **are lost**
 
 ---
 
-### Creating branches
+## Creating branches
 
 To store our commits, we need to *create* a **branch**, then attach the `HEAD` by checking it out.
 
@@ -429,6 +429,8 @@ flowchart RL
 ```
 
 ---
+
+## Creating branches
 
 ```mermaid
 flowchart RL
