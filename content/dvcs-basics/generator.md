@@ -1,4 +1,4 @@
- +++
++++
 
 title = "Software Engineering Module 3: Introduction to agile and DevOps"
 description = "Distributed version control systems, basics of Git"
@@ -14,7 +14,11 @@ outputs = ["Reveal"]
 
 ---
 
+<!-- write-here "shared-slides/git/dvcs-concepts.md" -->
+
 {{% import path="shared-slides/git/dvcs-concepts.md" %}}
+
+<!-- end-write -->
 
 ---
 
@@ -37,9 +41,7 @@ De-facto reference distributed version control system
 
 ---
 
-## Funny historical introduction
-
-{{< youtube id="4XpnKHJAok8" autoplay="false" title="Linus Torvalds introduces Git at Google">}}
+{{% import path="shared-slides/git/intro.md" %}}
 
 ---
 
