@@ -76,6 +76,10 @@ $heading4Size: 1.0em;
 	color: #039418
 }
 
+.reveal p {
+	margin: .2em 0 .2em 0;
+}
+
 .reveal section img {
 	border: 0em;
 	box-shadow: none;
@@ -99,8 +103,14 @@ $heading4Size: 1.0em;
 	color: black;
 }
 
+.reveal h2 {
+	color: navy;
+	text-transform: none;
+}
+
 .reveal h3 {
 	margin: .5em 0 0;
+	text-transform: none;
 }
 
 .reveal ul {
