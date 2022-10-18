@@ -76,6 +76,12 @@ outputs = ["Reveal"]
 
 ---
 
-<!-- write-here "shared-slides/git/github-forks.md" -->
+<!-- write-here "shared-slides/git/git-hosting-github.md" -->
+
+<!-- end-write -->
+
+---
+
+<!-- write-here "shared-slides/git/workflows-flow-fork.md" -->
 
 <!-- end-write -->
