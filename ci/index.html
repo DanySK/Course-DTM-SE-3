@@ -5,16 +5,14 @@
 <meta name="author" content="Danilo Pianini">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/dist/reset.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/dist/reset.css">
 <link rel="stylesheet" href="/Course-DTM-SE-3/reveal-js/dist/reveal.css">
   <link rel="stylesheet" href="/Course-DTM-SE-3/css/custom-theme.min.92b2c44a620cf4ca73ce77b379266190a6b53be4ed508d00e71adf7acf423d8f.css" id="theme"><link rel="stylesheet" href="/Course-DTM-SE-3/highlight-js/github.min.css">
-    
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Ubuntu Mono" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
   </head>
   <body>
@@ -26,7 +24,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Software Engineering</h1>
 <h2 id="continuous-integration-and-containerization">Continuous Integration and Containerization</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2023-01-24
+2023-02-07
 </section><section>
 <h1 id="continuous-integration">Continuous Integration</h1>
 <p>The practice of integrating code with a main development line <strong>continuously</strong>
@@ -814,16 +812,10 @@ here is a possible workflow for <strong>automatic</strong> dependency updates:</
     </div>
 <script type="text/javascript" src="/Course-DTM-SE-3/reveal-hugo/object-assign.js"></script>
 
-<a href="/Course-DTM-SE-3/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
-
-<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"height":"1080","highlight_theme":"github","history":true,"mermaid":[{"gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"useMaxWidth":false}],"slide_number":true,"theme":"league","transition":"slide","transition_speed":"fast","width":"1920"}</script>
-<script type="application/json" id="reveal-hugo-page-params">null</script>
 
 <script src="/Course-DTM-SE-3/reveal-js/dist/reveal.js"></script>
 
 
-  
-  
   <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/markdown/markdown.js"></script>
   
   <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/highlight/highlight.js"></script>
@@ -832,12 +824,6 @@ here is a possible workflow for <strong>automatic</strong> dependency updates:</
   
   <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/notes/notes.js"></script>
   
-  
-  <script type="text/javascript" src="/Course-DTM-SE-3/reveal-js/plugin/notes/notes.js"></script>
-
-
-
-
 <script type="text/javascript">
   
   
@@ -853,34 +839,53 @@ here is a possible workflow for <strong>automatic</strong> dependency updates:</
     }
     return map;
   }
-  
-  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
 
-  var revealHugoPlugins = { 
-    plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom ]
-   };
-  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
-  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+  var revealHugoSiteParams = {"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"height":"1080","highlight_theme":"github","history":true,"mermaid":[{"gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"useMaxWidth":false}],"slide_number":true,"theme":"league","transition":"slide","transition_speed":"fast","width":"1920"};
+  var revealHugoPageParams = {};
+
+  var revealHugoPlugins = {
+    
+    plugins: [RevealMarkdown,RevealHighlight,RevealZoom,RevealNotes]
+  };
+
   
   var options = Object.assign({},
     camelize(revealHugoDefaults),
     camelize(revealHugoSiteParams),
     camelize(revealHugoPageParams),
     camelize(revealHugoPlugins));
+
   Reveal.initialize(options);
 </script>
 
 
 
 
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+  
 
 
 
-
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@9.1.6/dist/mermaid.min.js"></script>
-  <script>
-    mermaid.initialize({"gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"useMaxWidth":false});
-
+  
+  <script type="text/javascript" src="/Course-DTM-SE-3/mermaid.min_6838052300336322795.js"></script>
+  <script type="text/javascript">
+    mermaid.initialize({startOnLoad: false});
     let render = (event) => {
       let mermaidElems = event.currentSlide.querySelectorAll('.mermaid');
       if (!mermaidElems.length){
@@ -894,8 +899,11 @@ here is a possible workflow for <strong>automatic</strong> dependency updates:</
           }
       });
     };
-    Reveal.addEventListener('slidechanged', render);
-    Reveal.addEventListener('ready', render);
+    
+    render({currentSlide: Reveal.getCurrentSlide()});
+
+    Reveal.on('slidechanged', render);
+    Reveal.on('ready', render);
   </script>
 
     <script>
