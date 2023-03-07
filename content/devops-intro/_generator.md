@@ -14,11 +14,15 @@ outputs = ["Reveal"]
 
 ---
 
-{{% import path="shared-slides/devops/devops-intro.md" %}}
+<!-- write-here "shared-slides/devops/devops-intro.md" -->
+
+<!-- end-write -->
 
 ---
 
-{{% import path="shared-slides/devops/real-world-case.md" %}}
+<!-- write-here "shared-slides/devops/real-world-case.md" -->
+
+<!-- end-write -->
 
 ---
 
@@ -234,6 +238,53 @@ Every actor in the process **must agree** and what is the meaning of a task bein
 
 ---
 
+## Pull mode: Kanban
+
+* Timeboxing in SCRUM resembles a *push* mechanism
+  * Work is allocated to the team to be performed within a timebox
+* Some activities may benefit of a *pull* mechanism
+  * Resources are allocated on a per-need basis
+  * The two modes can (should) cohexist in a sane agile workflow
+
+Based on the concept of a **board** (Kanban is Japanese for "board") divided in **columns** where **cards** can be moved,
+specifically:
+* **Columns** represent the different *stages of the workflow*
+* **Cards** represent the *tasks* to be performed
+* **Cards' color and/or shape** can be used to *classify* them (e.g., priority, type of work, reference project, etc.)
+* The cards are moved from *column to column* as they *progress*, in real time
+* The board can be *virtual* or *physical*
+  * Personally, I prefer physical boards, but it's a matter of taste
+
+---
+
+### Simple Kanban board
+
+![kanban board](https://upload.wikimedia.org/wikipedia/commons/d/d3/Simple-kanban-board-.jpg)
+
+---
+
+### Kanban board for an articulated workflow
+
+![kanban board](https://upload.wikimedia.org/wikipedia/commons/c/c2/Sample_Kanban_Board.png)
+
+---
+
+# Scrum + Kanban = Scrumban
+
+![scrumban](https://i.imgflip.com/7dlkk7.jpg)
+
+(*Scrumban* actually exists)
+
+Base ideas:
+* **Scrum** for the *planning* and *sprint management*
+* **Kanban** for the *continuous flow* of work
+
+---
+
+{{% youtube oyVksFviJVE %}}
+
+---
+
 ## The problem with Scrum
 
 Scrum and agile are often used as *synonyms*, but **they are not**
@@ -265,16 +316,16 @@ In the literature, Scrum and agile show mixed evidence of efficacy
 
 ---
 
-<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9k4adq/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="158" width="640" scrolling="no"></iframe>
-<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9kccas/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="139" width="640" scrolling="no"></iframe>
-<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9kdpz8/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="139" width="640" scrolling="no"></iframe>
-<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9ka6tj/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="139" width="640" scrolling="no"></iframe>
-<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9kmbvv/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="139" width="640" scrolling="no"></iframe>
-<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9kbutx/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="163" width="640" scrolling="no"></iframe>
+<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9k4adq/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="300" width="800" scrolling="no"></iframe>
+<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9kccas/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="300" width="800" scrolling="no"></iframe>
+<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9kdpz8/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="300" width="800" scrolling="no"></iframe>
+<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9ka6tj/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="300" width="800" scrolling="no"></iframe>
+<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9kmbvv/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="300" width="800" scrolling="no"></iframe>
+<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9kbutx/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="300" width="800" scrolling="no"></iframe>
 
 ---
 
-<iframe id="reddit-embed" src="https://www.redditmedia.com/r/scrum/comments/t4fun4/query_from_a_sm_of_6_months/?ref_source=embed&amp;ref=share&amp;embed=true" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="319" width="640" scrolling="no"></iframe>
+<iframe id="reddit-embed" src="https://www.redditmedia.com/r/scrum/comments/t4fun4/query_from_a_sm_of_6_months/?ref_source=embed&amp;ref=share&amp;embed=true" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="700" width="1920" scrolling="no"></iframe>
 
 ---
 
@@ -319,7 +370,7 @@ In the literature, Scrum and agile show mixed evidence of efficacy
 * Larger scale requires more coordination and buraucracy
 * Smaller scale benefits of less buraucracy
 
-> There is no one-fits-them-all workflow!
+### There is no workflow that "fits-them-all"!
 
 **Blindly adopting a pre-existing set of practices may lead to failures**
 
@@ -397,11 +448,11 @@ In the literature, Scrum and agile show mixed evidence of efficacy
 
 ---
 
-<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9lcdaf/?depth=2&amp;showmore=false&amp;embed=true&amp;showtitle=true&amp;context=1&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="411" width="640" scrolling="no"></iframe>
+<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9lcdaf/?depth=2&amp;showmore=false&amp;embed=true&amp;showtitle=true&amp;context=1&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="1000" width="1920" scrolling="no"></iframe>
 
 ---
 
-<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9kclup/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="236" width="640" scrolling="no"></iframe>
+<iframe id="reddit-embed" src="https://www.redditmedia.com/r/programming/comments/9wcku8/why_agile_and_especially_scrum_are_terrible/e9kclup/?depth=1&amp;showmore=false&amp;embed=true&amp;showmedia=false" sandbox="allow-scripts allow-same-origin allow-popups" style="border: none;" height="500" width="1920" scrolling="no"></iframe>
 
 ---
 

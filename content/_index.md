@@ -83,6 +83,8 @@ the authors of the sofware will most likely be included as co-authors.
 * If you have an idea, propose it as exam theme!
 * I might amend it or suggest changes/strategies or set requirements
 
+<!--
+
 ---
 
 ## Example proposal
@@ -233,3 +235,6 @@ and must feature appropriate automation (build) and get published on official di
 *Notes*:
 * The language should be agreed with the teacher
     * Python, Java, Scala, Kotlin, Rust, and Ruby are all valid picks, other should be discussed
+
+-->
+
