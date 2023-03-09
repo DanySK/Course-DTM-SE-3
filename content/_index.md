@@ -19,7 +19,7 @@ aliases = [
 
 # Teacher
 
-**Danilo Pianini**, fixed-term researcher (RTDA)
+**[Danilo Pianini](https://www.unibo.it/sitoweb/danilo.pianini/en)**, Senior assistant professor (RTDB)
 
 **email** [danilo.pianini@unibo.it](mailto:danilo.pianini@unibo.it)
 
