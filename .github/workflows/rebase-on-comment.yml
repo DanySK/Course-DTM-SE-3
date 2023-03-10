@@ -4,4 +4,6 @@ on:
 
 jobs:
   check-for-rebase:
-    uses: DanySK/workflows/.github/workflows/rebase-on-comment.yml@ea63efea171614b7ec70e43ea8a0393712b1eb75
+    uses: DanySK/workflows/.github/workflows/rebase-on-comment.yml@7390230b68b6ed20fced7c5abf6d2f2c00e3aa61
+    with:
+      token: ${{ secrets.WORKFLOW_TOKEN }}
