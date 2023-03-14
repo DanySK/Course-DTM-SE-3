@@ -10,7 +10,7 @@ on:
 
 jobs:
   create-and-deploy-pdfs:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     concurrency:
       group: pdf-slides-${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
       cancel-in-progress: false
