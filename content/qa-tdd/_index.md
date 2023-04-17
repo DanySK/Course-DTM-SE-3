@@ -363,4 +363,4 @@ Try the following:
 
 **Notes**:
 * A complex number can be modelled as a couple of real numbers, one for the real part, one for the imaginary part.
-* Try to emulate the behavior of a number [operator overloading](https://docs.python.org/3/reference/datamodel.html#emulating-numeric-types)!
+* Try to emulate the behavior of a number via [operator overloading](https://docs.python.org/3/reference/datamodel.html#emulating-numeric-types)!
