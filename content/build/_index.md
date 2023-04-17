@@ -118,7 +118,7 @@ The need for build systems in Python emerged with more complex use cases
 
 ## A simple financial application
 
-Build an applicatio that performs a simple graphical MACD analysis of a financial product:
+Build an application that performs a simple graphical MACD analysis of a financial product:
 
 ![app screenshot](app.png)
 
