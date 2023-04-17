@@ -89,7 +89,7 @@ Create a *declarative infrastructure* upon an *imperative basis*, and
 Still, many challenges remain open:
 * How to reuse the build logic?
     * within a project, and among projects
-automatiche 
+
 ---
 
 Many modern languages (such as Rust) come with a *build automator* as *part of their distribution*.
