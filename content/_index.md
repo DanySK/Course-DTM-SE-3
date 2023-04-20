@@ -46,7 +46,7 @@ aliases = [
 * **2h** [QA, testing, TDD, reproducibility and replicability (examples in Python)](qa-tdd)
 * **3h** [software dependencies, build automation (examples with virtualenv / pyenv / pip)](build)
 * **3h** [Continuous integration (examples with GitHub Actions)](ci)
-* **2h** [versioning, semantic release](https://danysk.github.io/Course-Laboratory-of-Software-Systems/05-version-selection), [licenses](https://danysk.github.io/Course-Laboratory-of-Software-Systems/06-licenses) (if we got time)
+* **2h** [versioning, semantic release](https://danysk.github.io/course-laboratory-of-software-systems/05-version-selection), [licenses](https://danysk.github.io/course-laboratory-of-software-systems/06-licenses) (if we got time)
 
 ---
 
