@@ -185,7 +185,7 @@ Upon their creation, runners have a default environment, which depends on their 
 
 ## Convention over configuration
 
-Several CI systems inherit the "*convention over configuration* principle.
+Several CI systems inherit the "*convention over configuration*" principle.
 
 For instance, by default (with an empty configuration file) Travis CI builds a Ruby project using `rake`.
 
