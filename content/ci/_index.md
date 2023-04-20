@@ -316,13 +316,12 @@ Also, *__tags__ don't get checked out*
 
 Communication with the runner happens via *[workflow commands](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions)*
 <br>
-The simplest way to send commands is to print on standard output a message in the form:
+The simplest way to create outputs for actions is to print on standard output a message in the form:
 <br>
-`::workflow-command parameter1={data},parameter2={data}::{command value}`
-
-In particular, actions can set outputs by printing:
+`"{name}={value}"`
 <br>
-`::set-output name={name}::{value}`
+and redirect it to the end of the file stored in the `$GITHUB_OUTPUT` environment variable:
+`echo "{name}={value}" >> $GITHUB_OUTPUT`
 
 {{< github repo="Tutorial-GitHub-Actions-Minimal" path=".github/workflows/use-step-outputs.yml" from=6 >}}
 
