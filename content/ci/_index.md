@@ -314,7 +314,7 @@ Also, *__tags__ don't get checked out*
 
 ## Writing outputs
 
-Communication with the runner happens via *[workflow commands](docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions)*
+Communication with the runner happens via *[workflow commands](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions)*
 <br>
 The simplest way to send commands is to print on standard output a message in the form:
 <br>
