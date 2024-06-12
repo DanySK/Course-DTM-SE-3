@@ -33,7 +33,7 @@ jobs:
         id: version-compute
         run: echo "version=${{ steps.commit-counter.outputs.commits }}.$(date +"%Y.%-m%d")" >> "$GITHUB_OUTPUT"
       - name: Setup Ruby
-        uses: ruby/setup-ruby@v1.179.1
+        uses: ruby/setup-ruby@v1.180.0
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@latest
         with:
