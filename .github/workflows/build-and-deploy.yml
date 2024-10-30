@@ -62,7 +62,7 @@ jobs:
       - name: Build slides with hugo
         run: hugo
       - name: Inline mermaid charts
-        uses: cric96/inline-mermaid@1.9.1
+        uses: cric96/inline-mermaid@1.10.0
         with:
           css-file-regex: '^css\\/.*custom.*theme.*\\.css$'
       - name: Deploy website
